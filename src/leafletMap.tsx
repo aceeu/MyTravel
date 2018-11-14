@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { LeafletSampleMap } from './leaflet';
+import { LeafletSampleMap, AddRoute, PointFeature } from './leaflet';
 
 interface Props {}
 
@@ -16,6 +16,8 @@ export class LeafletMap extends React.PureComponent<Props> {
     }
 
     componentDidMount() {
-        LeafletSampleMap(this.element.current, [50.07349, 88.42224])
+        const map = LeafletSampleMap(this.element.current)
+        AddRoute(map);
+        PointFeature(map);
     }
 }
