@@ -1,5 +1,6 @@
 import L from 'leaflet';
-import Data from './assets/test1_raw_json.json';
+import Data from './features/test1_raw_json.json';
+import './assets/main.css';
 
 export function LeafletSampleMap(element) {
     var mymap = L.map(element.id).setView([Data.geometry[0][0], Data.geometry[0][1]], 13);
@@ -25,19 +26,7 @@ var geojsonFeature = {
     }
 };
 
-export function AddRoute(map) {
+export function Route(map) {
     var myLayer = L.geoJSON().addTo(map);
     myLayer.addData(geojsonFeature);
-}
-
-export function PointFeature(map) {
-    let distance = 0;
-    Data.segments[0].steps.forEach(element => {
-        const startPoint = Data.geometry[element.way_points[0]];
-        const cMarker = L.circleMarker([startPoint[0], startPoint[1]], {color: '#ff9933', radius: 5, fillOpacity: 1});
-        const d = distance;
-        cMarker.on('click', e => alert(`${d.toFixed(1)} - ${element.instruction}`));
-        cMarker.addTo(map);
-        distance += element.distance;
-    });
 }

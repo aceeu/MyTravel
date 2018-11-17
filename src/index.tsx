@@ -1,9 +1,13 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Hello } from './test';
 import { LeafletMap } from './leafletMap';
+import { FeaturesList, RegisterOnList } from './features/features-list';
+import { MovementMarkersList } from './features/movement-markers';
+import { MilestonesList } from './features/mile-stones';
 
-ReactDOM.render(<Hello 
-    text='Привет'/>, document.getElementById('app'));
+// movement markers register
+RegisterOnList(new MovementMarkersList('mml'));
+RegisterOnList(new MilestonesList('milestones'));
 
-ReactDOM.render(<LeafletMap/>, document.getElementById('map'));
+// map
+ReactDOM.render(<LeafletMap featuresList={FeaturesList.featuresList}/>, document.getElementById('map'));

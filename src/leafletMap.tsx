@@ -1,10 +1,19 @@
 import * as React from 'react';
-import { LeafletSampleMap, AddRoute, PointFeature } from './leaflet';
+import { LeafletSampleMap, Route } from './leaflet';
+import { FeaturesList} from './features/features-list';
 
-interface Props {}
+interface Props {
+    featuresList: FeaturesList;
+}
 
 export class LeafletMap extends React.PureComponent<Props> {
     element = React.createRef<HTMLDivElement>();
+    map: any;
+
+    constructor(props: Props) {
+        super(props);
+    }
+
     render() {
         return (
             <div
@@ -16,8 +25,11 @@ export class LeafletMap extends React.PureComponent<Props> {
     }
 
     componentDidMount() {
-        const map = LeafletSampleMap(this.element.current)
-        AddRoute(map);
-        PointFeature(map);
+        this.map = LeafletSampleMap(this.element.current);
+        this.map.on('zoom', () => this.props.featuresList.onZoom());
+        Route(this.map);
+        this.props.featuresList.setMap(this.map);
+        this.props.featuresList.init();
+        this.props.featuresList.onZoom();
     }
 }
