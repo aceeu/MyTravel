@@ -9,9 +9,6 @@ export type FeatureMarker = any;
 export interface MapMarker {
     feature: FeatureMarker;
     distance: number;
-    zoomFrom: number;
-    zoomTo: number;
-    show: boolean;
 }
 
 

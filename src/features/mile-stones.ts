@@ -3,10 +3,15 @@ import * as Data from './test1_raw_json.json';
 import _ from '../leaflet-define';
 import * as azimuth from 'azimuth';
 
+const zoomFrom = 14;
+const zoomTo = Number.POSITIVE_INFINITY;
+
 export class MilestonesList implements Feature {
     milestones: MapMarker[] = [];
     map: any;
     name: string;
+    layerGroup: any;
+    showed: boolean = false;
     constructor(name: string) {
         this.name = name;
     }
@@ -35,28 +40,30 @@ export class MilestonesList implements Feature {
             }
             return a;
         }, this.milestones);
+        this.layerGroup = _().layerGroup(this.milestones.map(v => v.feature));
     }
 
     onZoom(zoom: number) {
         this.milestones.forEach(p => {
-            if (p.zoomFrom <= zoom && p.zoomTo > zoom) {
+            if (zoomFrom <= zoom && zoomTo > zoom) {
     
-                if ( p.show == false) {
-                    p.feature.addTo(this.map);
-                    p.show = true;
+                if ( this.showed == false) {
+                    this.layerGroup.addTo(this.map);
+                    this.showed = true;
                 }
             }
             else {
-                p.feature.remove();
-                p.show = false;
+                this.layerGroup.remove();
+                this.showed = false;
             }
         });
     }
 
     createMark(element: azimuth.Point, distance: number): FeatureMarker {
         const cMarker = _().circleMarker([element.lat, element.lng], {color: '#ff0000', radius: 5, fillOpacity: 1});
-        cMarker.on('click', (e: any) => alert(`${distance.toFixed(1)}`));
-        return {feature: cMarker, distance, zoomFrom: 14, zoomTo: Number.POSITIVE_INFINITY, show: false};
+        cMarker.bindPopup(`${distance.toFixed(1)}`);
+        cMarker.on('click', (e: any) => e.openPopup());
+        return {feature: cMarker, distance};
     }
 }
 

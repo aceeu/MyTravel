@@ -3,7 +3,7 @@ import Data from './features/test1_raw_json.json';
 import './assets/main.css';
 
 export function LeafletSampleMap(element) {
-    var mymap = L.map(element.id).setView([Data.geometry[0][0], Data.geometry[0][1]], 13);
+    var mymap = L.map(element).setView([Data.geometry[0][0], Data.geometry[0][1]], 13);
 
     // L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     //     attribution: 'aceeu',
