@@ -1,22 +1,16 @@
-import { Feature, MapMarker, FeatureMarker } from './features-list';
-import * as Data from './test1_raw_json.json';
+import { Feature, MapMarker, FeatureMarker, FeatureBase } from './features-list';
 import _ from '../leaflet-define';
 import * as azimuth from 'azimuth';
 
-const zoomFrom = 14;
-const zoomTo = Number.POSITIVE_INFINITY;
+const zoomFrom = 3;
+const zoomTo = 14;
 
-export class MilestonesList implements Feature {
-    milestones: MapMarker[] = [];
-    map: any;
-    name: string;
-    layerGroup: any;
-    showed: boolean = false;
+export class MilestonesList extends FeatureBase {
     constructor(name: string) {
-        this.name = name;
+        super(name, [zoomFrom, zoomTo]);
     }
-    init(map: any) {
-        this.map = map;
+
+    initChild(Data: any) {
         let distance: number = 0;
         let last: number = distance;
         let lastPoint: azimuth.Point
@@ -34,35 +28,18 @@ export class MilestonesList implements Feature {
                 return a;
             }
             lastPoint = elPoint;
-            if (distance - last > 1000) {
+            if (distance - last > 500000) {
                 a.push(this.createMark(elPoint, distance));
                 last = distance;
             }
             return a;
-        }, this.milestones);
-        this.layerGroup = _().layerGroup(this.milestones.map(v => v.feature));
+        }, this.markers);
+        this.layerGroup = _().layerGroup(this.markers.map(v => v.feature));
     }
 
-    onZoom(zoom: number) {
-        this.milestones.forEach(p => {
-            if (zoomFrom <= zoom && zoomTo > zoom) {
-    
-                if ( this.showed == false) {
-                    this.layerGroup.addTo(this.map);
-                    this.showed = true;
-                }
-            }
-            else {
-                this.layerGroup.remove();
-                this.showed = false;
-            }
-        });
-    }
-
-    createMark(element: azimuth.Point, distance: number): FeatureMarker {
-        const cMarker = _().circleMarker([element.lat, element.lng], {color: '#ff0000', radius: 5, fillOpacity: 1});
-        cMarker.bindPopup(`${distance.toFixed(1)}`);
-        cMarker.on('click', (e: any) => e.openPopup());
+    createMark(point: azimuth.Point, distance: number): FeatureMarker {
+        const cMarker = _().circleMarker([point.lat, point.lng], {color: '#ff0000', radius: 5, fillOpacity: 1});
+        cMarker.bindPopup(`${(distance / 1000).toFixed(1)}`);
         return {feature: cMarker, distance};
     }
 }

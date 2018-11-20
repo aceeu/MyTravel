@@ -1,0 +1,12 @@
+.showPlaceBoard {
+    display: flex;
+    flex-direction: column;
+}
+
+.showPlaceBoardImage {
+    max-width: 300px;
+}
+
+.leafletPopUp {
+    width: 300px;
+}

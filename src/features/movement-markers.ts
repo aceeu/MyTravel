@@ -1,41 +1,23 @@
-import { Feature, MapMarker } from './features-list';
-import * as Data from './test1_raw_json.json';
+import { MapMarker, FeatureBase } from './features-list';
 import _ from '../leaflet-define';
 
 const zoomFrom = 11;
 const zoomTo = Number.POSITIVE_INFINITY;
 
-export class MovementMarkersList implements Feature {
-    pointFeatures: MapMarker[] = [];
-    layerGroup: any;
-    showed: boolean = false;
-    map: any;
-    name: string;
+export class MovementMarkersList extends FeatureBase {
+
+
     constructor(name: string) {
-        this.name = name;
-    }
-    init(map: any) {
-        this.map = map;
-        this.pointFeatures = GenerateFeaturesGroup();
-        this.layerGroup = _().layerGroup(this.pointFeatures.map(v => v.feature));
+        super(name, [zoomFrom, zoomTo]);
     }
 
-    onZoom(zoom: number) {
-        if (zoomFrom <= zoom && zoomTo > zoom) {
-
-            if ( this.showed == false) {
-                this.layerGroup.addTo(this.map);
-                this.showed = true;
-            }
-        }
-        else {
-            this.layerGroup.remove();
-            this.showed = false;
-        }
+    initChild(Data: any) {
+        this.markers = GenerateFeaturesGroup(Data);
+        this.layerGroup = _().layerGroup(this.markers.map(v => v.feature));
     }
 }
 
-function GenerateFeaturesGroup(): MapMarker[] {
+function GenerateFeaturesGroup(Data: any): MapMarker[] {
     let distance = 0;
     return Data.segments[0].steps.map((element: any) => {
         const startPoint = Data.geometry[element.way_points[0]];

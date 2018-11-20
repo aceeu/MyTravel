@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { LeafletSampleMap, Route } from './leaflet';
+import { LeafletBaseMap, Route } from './leaflet';
 import { FeaturesList} from './features/features-list';
+import * as DataJson from './assets/maintrack.json';
 
 interface Props {
     featuresList: FeaturesList;
@@ -25,11 +26,11 @@ export class LeafletMap extends React.PureComponent<Props> {
     }
 
     componentDidMount() {
-        this.map = LeafletSampleMap(this.element.current);
+        this.map = LeafletBaseMap(this.element.current, [DataJson.geometry[0][0], DataJson.geometry[0][1]]);
         this.map.on('zoom', () => this.props.featuresList.onZoom());
-        Route(this.map);
+        Route(this.map, DataJson.geometry);
         this.props.featuresList.setMap(this.map);
-        this.props.featuresList.init();
+        this.props.featuresList.init({geometry: DataJson.geometry, segments: DataJson.segments});
         this.props.featuresList.onZoom();
     }
 }

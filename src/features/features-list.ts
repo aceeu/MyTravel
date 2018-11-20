@@ -1,7 +1,43 @@
 export interface Feature {
-    init: (map: any) => void;
+    init: (map: any, Data: any) => void;
     onZoom: (zoom: number) => void;
     name: string;
+}
+
+export abstract class FeatureBase {
+    markers: MapMarker[] = [];
+    map: any;
+    name: string;
+    layerGroup: any;
+    showed: boolean = false;
+    zoomRange: number[] = [];
+
+    constructor(name: string, zoomRange: number[]) {
+        this.name = name;
+        this.zoomRange = zoomRange;
+    }
+
+    init(map: any, Data: any) {
+        this.map = map;
+        this.initChild(Data);
+    }
+
+    abstract initChild(Data: any): void;
+
+    onZoom(zoom: number) {
+        if (this.zoomRange[0] <= zoom && this.zoomRange[1] > zoom) {
+
+            if ( this.showed == false) {
+                this.layerGroup.addTo(this.map);
+                this.showed = true;
+            }
+        }
+        else {
+            this.layerGroup.remove();
+            this.showed = false;
+        }
+    }
+
 }
 
 export type FeatureMarker = any;
@@ -31,11 +67,12 @@ export class FeaturesList implements Feature {
        this.container = this.container.filter(v => v.name != name);
     }
 
-    init() {
-        this.container.forEach(f => f.init(this.map))
+    init(Data: any) {
+        this.container.forEach(f => f.init(this.map, Data))
     }
     onZoom() {
         let z = this.map.getZoom();
+        console.log('zoom=' + z);
         this.container.forEach(f => f.onZoom(z));
     }
 }
