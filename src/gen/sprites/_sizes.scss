@@ -1,0 +1,13 @@
+// DON'T MODIFY THIS FILE, IT IS GENERATED AUTOMATICALLY
+
+$sizes: 37;
+%common-properties {
+  flex-shrink: 0;
+}
+@each $size in $sizes {
+  .i.x#{$size} {
+    @extend %common-properties;
+    width: #{$size}px;
+    height: #{$size}px;
+  }
+}

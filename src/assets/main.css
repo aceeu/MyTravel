@@ -12,3 +12,10 @@
     right: 0;
     position: absolute;
 }
+
+.mile-stone {
+    background-color: transparent;
+    color: #9933ff;
+    font-size: 1.2em;
+    border-left: 1px solid #9933ff;
+}

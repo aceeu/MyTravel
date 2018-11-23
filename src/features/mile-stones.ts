@@ -2,7 +2,7 @@ import { Feature, MapMarker, FeatureMarker, FeatureBase } from './features-list'
 import _ from '../leaflet-define';
 import * as azimuth from 'azimuth';
 
-const zoomFrom = 3;
+const zoomFrom = 5;
 const zoomTo = 14;
 
 export class MilestonesList extends FeatureBase {
@@ -38,12 +38,23 @@ export class MilestonesList extends FeatureBase {
     }
 
     createMark(point: azimuth.Point, distance: number): FeatureMarker {
-        const cMarker = _().circleMarker([point.lat, point.lng], {color: '#ff0000', radius: 5, fillOpacity: 1});
-        cMarker.bindPopup(`${(distance / 1000).toFixed(1)}`);
+        const  distanceKm: string = (distance / 1000).toFixed(0);
+        const cMarker = _().marker([point.lat, point.lng], {icon: makeMileStoneLeafIcon(distanceKm)});
         return {feature: cMarker, distance};
     }
 }
 
 function convert(e: number[]): azimuth.Point {
     return {lat: e[0], lng: e[1], elv: e[2]};
+}
+
+function makeMileStoneLeafIcon(distance: string) {
+    return _().divIcon({
+        iconSize:[40, 25],
+        iconAnchor: [2, 25],
+        popupAnchor: [0, -25],
+        tooltipAnchor: [0, -25],
+        html: `<div style="margin-top: -10px;">${distance}</div>`,
+        className: 'mile-stone'
+    });
 }

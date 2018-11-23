@@ -10,7 +10,8 @@
         "target": "es5",
         "allowJs": true,
         "jsx": "react",
-        "resolveJsonModule": true
+        "resolveJsonModule": true,
+        "baseUrl": "./src"
     },
     "include": [
         "./src/**/*"

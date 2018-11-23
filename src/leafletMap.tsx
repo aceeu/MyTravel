@@ -26,7 +26,7 @@ export class LeafletMap extends React.PureComponent<Props> {
     }
 
     componentDidMount() {
-        this.map = LeafletBaseMap(this.element.current, [DataJson.geometry[0][0], DataJson.geometry[0][1]]);
+        this.map = LeafletBaseMap(this.element.current, [54.0824, 57.83709]); // DataJson.geometry[0][0], DataJson.geometry[0][1]]);
         this.map.on('zoom', () => this.props.featuresList.onZoom());
         Route(this.map, DataJson.geometry);
         this.props.featuresList.setMap(this.map);
