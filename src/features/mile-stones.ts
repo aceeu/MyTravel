@@ -1,4 +1,4 @@
-import { Feature, MapMarker, FeatureMarker, FeatureBase } from './features-list';
+import { MapMarker, FeatureMarker, FeatureBase } from './features-list';
 import _ from '../leaflet-define';
 import * as azimuth from 'azimuth';
 

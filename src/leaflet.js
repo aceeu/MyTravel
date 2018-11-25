@@ -1,5 +1,8 @@
 import L from 'leaflet';
 import './assets/main.css';
+import './plugins/leaflet-mouse-position.js';
+import './plugins/Leaflet.PolylineMeasure.js';
+import './plugins/Leaflet.PolylineMeasure.css';
 
 let pedia = null;
 
@@ -16,6 +19,9 @@ export function LeafletBaseMap(element, startPos) {
     //     maxZoom: 16,
     //     attribution: 'Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
     // }).addTo(mymap);
+
+    L.control.mousePosition().addTo(mymap);
+    L.control.polylineMeasure().addTo(mymap);
 
     mymap.on('zoom', () => {
         const z = mymap.getZoom();
