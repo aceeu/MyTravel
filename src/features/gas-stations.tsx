@@ -6,7 +6,7 @@ import { ShowPlaceboardProps, ShowPlaceboard } from '../controls/show-place-boar
 import { getIconInfo, IconInfoMap } from '../common/sprite';
 import * as icons from '../gen/sprites/icons';
 import '../gen/sprites/_icons.scss';
-import * as SPData from '../assets/show-places-data.json';
+import * as data from '../assets/gas-station.json';
 
 
 const totalIconMap: IconInfoMap = {...icons.info};
@@ -14,28 +14,24 @@ const totalIconMap: IconInfoMap = {...icons.info};
 const zoomFrom = 0;
 const zoomTo = Number.POSITIVE_INFINITY;
 
-interface ShowPlacesListData extends ShowPlaceboardProps {
-    icon: string;
+interface GasRecord {
+    name: string;
+    position: number[];
 }
 
-export class ShowPlacesList extends FeatureBase {
+export class ShowGasStationList extends FeatureBase {
     marksList: any[] = []
     constructor(name: string) {
         super(name, [zoomFrom, zoomTo]);
     }
 
     initChild() {
-        this.marksList = SPData.map(this.createMark);
+        this.marksList = data.map(this.createMark);
         this.layerGroup = _().layerGroup(this.marksList);
     }
 
-    createMark(item: ShowPlacesListData): FeatureMarker {
-        const cMarker = _().marker(item.position, {icon: makeLeafIcon(totalIconMap, item.icon)});
-        cMarker.bindPopup(() => {
-            let element = document.createElement('div');
-            exampleShowPlaceBoard(element, item);
-            return element;
-        }, {className: 'leafletPopUp'});
+    createMark(item: GasRecord): FeatureMarker {
+        const cMarker = _().marker(item.position, {icon: makeLeafIcon(totalIconMap, 'fillingstation')});
         cMarker.bindTooltip(item.name);
         return cMarker;
     }
@@ -51,11 +47,4 @@ function makeLeafIcon(iconMap: IconInfoMap, icon: string) {
         tooltipAnchor: [16, -17],
         className: iconInfo.className
     });
-}
-
-function exampleShowPlaceBoard(element: HTMLElement, item: ShowPlacesListData) {
-    let props: ShowPlaceboardProps = {
-        ...item
-    };
-    ReactDOM.render(<ShowPlaceboard {...props}/>, element);
 }

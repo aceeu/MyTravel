@@ -2,8 +2,7 @@ let {SpriteGenerator} = require('./sprite-generator/build/sprite-generator');
 
 let spriteGenerator = new SpriteGenerator({
   sprites: [
-    {name: 'tourism', sourceFolder: 'src/assets/tourism_icons'},
-    {name: 'nature', sourceFolder: 'src/assets/nature_icons'}
+    {name: 'icons', sourceFolder: 'src/assets/icons'},
   ],
   targetFolder: {
     icons: 'src/gen/sprites',
