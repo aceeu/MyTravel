@@ -16,7 +16,7 @@
         "hrefs": ["https://uraloved.ru/mesta/bashkiriya/inzerskie-zubchatki"]
     },
     {
-        "icon": "water",
+        "icon": "bridge_old",
         "name": "Белорецкий пешеходный мост, самый длинный деревянный мост в России",
         "position": [53.98108, 58.40999],
         "imageUrl": "https://nashural.ru/assets/uploads/mb02.jpg",
@@ -72,7 +72,7 @@
         "hrefs": ["https://youtu.be/NUUVpuYc1NQ?t=209"]        
     },
     {
-        "icon": "water",
+        "icon": "waterwellpump",
         "name": "Уфа - Магнитогорск. Дороги России. Ассы",
         "position": [54.36577, 57.55608],
         "youtube": "https://www.youtube.com/embed/NUUVpuYc1NQ?t=646",

@@ -5,73 +5,83 @@
 .i.s0 {
   background-image: url('./icons.png');
 
-  // cave-2
+  // bridge_old
   &.i0 {
     background-position: -37px 0;
   }
 
-  // country
+  // cave-2
   &.i1 {
-    background-position: -37px -74px;
+    background-position: -74px -74px;
   }
 
-  // fillingstation
+  // country
   &.i2 {
     background-position: 0 -37px;
   }
 
-  // forest2
+  // fillingstation
   &.i3 {
     background-position: -37px -37px;
   }
 
-  // geyser-2
+  // forest2
   &.i4 {
     background-position: -74px 0;
   }
 
-  // landmark
+  // geyser-2
   &.i5 {
     background-position: -74px -37px;
   }
 
-  // lodging-2
+  // landmark
   &.i6 {
     background-position: 0 -74px;
   }
 
-  // mountains
+  // lodging-2
   &.i7 {
+    background-position: -37px -74px;
+  }
+
+  // mountains
+  &.i8 {
     background-position: 0 0;
   }
 
   // ne_barn-2
-  &.i8 {
-    background-position: -74px -74px;
-  }
-
-  // parkinggarage
   &.i9 {
     background-position: -111px 0;
   }
 
-  // river-2
+  // parkinggarage
   &.i10 {
     background-position: -111px -37px;
   }
 
-  // smallcity
+  // river-2
   &.i11 {
     background-position: -111px -74px;
   }
 
-  // tree
+  // smallcity
   &.i12 {
     background-position: 0 -111px;
   }
 
-  // water
+  // tree
   &.i13 {
     background-position: -37px -111px;
+  }
+
+  // water
+  &.i14 {
+    background-position: -74px -111px;
+  }
+
+  // waterwellpump
+  &.i15 {
+    background-position: -111px -111px;
   }
 }
