@@ -10,9 +10,9 @@ import { ShowGasStationList } from './features/gas-stations';
 
 // movement markers register
 // RegisterOnList(new MovementMarkersList('mml'));
-RegisterOnList(new ShowPlacesList('showPlaces'));
-RegisterOnList(new MilestonesList('milestones'));
-RegisterOnList(new ShowGasStationList('gas-station'));
+RegisterOnList(new ShowPlacesList('Достопримечательности'));
+RegisterOnList(new MilestonesList('Вехи'));
+RegisterOnList(new ShowGasStationList('Заправки'));
 
 // map
 ReactDOM.render(<LeafletMap featuresList={FeaturesList.featuresList}/>, document.getElementById('map'));

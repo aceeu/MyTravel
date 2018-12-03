@@ -3,6 +3,7 @@ import './assets/main.css';
 import './plugins/leaflet-mouse-position.js';
 import './plugins/Leaflet.PolylineMeasure.js';
 import './plugins/Leaflet.PolylineMeasure.css';
+import { FeaturesList } from './features/features-list';
 
 let pedia = null;
 
@@ -24,15 +25,18 @@ export function LeafletBaseMap(element, startPos) {
         "OSM": osm
     };
 
-    const overlayMaps = {
-        // "Cities": cities
-    };
+    const overlayMaps = FeaturesList.FeaturesGroupList().reduce((a, g) => {
+        a[g.name] = g.group;
+        return a;
+    }, {});
 
     let mymap = L.map(element, {
         center: startPos,
         zoom: 7,
         layers: [mapbox]
     });
+
+    FeaturesList.FeaturesGroupList().forEach(e => e.group.addTo(mymap));
     L.control.layers(baseMaps, overlayMaps).addTo(mymap);
 
 

@@ -1,6 +1,7 @@
 export interface Feature {
     init: (map: any, Data: any) => void;
     onZoom: (zoom: number) => void;
+    getLayerGroup(): any;
     name: string;
 }
 
@@ -20,6 +21,10 @@ export abstract class FeatureBase {
     init(map: any, Data: any) {
         this.map = map;
         this.initChild(Data);
+    }
+
+    getLayerGroup(): any {
+        return this.layerGroup;
     }
 
     abstract initChild(Data: any): void;
@@ -54,6 +59,12 @@ export class FeaturesList implements Feature {
     container: Array<Feature> = [];
 
     static featuresList: FeaturesList = new FeaturesList();
+
+    static FeaturesGroupList(): {name: string, group: any}[]  {
+        return FeaturesList.featuresList.container.map(f => ({name: f.name, group: f.getLayerGroup()}));
+    }
+
+    getLayerGroup(){}
 
     setMap(map: any) {
         this.map = map;
