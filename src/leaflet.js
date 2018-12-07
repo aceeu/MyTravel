@@ -20,6 +20,10 @@ export function LeafletBaseMap(element, startPos) {
         attribution: 'Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
     });
 
+    const Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+	    attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+    });
+
     let mymap = L.map(element, {
         center: startPos,
         zoom: 7,
@@ -28,13 +32,14 @@ export function LeafletBaseMap(element, startPos) {
 
     baseMaps = {
         "Mapbox": mapbox,
-        "OSM": osm
+        "OSM": osm,
+        "Satelite": Esri_WorldImagery
     };
     return mymap;
 }
 
-export function Route(map, geometry) {
-    L.polyline(geometry, {color: '#ff5555', opacity: 0.5}).addTo(map);
+export function Route(map, geometry, color) {
+    L.polyline(geometry, {color: color || '#ff5555', opacity: 0.5}).addTo(map);
 }
 
 export function AddControls(mymap) {

@@ -6,7 +6,6 @@ import { ShowPlaceboardProps, ShowPlaceboard } from '../controls/show-place-boar
 import { getIconInfo, IconInfoMap } from '../common/sprite';
 import * as icons from '../gen/sprites/icons';
 import '../gen/sprites/_icons.scss';
-import * as SPData from '../assets/show-places-data.json';
 
 
 const totalIconMap: IconInfoMap = {...icons.info};
@@ -19,21 +18,25 @@ interface ShowPlacesListData extends ShowPlaceboardProps {
 }
 
 export class ShowPlacesList extends FeatureBase {
-    marksList: any[] = []
-    constructor(name: string) {
+    marksList: any[] = [];
+    data: any[] = [];
+    defaultIcon: string | undefined;
+    constructor(name: string, data: any[], defaultIcon?: string) {
         super(name, [zoomFrom, zoomTo]);
+        this.data = data;
+        this.defaultIcon = defaultIcon;
     }
 
     initChild() {
-        this.marksList = SPData.map(this.createMark);
+        this.marksList = this.data.map(this.createMark);
         this.layerGroup = _().layerGroup(this.marksList);
     }
 
-    createMark(item: ShowPlacesListData): FeatureMarker {
-        const cMarker = _().marker(item.position, {icon: makeLeafIcon(totalIconMap, item.icon)});
+    createMark = (item: ShowPlacesListData): FeatureMarker => {
+        const cMarker = _().marker(item.position, {icon: makeLeafIcon(totalIconMap, item.icon || this.defaultIcon || '')});
         cMarker.bindPopup(() => {
             let element = document.createElement('div');
-            exampleShowPlaceBoard(element, item);
+            showPlaceBoard(element, item);
             return element;
         }, {className: 'leafletPopUp'});
         cMarker.bindTooltip(item.name);
@@ -53,7 +56,7 @@ function makeLeafIcon(iconMap: IconInfoMap, icon: string) {
     });
 }
 
-function exampleShowPlaceBoard(element: HTMLElement, item: ShowPlacesListData) {
+function showPlaceBoard(element: HTMLElement, item: ShowPlacesListData) {
     let props: ShowPlaceboardProps = {
         ...item
     };

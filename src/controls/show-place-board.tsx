@@ -7,11 +7,11 @@ export interface ShowPlaceboardProps {
     imageUrl?: string;
     youtube?: string;
     text?: string;
-    hrefs: string[];
+    hrefs?: string[];
 }
 
 export const ShowPlaceboard: React.SFC<ShowPlaceboardProps> = (props: ShowPlaceboardProps) => {
-    const links = props.hrefs.map((l, i) => (<a href={l} key={i}>ссылка</a>))
+    const links = props.hrefs && props.hrefs.map((l, i) => (<a href={l} key={i}>ссылка</a>))
     const youtube = props.youtube && <iframe width="336" height="189" 
         src={props.youtube}
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
