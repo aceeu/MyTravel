@@ -70,18 +70,23 @@
     background-position: 0 -111px;
   }
 
-  // tree
+  // tollstation
   &.i13 {
     background-position: -37px -111px;
   }
 
-  // water
+  // tree
   &.i14 {
     background-position: -74px -111px;
   }
 
-  // waterwellpump
+  // water
   &.i15 {
     background-position: -111px -111px;
+  }
+
+  // waterwellpump
+  &.i16 {
+    background-position: -148px 0;
   }
 }

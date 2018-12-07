@@ -104,6 +104,14 @@
         "text": "",
         "hrefs": [""]
     },
+    {
+        "icon": "tollstation",
+        "name": "Дорога в Казахстан через ДААП \"Николаева\" (через Варну)",
+        "position": [53.00341, 62.13309],
+        "imageUrl": "",
+        "text": "",
+        "hrefs": ["https://www.e1.ru/talk/forum/read.php?f=67&i=16858010&t=16858010"]
+    },
     { 
         "icon": "geyser-2",
         "name": "Музей Семипалатинского испытательного полигона",
@@ -130,13 +138,5 @@
         "imageUrl": "",
         "text": "",
         "hrefs": [""]
-    },
-    {
-        "icon": "lodging-2",
-        "name": "Отель скиф",
-        "position": [51.18025, 71.4078],
-        "imageUrl": "",
-        "text": "3 звезды",
-        "hrefs": ["http://skif.hoteleastana.com/"]
     }
 ]

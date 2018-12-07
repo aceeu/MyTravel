@@ -19,9 +19,10 @@ export const enum Classes {
   Parkinggarage = 'i s0 x37 i10',
   River_2 = 'i s0 x37 i11',
   Smallcity = 'i s0 x37 i12',
-  Tree = 'i s0 x37 i13',
-  Water = 'i s0 x37 i14',
-  Waterwellpump = 'i s0 x37 i15'
+  Tollstation = 'i s0 x37 i13',
+  Tree = 'i s0 x37 i14',
+  Water = 'i s0 x37 i15',
+  Waterwellpump = 'i s0 x37 i16'
 }
 
 // Information about the icons
@@ -39,7 +40,8 @@ export const info: IconInfoMap = {
   'parkinggarage': i('i s0 x37 i10', 111, 37, 37, 37),
   'river-2': i('i s0 x37 i11', 111, 74, 37, 37),
   'smallcity': i('i s0 x37 i12', 0, 111, 37, 37),
-  'tree': i('i s0 x37 i13', 37, 111, 37, 37),
-  'water': i('i s0 x37 i14', 74, 111, 37, 37),
-  'waterwellpump': i('i s0 x37 i15', 111, 111, 37, 37)
+  'tollstation': i('i s0 x37 i13', 37, 111, 37, 37),
+  'tree': i('i s0 x37 i14', 74, 111, 37, 37),
+  'water': i('i s0 x37 i15', 111, 111, 37, 37),
+  'waterwellpump': i('i s0 x37 i16', 148, 0, 37, 37)
 };

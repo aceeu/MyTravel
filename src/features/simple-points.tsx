@@ -1,12 +1,9 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import { FeatureMarker, FeatureBase } from './features-list';
 import _ from '../leaflet-define';
 import { ShowPlaceboardProps, ShowPlaceboard } from '../controls/show-place-board';
 import { getIconInfo, IconInfoMap } from '../common/sprite';
 import * as icons from '../gen/sprites/icons';
 import '../gen/sprites/_icons.scss';
-import * as data from '../assets/gas-station.json';
 
 
 const totalIconMap: IconInfoMap = {...icons.info};
@@ -19,19 +16,24 @@ interface GasRecord {
     position: number[];
 }
 
-export class ShowGasStationList extends FeatureBase {
-    marksList: any[] = []
-    constructor(name: string) {
+export class SimplePointsList extends FeatureBase {
+    marksList: any[] = [];
+    data: any[];
+    icon: string;
+
+    constructor(name: string, data: any[], icon: string) {
         super(name, [zoomFrom, zoomTo]);
+        this.data = data;
+        this.icon = icon;
     }
 
     initChild() {
-        this.marksList = data.map(this.createMark);
+        this.marksList = this.data.map(this.createMark);
         this.layerGroup = _().layerGroup(this.marksList);
     }
 
-    createMark(item: GasRecord): FeatureMarker {
-        const cMarker = _().marker(item.position, {icon: makeLeafIcon(totalIconMap, 'fillingstation')});
+    createMark = (item: GasRecord): FeatureMarker => {
+        const cMarker = _().marker(item.position, {icon: makeLeafIcon(totalIconMap, this.icon)});
         cMarker.bindTooltip(item.name);
         return cMarker;
     }

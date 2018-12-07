@@ -5,7 +5,7 @@ import './plugins/Leaflet.PolylineMeasure.js';
 import './plugins/Leaflet.PolylineMeasure.css';
 import { FeaturesList } from './features/features-list';
 
-let pedia = null;
+let baseMaps;
 
 export function LeafletBaseMap(element, startPos) {
 
@@ -20,21 +20,29 @@ export function LeafletBaseMap(element, startPos) {
         attribution: 'Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
     });
 
-    const baseMaps = {
-        "Mapbox": mapbox,
-        "OSM": osm
-    };
-
-    const overlayMaps = FeaturesList.FeaturesGroupList().reduce((a, g) => {
-        a[g.name] = g.group;
-        return a;
-    }, {});
-
     let mymap = L.map(element, {
         center: startPos,
         zoom: 7,
         layers: [mapbox]
     });
+
+    baseMaps = {
+        "Mapbox": mapbox,
+        "OSM": osm
+    };
+    return mymap;
+}
+
+export function Route(map, geometry) {
+    L.polyline(geometry, {color: '#ff5555', opacity: 0.5}).addTo(map);
+}
+
+export function AddControls(mymap) {
+
+    const overlayMaps = FeaturesList.FeaturesGroupList().reduce((a, g) => {
+        a[g.name] = g.group;
+        return a;
+    }, {});
 
     FeaturesList.FeaturesGroupList().forEach(e => e.group.addTo(mymap));
     L.control.layers(baseMaps, overlayMaps).addTo(mymap);
@@ -42,22 +50,4 @@ export function LeafletBaseMap(element, startPos) {
 
     L.control.mousePosition().addTo(mymap);
     L.control.polylineMeasure().addTo(mymap);
-    return mymap;
 }
-
-function GeoJson(geometry) {
-    return {
-        "type": "Feature",
-        "geometry": {
-            "type": "LineString",
-            "coordinates": geometry.map(v => [v[1], v[0]])
-        }
-    };
-}
-
-export function Route(map, geometry) {
-    var myLayer = L.geoJSON().addTo(map);
-    myLayer.addData(GeoJson(geometry));
-}
-
-

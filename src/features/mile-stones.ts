@@ -6,15 +6,17 @@ const zoomFrom = 5;
 const zoomTo = 14;
 
 export class MilestonesList extends FeatureBase {
-    constructor(name: string) {
+    geometries: number[][] = [];
+    constructor(name: string, geometries: number[][]) {
         super(name, [zoomFrom, zoomTo]);
+        this.geometries = geometries;
     }
 
-    initChild(Data: any) {
+    initChild() {
         let distance: number = 0;
         let last: number = distance;
         let lastPoint: azimuth.Point
-        Data.geometry.reduce((a: MapMarker[], element: number[], i: number) => {
+        this.geometries.reduce((a: MapMarker[], element: number[], i: number) => {
             const elPoint: azimuth.Point = convert(element);
             if (a.length == 0) {
                 a.push(this.createMark(elPoint, distance));
@@ -23,7 +25,7 @@ export class MilestonesList extends FeatureBase {
                 return a;
             }
             distance += azimuth.azimuth(lastPoint, elPoint).distance;
-            if (i == Data.geometry.length - 1) {
+            if (i == this.geometries.length - 1) {
                 a.push(this.createMark(elPoint, distance));
                 return a;
             }
