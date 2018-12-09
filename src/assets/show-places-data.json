@@ -105,12 +105,66 @@
         "hrefs": [""]
     },
     {
+        "icon": "castle-2",
+        "name": "Николаевская крепость",
+        "position": [53.03306, 62.00501],
+        "youtube": "https://www.youtube.com/embed/mmajoczImAE?start=12"
+
+    },
+    {
         "icon": "tollstation",
         "name": "Дорога в Казахстан через ДААП \"Николаева\" (через Варну)",
         "position": [53.00341, 62.13309],
         "imageUrl": "",
         "text": "",
+        "youtube": "https://www.youtube.com/embed/1pyYwozDTEs",
         "hrefs": ["https://www.e1.ru/talk/forum/read.php?f=67&i=16858010&t=16858010"]
+    },
+    {
+        "icon": "road",
+        "name": "Дорога до Астаны",
+        "position":[53.03732, 63.37172],
+        "imageUrl":"https://s.drom.ru/i24202/pubs/4483/47779/2466052.jpg",
+        "text": "Маршрут: Рудный — Костанай — Атбасар — Астана — Атбасар — Костанай — Рудный",
+        "hrefs": ["https://travel.drom.ru/47779/"]
+    },
+    {
+        "icon": "landmark",
+        "name": "Байтерек",
+        "position": [51.1283, 71.43049],
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Central_Downtown_Astana_2.jpg/1920px-Central_Downtown_Astana_2.jpg",
+        "hrefs": ["http://www.astana-hotels.net/rus/astana/sights/baiterek.htm"]
+    },
+    {
+        "icon": "pyramid",
+        "name": "Астана. «Хан Шатыр»",
+        "position": [51.13224, 71.40496],
+        "imageUrl": "https://www.fosterandpartners.com/media/2633808/img2_1438_fp406064.jpg?width=1920&quality=85",
+        "text": "«Хан Шатыр» — крупный торгово-развлекательный центр в столице Казахстана Астане. Открыт 6 июля 2010 года. Является самым большим шатром в мире[1].",
+        "hrefs": ["https://ru.wikipedia.org/wiki/%D0%A5%D0%B0%D0%BD_%D0%A8%D0%B0%D1%82%D1%8B%D1%80", "https://www.tripadvisor.ru/Attraction_Review-g293944-d2619183-Reviews-Khan_Shatyr-Astana_Akmola_Province.html"]
+    },
+    {
+        "icon": "bigcity",
+        "name": "Астана. Красивые места",
+        "position": [51.13142, 71.41648],
+        "imageUrl": "http://krasivye-mesta.ru/img/Astana.jpg",
+        "text": "Астана является самой молодой и красивой столицей в мире – это достаточно большой город, площадью более 200 км2. Астана с каждым годом преображается и становится привлекательней как для местных жителей, та и для гостей города. Уникальный архитектурный стиль столицы сочетает в себе наилучшие традиции европейской и восточной культуры.",
+        "hrefs": ["http://krasivye-mesta.ru/astana"]
+    },
+    {
+        "icon": "pyramid",
+        "name": "Дворец мира и согласия",
+        "position": [51.12313, 71.46353],
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Astana_Architecture_01.jpg/1920px-Astana_Architecture_01.jpg",
+        "text": "здание пирамидального вида, созданное архитектором сэром Норманом Фостером в Астане, столице Казахстана специально для проведения «Конгресса лидеров мировых и традиционных религий». ",
+        "hrefs": ["https://ru.wikipedia.org/wiki/%D0%94%D0%B2%D0%BE%D1%80%D0%B5%D1%86_%D0%BC%D0%B8%D1%80%D0%B0_%D0%B8_%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%B8%D1%8F"]
+    },
+    {
+        "icon": "birds-2",
+        "name": "Ерементау",
+        "position": [51.69171, 73.22474],
+        "text": "Ерейментауский район, Акмолинской области какая та сотня другая км от столицы и ваша душа буквально сливается с природой в умиротворяющим танце.",
+        "youtube": "https://www.youtube.com/embed/SqgY5RwV1ac?start=314"
     },
     { 
         "icon": "geyser-2",

@@ -5,88 +5,113 @@
 .i.s0 {
   background-image: url('./icons.png');
 
-  // bridge_old
+  // bigcity
   &.i0 {
     background-position: -37px 0;
   }
 
-  // cave-2
+  // birds-2
   &.i1 {
-    background-position: -74px -74px;
+    background-position: -111px -74px;
   }
 
-  // country
+  // bridge_old
   &.i2 {
     background-position: 0 -37px;
   }
 
-  // fillingstation
+  // castle-2
   &.i3 {
     background-position: -37px -37px;
   }
 
-  // forest2
+  // cave-2
   &.i4 {
     background-position: -74px 0;
   }
 
-  // geyser-2
+  // country
   &.i5 {
     background-position: -74px -37px;
   }
 
-  // landmark
+  // fillingstation
   &.i6 {
     background-position: 0 -74px;
   }
 
-  // lodging-2
+  // forest2
   &.i7 {
     background-position: -37px -74px;
   }
 
-  // mountains
+  // geyser-2
   &.i8 {
-    background-position: 0 0;
+    background-position: -74px -74px;
   }
 
-  // ne_barn-2
+  // landmark
   &.i9 {
     background-position: -111px 0;
   }
 
-  // parkinggarage
+  // lodging-2
   &.i10 {
     background-position: -111px -37px;
   }
 
-  // river-2
+  // mountains
   &.i11 {
-    background-position: -111px -74px;
+    background-position: 0 0;
   }
 
-  // smallcity
+  // ne_barn-2
   &.i12 {
     background-position: 0 -111px;
   }
 
-  // tollstation
+  // parkinggarage
   &.i13 {
     background-position: -37px -111px;
   }
 
-  // tree
+  // pyramid
   &.i14 {
     background-position: -74px -111px;
   }
 
-  // water
+  // river-2
   &.i15 {
     background-position: -111px -111px;
   }
 
-  // waterwellpump
+  // road
   &.i16 {
     background-position: -148px 0;
+  }
+
+  // smallcity
+  &.i17 {
+    background-position: -148px -37px;
+  }
+
+  // tollstation
+  &.i18 {
+    background-position: -148px -74px;
+  }
+
+  // tree
+  &.i19 {
+    background-position: -148px -111px;
+  }
+
+  // water
+  &.i20 {
+    background-position: 0 -148px;
+  }
+
+  // waterwellpump
+  &.i21 {
+    background-position: -37px -148px;
   }
 }
