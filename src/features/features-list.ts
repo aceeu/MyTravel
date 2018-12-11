@@ -1,5 +1,5 @@
 export interface Feature {
-    init: (map: any, Data: any) => void;
+    init: (map: any) => void;
     onZoom: (zoom: number) => void;
     getLayerGroup(): any;
     name: string;
@@ -18,16 +18,16 @@ export abstract class FeatureBase {
         this.zoomRange = zoomRange;
     }
 
-    init(map: any, Data: any) {
+    init(map: any) {
         this.map = map;
-        this.initChild(Data);
+        this.initChild();
     }
 
     getLayerGroup(): any {
         return this.layerGroup;
     }
 
-    abstract initChild(Data: any): void;
+    abstract initChild(): void;
 
     onZoom(zoom: number) {
         if (this.zoomRange[0] <= zoom && this.zoomRange[1] > zoom) {
@@ -78,8 +78,8 @@ export class FeaturesList implements Feature {
        this.container = this.container.filter(v => v.name != name);
     }
 
-    init(Data: any) {
-        this.container.forEach(f => f.init(this.map, Data))
+    init() {
+        this.container.forEach(f => f.init(this.map))
     }
     onZoom() {
         let z = this.map.getZoom();

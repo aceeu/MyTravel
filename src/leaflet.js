@@ -10,7 +10,7 @@ let baseMaps;
 export function LeafletBaseMap(element, startPos) {
 
     const mapbox = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-        attribution: 'aceeu',
+        attribution: 'mapbox; openstreetmap',
         maxZoom: 18,
         id: 'mapbox.streets',
         accessToken: 'pk.eyJ1IjoiYWNlZXUiLCJhIjoiY2pvZzR6OXg3MDJuMDN3bnhmb24zcGt5biJ9.zpuG05zrtlhpz7LVLVmxcg'
@@ -39,7 +39,7 @@ export function LeafletBaseMap(element, startPos) {
 }
 
 export function Route(map, geometry, color) {
-    L.polyline(geometry, {color: color || '#ff5555', opacity: 0.5}).addTo(map);
+    L.polyline(geometry, {weight: 3, color: color || '#ff5555', opacity: 0.9}).addTo(map);
 }
 
 export function AddControls(mymap) {

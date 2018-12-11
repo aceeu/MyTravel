@@ -11,9 +11,9 @@ export class MovementMarkersList extends FeatureBase {
         super(name, [zoomFrom, zoomTo]);
     }
 
-    initChild(Data: any) {
-        this.markers = GenerateFeaturesGroup(Data);
-        this.layerGroup = _().layerGroup(this.markers.map(v => v.feature));
+    initChild() {
+        // this.markers = GenerateFeaturesGroup(Data);
+        // this.layerGroup = _().layerGroup(this.markers.map(v => v.feature));
     }
 }
 
