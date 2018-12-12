@@ -1,6 +1,5 @@
 import { FeatureMarker, FeatureBase } from './features-list';
 import _ from '../leaflet-define';
-import { ShowPlaceboardProps, ShowPlaceboard } from '../controls/show-place-board';
 import { getIconInfo, IconInfoMap } from '../common/sprite';
 import * as icons from '../gen/sprites/icons';
 import '../gen/sprites/_icons.scss';

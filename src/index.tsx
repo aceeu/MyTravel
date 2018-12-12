@@ -10,16 +10,6 @@ import * as gas_station from './assets/gas-station.json';
 import * as overnight_stay from './assets/overnight-stay.json';
 import * as show_places from './assets/show-places-data.json';
 
-
-// track
-// import * as Data1day from './assets/1day.json';
-// import * as Data2day from './assets/2day.json';
-// import * as Data3day from './assets/3day.json';
-// import * as Data4day from './assets/4day.json';
-// import * as Data5day from './assets/5day.json';
-// import * as Data6day from './assets/6day.json';
-// import * as Data7day from './assets/7day.json';
-
 import { Route, AddControls } from './leaflet';
 
 
@@ -48,30 +38,33 @@ export function getMap() {
     return map;
 }
 
-function  fetchAndDisplayRoute(map: Map) {
-    routeFiles.forEach((rjs, i) => {
-        fetch('/mongol19/' + rjs).then(response =>
-            response.json().then(
-                json => {
-                    console.log(json);
-                    Route(map, json.geometry, palette[i % palette.length])
-                }
-            )
-        );
+type path = number[][];
+
+function fetchRoutes() {
+    let res: {[key: number]: any} = {};
+    let promices = routeFiles.map(async (route, i) => {
+        const response = await fetch('/mongol19/' + route);
+        return response.json();
     });
+    return Promise.all(promices);
 }
 
-function onMapCreated(map: Map) {
+async function onMapCreated(map: Map) {
 // movement markers register
-    fetchAndDisplayRoute(map);
+    const results: any[] = await fetchRoutes();
+    const geos: any[] = results.map(r => r.geometry);
+    geos.forEach((r, i) => Route(map, r, palette[i % palette.length]));
+    RegisterOnList(new MilestonesList('Вехи', [].concat(...geos)));
+    const show_places_: any = show_places;
 // RegisterOnList(new MovementMarkersList('mml'));
-    RegisterOnList(new ShowPlacesList('Достопримечательности', [...show_places]));
-    // RegisterOnList(new MilestonesList('Вехи', [].concat(...paths)));
-    RegisterOnList(new SimplePointsList('Заправки', [...gas_station], 'fillingstation'));
-    RegisterOnList(new ShowPlacesList('Ночевки', [...overnight_stay], 'lodging-2'));
+    RegisterOnList(new ShowPlacesList('Достопримечательности', [...show_places_.default]));
+    const gas_station_: any = gas_station;
+    RegisterOnList(new SimplePointsList('Заправки', [...gas_station_.default], 'fillingstation'));
+    const overnight_stay_: any = overnight_stay;
+    RegisterOnList(new ShowPlacesList('Ночевки', [...overnight_stay_.default], 'lodging-2'));
 
     FeaturesList.featuresList.setMap(map);
     FeaturesList.featuresList.init();
-    FeaturesList.featuresList.onZoom();
-    AddControls(getMap());
+    // FeaturesList.featuresList.onZoom();
+    AddControls(map);
 }
