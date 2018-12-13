@@ -66,10 +66,6 @@ export class FeaturesList implements Feature {
 
     getLayerGroup(){}
 
-    setMap(map: any) {
-        this.map = map;
-    }
-
     register(f: Feature) {
         this.container.push(f);
     }
@@ -78,7 +74,7 @@ export class FeaturesList implements Feature {
        this.container = this.container.filter(v => v.name != name);
     }
 
-    init() {
+    init(map: any) {
         this.container.forEach(f => f.init(this.map))
     }
     onZoom() {
@@ -89,7 +85,7 @@ export class FeaturesList implements Feature {
 }
 
 
-export function RegisterOnList(f: Feature) {
+export function RegisterFeature(f: Feature) {
     return FeaturesList.featuresList.register(f);
 }
 
