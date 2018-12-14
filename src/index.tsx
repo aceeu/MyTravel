@@ -66,7 +66,7 @@ async function fetchData(urls: string[]) {
 async function onMapCreated(map: Map) {
     await Routes(map);
     fetchData(urls.map(u => '/mongol19/' + u)).then((data) => {
-        RegisterFeature(new ShowPlacesList('Достопримечательности', data[0]));
+        RegisterFeature(new ShowPlacesList('Достопримечательности', data[0], 'information'));
         RegisterFeature(new SimplePointsList('Заправки', data[1], 'fillingstation'));
         RegisterFeature(new ShowPlacesList('Ночевки', data[2], 'lodging-2'));
         FeaturesList.featuresList.init(map);

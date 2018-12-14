@@ -12,106 +12,141 @@
 
   // birds-2
   &.i1 {
-    background-position: -111px -74px;
+    background-position: -74px -111px;
   }
 
-  // bridge_old
+  // bridge_modern
   &.i2 {
     background-position: 0 -37px;
   }
 
-  // castle-2
+  // bridge_old
   &.i3 {
     background-position: -37px -37px;
   }
 
-  // cave-2
+  // castle-2
   &.i4 {
     background-position: -74px 0;
   }
 
-  // country
+  // cave-2
   &.i5 {
     background-position: -74px -37px;
   }
 
-  // fillingstation
+  // country
   &.i6 {
     background-position: 0 -74px;
   }
 
-  // forest2
+  // desert
   &.i7 {
     background-position: -37px -74px;
   }
 
-  // geyser-2
+  // fillingstation
   &.i8 {
     background-position: -74px -74px;
   }
 
-  // landmark
+  // forest2
   &.i9 {
     background-position: -111px 0;
   }
 
-  // lodging-2
+  // geyser-2
   &.i10 {
     background-position: -111px -37px;
   }
 
-  // mountains
+  // hostel_0star
   &.i11 {
-    background-position: 0 0;
+    background-position: -111px -74px;
   }
 
-  // ne_barn-2
+  // information
   &.i12 {
     background-position: 0 -111px;
   }
 
-  // parkinggarage
+  // lake
   &.i13 {
     background-position: -37px -111px;
   }
 
-  // pyramid
+  // landmark
   &.i14 {
-    background-position: -74px -111px;
+    background-position: 0 0;
   }
 
-  // river-2
+  // lodging-2
   &.i15 {
     background-position: -111px -111px;
   }
 
-  // road
+  // monument
   &.i16 {
     background-position: -148px 0;
   }
 
-  // smallcity
+  // mountains
   &.i17 {
     background-position: -148px -37px;
   }
 
-  // tollstation
+  // ne_barn-2
   &.i18 {
     background-position: -148px -74px;
   }
 
-  // tree
+  // parkinggarage
   &.i19 {
     background-position: -148px -111px;
   }
 
-  // water
+  // pyramid
   &.i20 {
     background-position: 0 -148px;
   }
 
-  // waterwellpump
+  // river-2
   &.i21 {
     background-position: -37px -148px;
+  }
+
+  // road
+  &.i22 {
+    background-position: -74px -148px;
+  }
+
+  // smallcity
+  &.i23 {
+    background-position: -111px -148px;
+  }
+
+  // tollstation
+  &.i24 {
+    background-position: -148px -148px;
+  }
+
+  // tree
+  &.i25 {
+    background-position: -185px 0;
+  }
+
+  // water
+  &.i26 {
+    background-position: -185px -37px;
+  }
+
+  // waterfall
+  &.i27 {
+    background-position: -185px -74px;
+  }
+
+  // waterwellpump
+  &.i28 {
+    background-position: -185px -111px;
   }
 }
