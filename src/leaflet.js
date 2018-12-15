@@ -24,6 +24,10 @@ export function LeafletBaseMap(element, startPos) {
 	    attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
     });
 
+    const outDoors = L.tileLayer('https://tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey=99ae1bf83076479f99b0a1878abdf254', {
+	    attribution: 'thunderforest outdoors'
+    });
+
     let mymap = L.map(element, {
         center: startPos,
         zoom: 7,
@@ -33,7 +37,8 @@ export function LeafletBaseMap(element, startPos) {
     baseMaps = {
         "Mapbox": mapbox,
         "OSM": osm,
-        "Satelite": Esri_WorldImagery
+        "Satelite": Esri_WorldImagery,
+        "Outdoors": outDoors
     };
     return mymap;
 }

@@ -18,6 +18,8 @@ let map: Map = undefined;
 const routeFiles = ['1day.json', '2day.json', '3day.json',
     '4day.json', '5day.json', '6day.json', '7day.json'];
 
+const alternates = ['alt-oroktoy.json', 'alt-katyyaryk.json'];
+
 const urls = [
     'show-places-data.json',
     'gas-station.json',
@@ -38,9 +40,9 @@ export function getMap() {
 
 type path = number[][];
 
-function fetchRoutes() {
+function fetchRoutes(files: string[]) {
     let res: {[key: number]: any} = {};
-    let promices = routeFiles.map(async (route, i) => {
+    let promices = files.map(async (route, i) => {
         const response = await fetch('/mongol19/' + route);
         return response.json();
     });
@@ -49,10 +51,18 @@ function fetchRoutes() {
 
 async function Routes(map: Map) {
     // movement markers register
-    const results: any[] = await fetchRoutes();
+    const results: any[] = await fetchRoutes(routeFiles);
     const geos: any[] = results.map(r => r.geometry);
     geos.forEach((r, i) => Route(map, r, palette[i % palette.length]));
     RegisterFeature(new MilestonesList('Вехи', [].concat(...geos)));
+}
+
+async function AlternateRoutes(map: Map) {
+    const results: any[] = await fetchRoutes(alternates);
+    results.forEach(r => {
+        Route(map, r.geometry, '#0000ff');
+        RegisterFeature(new MilestonesList('--', r.geometry, 10000));
+    });
 }
 
 async function fetchData(urls: string[]) {
@@ -65,6 +75,7 @@ async function fetchData(urls: string[]) {
 
 async function onMapCreated(map: Map) {
     await Routes(map);
+    await AlternateRoutes(map);
     fetchData(urls.map(u => '/mongol19/' + u)).then((data) => {
         RegisterFeature(new ShowPlacesList('Достопримечательности', data[0], 'information'));
         RegisterFeature(new SimplePointsList('Заправки', data[1], 'fillingstation'));

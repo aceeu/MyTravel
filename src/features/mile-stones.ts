@@ -7,9 +7,11 @@ const zoomTo = 14;
 
 export class MilestonesList extends FeatureBase {
     geometries: number[][] = [];
-    constructor(name: string, geometries: number[][]) {
+    step: number = 500000;
+    constructor(name: string, geometries: number[][], step: number = 500000) {
         super(name, [zoomFrom, zoomTo]);
         this.geometries = geometries;
+        this.step = step;
     }
 
     initChild() {
@@ -30,7 +32,7 @@ export class MilestonesList extends FeatureBase {
                 return a;
             }
             lastPoint = elPoint;
-            if (distance - last > 500000) {
+            if (distance - last > this.step) {
                 a.push(this.createMark(elPoint, distance));
                 last = distance;
             }
