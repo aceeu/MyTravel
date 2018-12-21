@@ -3,13 +3,13 @@ import _ from '../leaflet-define';
 import * as azimuth from 'azimuth';
 
 const zoomFrom = 5;
-const zoomTo = 14;
+const zoomTo = Number.POSITIVE_INFINITY;
 
 export class MilestonesList extends FeatureBase {
     geometries: number[][] = [];
-    step: number = 500000;
-    constructor(name: string, geometries: number[][], step: number = 500000) {
-        super(name, [zoomFrom, zoomTo]);
+    step: number;
+    constructor(name: string, geometries: number[][], step: number = 500000, zoom: number[] = [zoomFrom, zoomTo]) {
+        super(name, zoom);
         this.geometries = geometries;
         this.step = step;
     }

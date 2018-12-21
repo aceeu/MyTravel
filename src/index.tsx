@@ -18,7 +18,9 @@ let map: Map = undefined;
 const routeFiles = ['1day.json', '2day.json', '3day.json',
     '4day.json', '5day.json', '6day.json', '7day.json'];
 
-const alternates = ['alt-oroktoy.json', 'alt-katyyaryk.json'];
+const alternates = ['alt-oroktoy.json',
+                    'alt-katyyaryk.json',
+                    'alt-aktru.json'];
 
 const urls = [
     'show-places-data.json',
@@ -43,7 +45,7 @@ type path = number[][];
 function fetchRoutes(files: string[]) {
     let res: {[key: number]: any} = {};
     let promices = files.map(async (route, i) => {
-        const response = await fetch('/mongol19/' + route);
+        const response = await fetch('./mongol19/' + route);
         return response.json();
     });
     return Promise.all(promices);
@@ -61,7 +63,7 @@ async function AlternateRoutes(map: Map) {
     const results: any[] = await fetchRoutes(alternates);
     results.forEach(r => {
         Route(map, r.geometry, '#0000ff');
-        RegisterFeature(new MilestonesList('--', r.geometry, 10000));
+        RegisterFeature(new MilestonesList('Альтернативные пути', r.geometry, 10000, [9, 14]));
     });
 }
 
@@ -76,14 +78,15 @@ async function fetchData(urls: string[]) {
 async function onMapCreated(map: Map) {
     await Routes(map);
     await AlternateRoutes(map);
-    fetchData(urls.map(u => '/mongol19/' + u)).then((data) => {
-        RegisterFeature(new ShowPlacesList('Достопримечательности', data[0], 'information'));
-        RegisterFeature(new SimplePointsList('Заправки', data[1], 'fillingstation'));
-        RegisterFeature(new ShowPlacesList('Ночевки', data[2], 'lodging-2'));
-        FeaturesList.featuresList.init(map);
-        AddControls(map);    
-    });
-
-    // FeaturesList.featuresList.onZoom();
+    const data = await fetchData(urls.map(u => './mongol19/' + u));
+    RegisterFeature(new ShowPlacesList('Достопримечательности', data[0], 'information'));
+    RegisterFeature(new SimplePointsList('Заправки', data[1], 'fillingstation'));
+    RegisterFeature(new ShowPlacesList('Ночевки', data[2], 'lodging-2'));
+    FeaturesList.featuresList.init(map);
+    AddControls(map);
+    map.on('zoom', () => {
+        FeaturesList.featuresList.onZoom();
+    })
+    FeaturesList.featuresList.onZoom();
     // RegisterOnList(new MovementMarkersList('mml'));
 }

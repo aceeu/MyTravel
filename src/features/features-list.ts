@@ -75,6 +75,7 @@ export class FeaturesList implements Feature {
     }
 
     init(map: any) {
+        this.map = map;
         this.container.forEach(f => f.init(this.map))
     }
     onZoom() {

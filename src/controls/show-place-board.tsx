@@ -14,7 +14,7 @@ export const ShowPlaceboard: React.SFC<ShowPlaceboardProps> = (props: ShowPlaceb
     const links = props.hrefs && props.hrefs.map((l, i) => {
         return l && <a href={l} key={i} target="_blank">ссылка</a>;
     });
-    const youtube = props.youtube && <iframe width="330" height="189" 
+    const youtube = props.youtube && <iframe width="330" height="189"
         src={props.youtube}
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
     >;
