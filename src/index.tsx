@@ -15,18 +15,11 @@ const palette: string[] = [
 
 let map: Map = undefined;
 
-const routeFiles = ['1day.json', '2day.json', '3day.json',
-    '4day.json', '5day.json', '6day.json', '7day.json'];
-
-const alternates = ['alt-oroktoy.json',
-                    'alt-katyyaryk.json',
-                    'alt-aktru.json'];
-
-const urls = [
-    'show-places-data.json',
-    'gas-station.json',
-    'overnight-stay.json'
-];
+interface MetaData {
+    routeFiles: string[],
+    alternates: string[],
+    urls: string[]
+}
 
 ReactDOM.render(
     <LeafletMap 
@@ -51,7 +44,7 @@ function fetchRoutes(files: string[]) {
     return Promise.all(promices);
 }
 
-async function Routes(map: Map) {
+async function Routes(map: Map, routeFiles: string[]) {
     // movement markers register
     const results: any[] = await fetchRoutes(routeFiles);
     const geos: any[] = results.map(r => r.geometry);
@@ -59,7 +52,7 @@ async function Routes(map: Map) {
     RegisterFeature(new MilestonesList('Вехи', [].concat(...geos)));
 }
 
-async function AlternateRoutes(map: Map) {
+async function AlternateRoutes(map: Map, alternates: string[]) {
     const results: any[] = await fetchRoutes(alternates);
     results.forEach(r => {
         Route(map, r.geometry, '#0000ff');
@@ -75,10 +68,16 @@ async function fetchData(urls: string[]) {
     return Promise.all(results);
 }
 
+async function fetchMetaData(): Promise<MetaData> {
+    const response = await fetch('./mongol19/metadata.json');
+    return await response.json();
+}
+
 async function onMapCreated(map: Map) {
-    await Routes(map);
-    await AlternateRoutes(map);
-    const data = await fetchData(urls.map(u => './mongol19/' + u));
+    const metaData: MetaData = await fetchMetaData();
+    await Routes(map, metaData.routeFiles);
+    await AlternateRoutes(map, metaData.alternates);
+    const data = await fetchData(metaData.urls.map(u => './mongol19/' + u));
     RegisterFeature(new ShowPlacesList('Достопримечательности', data[0], 'information'));
     RegisterFeature(new SimplePointsList('Заправки', data[1], 'fillingstation'));
     RegisterFeature(new ShowPlacesList('Ночевки', data[2], 'lodging-2'));
