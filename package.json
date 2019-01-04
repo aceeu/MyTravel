@@ -29,6 +29,7 @@
     "dependencies": {
         "azimuth": "^0.1.0",
         "d3": "5.7.0",
+        "js-binary": "^1.2.0",
         "npm": "^6.5.0",
         "react": "^16.6.3",
         "react-dom": "^16.6.3",

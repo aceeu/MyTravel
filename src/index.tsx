@@ -8,6 +8,7 @@ import { ShowPlacesList } from './features/show-places';
 import { SimplePointsList } from './features/simple-points';
 
 import { Route, AddControls } from './leaflet';
+import { fetchBinaryData } from './fetch-showplaces';
 
 const palette: string[] = [
     '#1c6597', '#bc832d', '#466a33', '#d0342a', '#125f6a', '#f47955', '#8c5892', '#a99f2e', '#ffce07', '#32a9b2'
@@ -77,7 +78,7 @@ async function onMapCreated(map: Map) {
     const metaData: MetaData = await fetchMetaData();
     await Routes(map, metaData.routeFiles);
     await AlternateRoutes(map, metaData.alternates);
-    const data = await fetchData(metaData.urls.map(u => './mongol19/' + u));
+    const data = await fetchBinaryData(metaData.urls.map(u => './mongol19/' + u));
     RegisterFeature(new ShowPlacesList('Достопримечательности', data[0], 'information'));
     RegisterFeature(new SimplePointsList('Заправки', data[1], 'fillingstation'));
     RegisterFeature(new ShowPlacesList('Ночевки', data[2], 'lodging-2'));
@@ -87,5 +88,4 @@ async function onMapCreated(map: Map) {
         FeaturesList.featuresList.onZoom();
     })
     FeaturesList.featuresList.onZoom();
-    // RegisterOnList(new MovementMarkersList('mml'));
 }

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { LeafletBaseMap } from './leaflet';
-import { FeaturesList} from './features/features-list';
 
 export type Map = any;
 

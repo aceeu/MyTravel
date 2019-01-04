@@ -8,7 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "Запустить программу",
-            "program": "${workspaceFolder}/sgen.js"
+            "program": "${workspaceFolder}/data-gen.js"
         }
     ]
 }
