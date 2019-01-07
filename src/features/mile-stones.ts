@@ -8,8 +8,8 @@ const zoomTo = Number.POSITIVE_INFINITY;
 export class MilestonesList extends FeatureBase {
     geometries: number[][] = [];
     step: number;
-    constructor(name: string, geometries: number[][], step: number = 500000, zoom: number[] = [zoomFrom, zoomTo]) {
-        super(name, zoom);
+    constructor(name: string, groupName: string, geometries: number[][], step: number = 500000, zoom: number[] = [zoomFrom, zoomTo]) {
+        super(name, groupName, zoom);
         this.geometries = geometries;
         this.step = step;
     }

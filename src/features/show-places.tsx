@@ -21,8 +21,8 @@ export class ShowPlacesList extends FeatureBase {
     marksList: any[] = [];
     data: any[] = [];
     defaultIcon: string | undefined;
-    constructor(name: string, data: any[], defaultIcon?: string) {
-        super(name, [zoomFrom, zoomTo]);
+    constructor(name: string, groupName: string, data: any[], defaultIcon?: string) {
+        super(name, groupName, [zoomFrom, zoomTo]);
         this.data = data;
         this.defaultIcon = defaultIcon;
     }

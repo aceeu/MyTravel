@@ -20,8 +20,8 @@ export class SimplePointsList extends FeatureBase {
     data: any[];
     icon: string;
 
-    constructor(name: string, data: any[], icon: string) {
-        super(name, [zoomFrom, zoomTo]);
+    constructor(name: string, groupName: string, data: any[], icon: string) {
+        super(name, groupName, [zoomFrom, zoomTo]);
         this.data = data;
         this.icon = icon;
     }

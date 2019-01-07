@@ -43,20 +43,15 @@ export function LeafletBaseMap(element, startPos) {
     return mymap;
 }
 
-export function Route(map, geometry, color) {
-    L.polyline(geometry, {weight: 3, color: color || '#ff5555', opacity: 0.9}).addTo(map);
+
+
+export function RouteLine(geometry, color) {
+    return L.polyline(geometry, {weight: 3, color: color || '#ff5555', opacity: 0.9});
 }
 
-export function AddControls(mymap) {
+export function AddControls(mymap, overlays) {
 
-    const overlayMaps = FeaturesList.FeaturesGroupList().reduce((a, g) => {
-        a[g.name] = g.group;
-        return a;
-    }, {});
-
-    FeaturesList.FeaturesGroupList().forEach(e => e.group.addTo(mymap));
-    L.control.layers(baseMaps, overlayMaps).addTo(mymap);
-
+    L.control.layers(baseMaps, overlays).addTo(mymap);
 
     L.control.mousePosition().addTo(mymap);
     L.control.polylineMeasure().addTo(mymap);

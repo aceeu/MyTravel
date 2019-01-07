@@ -1,14 +1,15 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { LeafletMap, Map } from './leafletMap';
-import { FeaturesList, RegisterFeature } from './features/features-list';
+import { FeaturesList, RegisterFeature, FeatureBase, Feature } from './features/features-list';
 // import { MovementMarkersList } from './features/movement-markers';
 import { MilestonesList } from './features/mile-stones';
 import { ShowPlacesList } from './features/show-places';
 import { SimplePointsList } from './features/simple-points';
 
-import { Route, AddControls } from './leaflet';
+import { RouteLine, AddControls } from './leaflet';
 import { fetchBinaryData } from './fetch-showplaces';
+import { Route } from './features/route';
 
 const palette: string[] = [
     '#1c6597', '#bc832d', '#466a33', '#d0342a', '#125f6a', '#f47955', '#8c5892', '#a99f2e', '#ffce07', '#32a9b2'
@@ -45,29 +46,29 @@ function fetchRoutes(files: string[]) {
     return Promise.all(promices);
 }
 
-async function Routes(map: Map, routeFiles: string[]) {
+async function MainRoutes(routeFiles: string[]) {
     // movement markers register
     const results: any[] = await fetchRoutes(routeFiles);
     const geos: any[] = results.map(r => r.geometry);
-    geos.forEach((r, i) => Route(map, r, palette[i % palette.length]));
-    RegisterFeature(new MilestonesList('Вехи', [].concat(...geos)));
+    geos.forEach((r, i) => RegisterFeature(new Route('r' + i, 'Main route', r, palette[i % palette.length])))
+    RegisterFeature(new MilestonesList('Вехи', 'Main route', [].concat(...geos)));
 }
 
-async function AlternateRoutes(map: Map, alternates: string[]) {
+async function AlternateRoutes(alternates: string[]) {
     const results: any[] = await fetchRoutes(alternates);
-    results.forEach(r => {
-        Route(map, r.geometry, '#0000ff');
-        RegisterFeature(new MilestonesList('Альтернативные пути', r.geometry, 10000, [9, 14]));
+    results.forEach((r, i) => {
+        RegisterFeature(new Route('ar' + i, 'Альтернативные пути', r.geometry, '#0000ff'));
+        RegisterFeature(new MilestonesList('Альтернативные пути' + i, 'Альтернативные пути' , r.geometry, 10000, [9, 14]));
     });
 }
 
-async function fetchData(urls: string[]) {
-    const results = urls.map(async url => {
-        const response = await fetch(url);
-        return await response.json();
-    })
-    return Promise.all(results);
-}
+// async function fetchData(urls: string[]) {
+//     const results = urls.map(async url => {
+//         const response = await fetch(url);
+//         return await response.json();
+//     })
+//     return Promise.all(results);
+// }
 
 async function fetchMetaData(): Promise<MetaData> {
     const response = await fetch('./mongol19/metadata.json');
@@ -76,16 +77,38 @@ async function fetchMetaData(): Promise<MetaData> {
 
 async function onMapCreated(map: Map) {
     const metaData: MetaData = await fetchMetaData();
-    await Routes(map, metaData.routeFiles);
-    await AlternateRoutes(map, metaData.alternates);
+    await MainRoutes(metaData.routeFiles);
+    await AlternateRoutes(metaData.alternates);
     const data = await fetchBinaryData(metaData.urls.map(u => './mongol19/' + u));
-    RegisterFeature(new ShowPlacesList('Достопримечательности', data[0], 'information'));
-    RegisterFeature(new SimplePointsList('Заправки', data[1], 'fillingstation'));
-    RegisterFeature(new ShowPlacesList('Ночевки', data[2], 'lodging-2'));
+    let features: FeatureBase[] = [
+        new ShowPlacesList('Достопримечательности', 'Достопримечательности', data[0], 'information'),
+        new SimplePointsList('Заправки', 'Заправки', data[1], 'fillingstation'),
+        new ShowPlacesList('Ночевки', 'Ночевки', data[2], 'lodging-2')
+    ];
+    features.forEach(f => {
+        RegisterFeature(f);
+
+    });
+
     FeaturesList.featuresList.init(map);
-    AddControls(map);
-    map.on('zoom', () => {
-        FeaturesList.featuresList.onZoom();
-    })
-    FeaturesList.featuresList.onZoom();
+
+    const overlays = FeaturesList.FeaturesList().reduce((a: any, feature: Feature) => {
+        const gname = feature.getGroupName();
+        const name: string = gname ? gname : feature.name;
+        if (a[name])
+            feature.getLayerGroup().addTo(a[name]);
+        else
+            a[name] = feature.getLayerGroup(); 
+        return a;
+    }, {});
+
+    overlays['Main route'].addTo(map);
+    overlays['Достопримечательности'].addTo(map);
+
+
+    AddControls(map, overlays);
+    // map.on('zoom', () => {
+    //     FeaturesList.featuresList.onZoom();
+    // })
+    // FeaturesList.featuresList.onZoom();
 }

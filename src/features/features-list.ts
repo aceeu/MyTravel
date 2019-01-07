@@ -1,21 +1,27 @@
+import _ from '../leaflet-define';
+
 export interface Feature {
     init: (map: any) => void;
     onZoom: (zoom: number) => void;
     getLayerGroup(): any;
+    getGroupName(): string | undefined
     name: string;
 }
 
-export abstract class FeatureBase {
+export abstract class FeatureBase implements Feature {
     markers: MapMarker[] = [];
     map: any;
     name: string;
+    groupName: string | undefined; // если имена группы FeatureBase будут совпадать они попадут в одну группу в Controls
     layerGroup: any;
     showed: boolean = false;
     zoomRange: number[] = [];
 
-    constructor(name: string, zoomRange: number[]) {
+    constructor(name: string, groupName: string, zoomRange: number[]) {
         this.name = name;
         this.zoomRange = zoomRange;
+        this.groupName = groupName;
+        this.layerGroup = _().layerGroup();
     }
 
     init(map: any) {
@@ -25,6 +31,10 @@ export abstract class FeatureBase {
 
     getLayerGroup(): any {
         return this.layerGroup;
+    }
+
+    getGroupName(): string | undefined {
+        return this.groupName;
     }
 
     abstract initChild(): void;
@@ -60,11 +70,12 @@ export class FeaturesList implements Feature {
 
     static featuresList: FeaturesList = new FeaturesList();
 
-    static FeaturesGroupList(): {name: string, group: any}[]  {
-        return FeaturesList.featuresList.container.map(f => ({name: f.name, group: f.getLayerGroup()}));
+    static FeaturesList(): Feature[]  {
+        return FeaturesList.featuresList.container;
     }
 
     getLayerGroup(){}
+    getGroupName(): string | undefined {return}
 
     register(f: Feature) {
         this.container.push(f);

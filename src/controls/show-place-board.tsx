@@ -27,7 +27,7 @@ export const ShowPlaceboard: React.SFC<ShowPlaceboardProps> = (props: ShowPlaceb
     return (
         <div className='showPlaceBoard'>
             <h3>{props.name}</h3>
-            <div>{`${props.position[0]}, ${props.position[1]}`}</div>
+            <div>{/*`${props.position[0]}, ${props.position[1]}`*/}</div>
             {img}
             {youtube}
             <div>{props.text}</div>

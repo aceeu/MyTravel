@@ -7,8 +7,8 @@ const zoomTo = Number.POSITIVE_INFINITY;
 export class MovementMarkersList extends FeatureBase {
 
 
-    constructor(name: string) {
-        super(name, [zoomFrom, zoomTo]);
+    constructor(name: string, groupName: string) {
+        super(name, groupName, [zoomFrom, zoomTo]);
     }
 
     initChild() {
