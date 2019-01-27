@@ -12,6 +12,7 @@ export class MilestonesList extends FeatureBase {
         super(name, groupName, zoom);
         this.geometries = geometries;
         this.step = step;
+        console.log(name + ' ' + step);
     }
 
     initChild() {

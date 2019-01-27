@@ -10,6 +10,7 @@ import { SimplePointsList } from './features/simple-points';
 import { RouteLine, AddControls } from './leaflet';
 import { fetchBinaryData } from './fetch-showplaces';
 import { Route } from './features/route';
+import { getStep } from './math';
 
 const palette: string[] = [
     '#1c6597', '#bc832d', '#466a33', '#d0342a', '#125f6a', '#f47955', '#8c5892', '#a99f2e', '#ffce07', '#32a9b2'
@@ -58,7 +59,8 @@ async function AlternateRoutes(alternates: string[]) {
     const results: any[] = await fetchRoutes(alternates);
     results.forEach((r, i) => {
         RegisterFeature(new Route('ar' + i, 'Альтернативные пути', r.geometry, '#0000ff'));
-        RegisterFeature(new MilestonesList('Альтернативные пути' + i, 'Альтернативные пути' , r.geometry, 10000, [9, 14]));
+        RegisterFeature(new MilestonesList('Альтернативные пути' + i, 'Альтернативные пути' , r.geometry,
+            Math.ceil(getStep(r.summary.distance, 8)), [9, 14]));
     });
 }
 
