@@ -33,6 +33,7 @@
         "npm": "^6.5.0",
         "react": "^16.6.3",
         "react-dom": "^16.6.3",
-        "simple-array-diff": "^1.1.0"
+        "simple-array-diff": "^1.1.0",
+        "xmlbuilder": "^10.1.1"
     }
 }

@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { LeafletBaseMap } from './leaflet';
+import { download } from './download';
+import { kmlgen } from './kmlgen';
 
 export type Map = any;
 
@@ -15,13 +17,24 @@ export class LeafletMap extends React.PureComponent<Props> {
         super(props);
     }
 
+    kmlClick = () => {
+        download('test.kml', kmlgen());
+    }
+
     render() {
         return (
-            <div
-                className={'leafletMap'}
-                ref={this.element}
-                id={'leafletmap'}
-            ></div>
+            <React.Fragment>
+                <div
+                    className={'leafletMap'}
+                    ref={this.element}
+                    id={'leafletmap'}
+                ></div>
+                <div
+                    className={'kml-button'}
+                    onClick={this.kmlClick}
+                >kml
+                </div>
+            </React.Fragment>
         )
     }
 

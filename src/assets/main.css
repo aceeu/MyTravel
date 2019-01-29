@@ -19,3 +19,14 @@
     font-size: 1.2em;
     border-left: 1px solid black;
 }
+
+.kml-button {
+    position: absolute;
+    background-color: bisque;
+    width: 2rem;
+    height: 1rem;
+    left: 50%;
+    top: 0;
+    z-index: 700;
+    cursor: pointer;
+}
