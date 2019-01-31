@@ -19,7 +19,7 @@ interface ShowPlacesListData extends ShowPlaceboardProps {
 
 export class ShowPlacesList extends FeatureBase {
     marksList: any[] = [];
-    data: any[] = [];
+    data: ShowPlacesListData[] = [];
     defaultIcon: string | undefined;
     constructor(name: string, groupName: string, data: any[], defaultIcon?: string) {
         super(name, groupName, [zoomFrom, zoomTo]);

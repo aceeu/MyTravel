@@ -64,14 +64,6 @@ async function AlternateRoutes(alternates: string[]) {
     });
 }
 
-// async function fetchData(urls: string[]) {
-//     const results = urls.map(async url => {
-//         const response = await fetch(url);
-//         return await response.json();
-//     })
-//     return Promise.all(results);
-// }
-
 async function fetchMetaData(): Promise<MetaData> {
     const response = await fetch('./mongol19/metadata.json');
     return await response.json();
