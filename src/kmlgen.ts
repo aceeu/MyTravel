@@ -18,6 +18,10 @@ function imageRef(href: string): string {
     return `<img src="${href}" height="200" width="auto" />`;
 }
 
+function ahref(href: string): string {
+    return `<a href="${href}">Ссылка</a>`;
+}
+
 function routeFolder(name: string, coordinates: string): any {
     return {
         'name': name,
@@ -73,7 +77,9 @@ export function generateKml() {
         throw 'cannot find Достопримечательности';
     const points: PlacemarkPoint[] = poifeature.data.map(v => {
         const imgurl = v.imageUrl || '';
-        let description: string = imageRef(imgurl)+ '<br>' + (v.text ? v.text : '') + ' ' + (v.hrefs ? v.hrefs.join(' ') : '')
+        let description: string = imageRef(imgurl)
+            + '<br>' + (v.text ? v.text : '') + ' ' + 
+            (v.hrefs ? v.hrefs.map(h => ahref(h)).join(' ') : '')
         return {
             name: v.name,
             description ,

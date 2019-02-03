@@ -7,10 +7,11 @@ import { MilestonesList } from './features/mile-stones';
 import { ShowPlacesList } from './features/show-places';
 import { SimplePointsList } from './features/simple-points';
 
-import { RouteLine, AddControls } from './leaflet';
+import { AddControls } from './leaflet';
 import { fetchBinaryData } from './fetch-showplaces';
 import { Route } from './features/route';
 import { getStep } from './math';
+import { AddButtonsToTheMap } from './controls';
 
 const palette: string[] = [
     '#1c6597', '#bc832d', '#466a33', '#d0342a', '#125f6a', '#f47955', '#8c5892', '#a99f2e', '#ffce07', '#32a9b2'
@@ -105,4 +106,5 @@ async function onMapCreated(map: Map) {
     //     FeaturesList.featuresList.onZoom();
     // })
     // FeaturesList.featuresList.onZoom();
+    AddButtonsToTheMap(map);
 }

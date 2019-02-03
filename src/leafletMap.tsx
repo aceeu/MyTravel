@@ -21,6 +21,14 @@ export class LeafletMap extends React.PureComponent<Props> {
         download('test.kml', generateKml());
     }
 
+    kmlExportButton() {
+        return <div
+            className={'kml-button'}
+            onClick={this.kmlClick}
+        >kml
+        </div>
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -29,13 +37,9 @@ export class LeafletMap extends React.PureComponent<Props> {
                     ref={this.element}
                     id={'leafletmap'}
                 ></div>
-                <div
-                    className={'kml-button'}
-                    onClick={this.kmlClick}
-                >kml
-                </div>
+                {/*this.kmlExportButton()*/}
             </React.Fragment>
-        )
+        );
     }
 
     componentDidMount() {
