@@ -13,7 +13,7 @@ const totalIconMap: IconInfoMap = {...icons.info};
 const zoomFrom = 0;
 const zoomTo = Number.POSITIVE_INFINITY;
 
-interface ShowPlacesListData extends ShowPlaceboardProps {
+export interface ShowPlacesListData extends ShowPlaceboardProps {
     icon: string;
 }
 

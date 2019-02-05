@@ -9,7 +9,8 @@ let scheme = new Type(
         'imageUrl?': 'string',
         'youtube?': 'string',
         'text?': 'string',
-        'hrefs?': ['string']
+        'hrefs?': ['string'],
+        'presntNum?': 'uint'
     }]
 );
     

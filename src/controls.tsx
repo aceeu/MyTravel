@@ -18,11 +18,20 @@ L.Control.Watermark = L.Control.extend({
     }
 });
 
+let presentationStarted: boolean = false;
+
 L.Control.Button = L.Control.extend({
     onAdd: function(map: any) {
         var button = L.DomUtil.create('button');
-        button.innerHTML='Запуск презентации';
-        button.onclick = () => StartPresentation(map);
+        button.innerHTML= 'Запуск презентации';
+        button.onclick = () => {
+            if (!presentationStarted)
+                button.innerHTML = 'Остановить';             
+            else
+                button.innerHTML = 'Запуск презентации';                
+            presentationStarted = !presentationStarted
+            StartPresentation(map, presentationStarted);
+        }
         return button;
     },
 

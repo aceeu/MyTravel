@@ -2,7 +2,7 @@ import { Type } from 'js-binary';
 
 // ShowPlaceboardProps
 
-let scheme = new Type(
+let scheme = new Type( // the same as in data-gen.js
     [{
         'icon?': 'string',
         name: 'string',
@@ -10,7 +10,8 @@ let scheme = new Type(
         'imageUrl?': 'string',
         'youtube?': 'string',
         'text?': 'string',
-        'hrefs?': ['string']
+        'hrefs?': ['string'],
+        'presntNum?': 'uint'
     }]
 );
 
