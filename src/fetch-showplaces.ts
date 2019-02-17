@@ -11,7 +11,7 @@ let scheme = new Type( // the same as in data-gen.js
         'youtube?': 'string',
         'text?': 'string',
         'hrefs?': ['string'],
-        'presntNum?': 'uint'
+        'gravity?': 'uint'
     }]
 );
 

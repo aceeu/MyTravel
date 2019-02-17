@@ -10,14 +10,14 @@ let scheme = new Type(
         'youtube?': 'string',
         'text?': 'string',
         'hrefs?': ['string'],
-        'presntNum?': 'uint'
+        'gravity?': 'uint'
     }]
 );
     
-let filenames = ["show-places-data.json","gas-station.json","overnight-stay.json"];
+let filenamesToBinary = ["show-places-data.json","gas-station.json","overnight-stay.json"];
 let path = "./dist/mongol19/";
 
-filenames.forEach((filename, i) => {
+filenamesToBinary.forEach((filename, i) => {
     let content = fs.readFileSync(path + filename);
     let res = scheme.encode(JSON.parse(content));
     fs.writeFileSync(path + filename + '.bin', res);

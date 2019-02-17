@@ -14,7 +14,8 @@ import { getStep } from './math';
 import { AddButtonsToTheMap } from './controls';
 
 const palette: string[] = [
-    '#1c6597', '#bc832d', '#466a33', '#d0342a', '#125f6a', '#f47955', '#8c5892', '#a99f2e', '#ffce07', '#32a9b2'
+    '#990000'
+    // '#1c6597', '#bc832d', '#466a33', '#d0342a', '#125f6a', '#f47955', '#8c5892', '#a99f2e', '#ffce07', '#32a9b2'
 ];
 
 let map: Map = undefined;

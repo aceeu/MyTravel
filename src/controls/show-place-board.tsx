@@ -8,7 +8,7 @@ export interface ShowPlaceboardProps {
     youtube?: string;
     text?: string;
     hrefs?: string[];
-    presntNum: number;
+    gravity: number;
 }
 
 export const ShowPlaceboard: React.SFC<ShowPlaceboardProps> = (props: ShowPlaceboardProps) => {
