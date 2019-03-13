@@ -14,13 +14,13 @@ export function StartPresentation(map: any, startStop: boolean): Promise<void> {
     }
     
     return new Promise<void>((res, rej) => {
-        const seesights: ShowPlacesList = FeaturesList.featuresList.find('Достопримечательности') as ShowPlacesList;
+        const seesights: ShowPlacesList = FeaturesList.featuresList.find(
+            ['Основные Достопримечательности', 'Достопримечательности']) as ShowPlacesList;
         let SeeSpairs: SeeSightsPair[] = [];
         for(let i: number = 0; i < seesights.data.length; ++i) {
             SeeSpairs.push({data: seesights.data[i], mark: seesights.marksList[i]});
         }
         SeeSpairs = SeeSpairs.filter((s: SeeSightsPair) => s.data.gravity >= 3);
-            // .sort((a: SeeSightsPair, b: SeeSightsPair) => a.data.presntNum - b.data.presntNum);
         let i = 0;
         const handler = () => {
             SeeSpairs[i].mark.openPopup();

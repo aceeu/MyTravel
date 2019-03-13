@@ -94,8 +94,8 @@ export class FeaturesList implements Feature {
         console.log('zoom=' + z);
         this.container.forEach(f => f.onZoom(z));
     }
-    find(name: string): Feature | undefined {
-        return FeaturesList.featuresList.container.find(f => f.name == name);
+    find(name: string[]): Feature | undefined {
+        return FeaturesList.featuresList.container.find(f => name.some(n => n == f.name));
     }
 }
 

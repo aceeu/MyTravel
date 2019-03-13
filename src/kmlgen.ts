@@ -55,7 +55,7 @@ export function generateKml() {
     let i = 0;
     let routes: Route[] = []
     while (1) {
-        const r = FeaturesList.featuresList.find('r' + i) as Route;
+        const r = FeaturesList.featuresList.find(['r' + i]) as Route;
         ++i;
         if (r) routes.push(r);
         else break;
@@ -72,7 +72,8 @@ export function generateKml() {
         return routeFolder(r.name, coordinates.join(' '));
 
     });
-    const poifeature = FeaturesList.featuresList.find('Достопримечательности') as ShowPlacesList;
+    const poifeature = FeaturesList.featuresList.find(
+        ['Основные Достопримечательности', 'Достопримечательности']) as ShowPlacesList;
     if (!poifeature)
         throw 'cannot find Достопримечательности';
     const points: PlacemarkPoint[] = poifeature.data.map(v => {

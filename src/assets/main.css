@@ -5,12 +5,25 @@
     height: 100%;
 }
 
-#map {
+
+#top {
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
     position: absolute;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+}
+
+#map {
+    flex: 1;
+}
+#disqus_thread {
+    padding: 5px;
+    width: 30%;
+    overflow: hidden;
 }
 
 .mile-stone {

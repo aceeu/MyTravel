@@ -4,14 +4,15 @@ import { LeafletMap, Map } from './leafletMap';
 import { FeaturesList, RegisterFeature, FeatureBase, Feature } from './features/features-list';
 // import { MovementMarkersList } from './features/movement-markers';
 import { MilestonesList } from './features/mile-stones';
-import { ShowPlacesList } from './features/show-places';
+import { ShowPlacesList, ShowPlacesListData } from './features/show-places';
 import { SimplePointsList } from './features/simple-points';
 
 import { AddControls } from './leaflet';
-import { fetchBinaryData } from './fetch-showplaces';
+import { fetchBinaryData, fetchBinaryRouteData } from './fetch-showplaces';
 import { Route } from './features/route';
 import { getStep } from './math';
 import { AddButtonsToTheMap } from './controls';
+import { ShowPlaceboardProps } from 'controls/show-place-board';
 
 const palette: string[] = [
     '#990000'
@@ -50,18 +51,17 @@ function fetchRoutes(files: string[]) {
 }
 
 async function MainRoutes(routeFiles: string[]) {
-    // movement markers register
-    const results: any[] = await fetchRoutes(routeFiles);
+    const results: any[] = await fetchBinaryRouteData(routeFiles.map(u => './mongol19/bin/' + u));
     const geos: any[] = results.map(r => r.geometry);
-    geos.forEach((r, i) => RegisterFeature(new Route('r' + i, 'Main route', r, palette[i % palette.length])))
-    RegisterFeature(new MilestonesList('Вехи', 'Main route', [].concat(...geos)));
+    geos.forEach((r, i) => RegisterFeature(new Route('r' + i, 'Основной маршрут', r, palette[i % palette.length])))
+    RegisterFeature(new MilestonesList('Вехи', 'Основной маршрут', [].concat(...geos)));
 }
 
 async function AlternateRoutes(alternates: string[]) {
-    const results: any[] = await fetchRoutes(alternates);
+    const results: any[] = await fetchBinaryRouteData(alternates.map(u => './mongol19/bin/' + u));
     results.forEach((r, i) => {
-        RegisterFeature(new Route('ar' + i, 'Альтернативные пути', r.geometry, '#0000ff'));
-        RegisterFeature(new MilestonesList('Альтернативные пути' + i, 'Альтернативные пути' , r.geometry,
+        RegisterFeature(new Route('ar' + i, 'Дополнительные маршруты', r.geometry, '#0000ff'));
+        RegisterFeature(new MilestonesList('Дополнительные маршруты' + i, 'Дополнительные маршруты' , r.geometry,
             Math.ceil(getStep(r.summary.distance, 8)), [9, 14]));
     });
 }
@@ -75,9 +75,12 @@ async function onMapCreated(map: Map) {
     const metaData: MetaData = await fetchMetaData();
     await MainRoutes(metaData.routeFiles);
     await AlternateRoutes(metaData.alternates);
-    const data = await fetchBinaryData(metaData.urls.map(u => './mongol19/' + u));
+    const data = await fetchBinaryData(metaData.urls.map(u => './mongol19/bin/' + u));
+    const seeSights: ShowPlaceboardProps[] = data[0];
+    const mainPoints: ShowPlaceboardProps[] = seeSights.filter((ss: ShowPlaceboardProps) => ss.gravity >= 4);
     let features: FeatureBase[] = [
-        new ShowPlacesList('Достопримечательности', 'Достопримечательности', data[0], 'information'),
+        new ShowPlacesList('Основные Достопримечательности', 'Основные Достопримечательности', mainPoints as ShowPlacesListData[], 'information'),
+        new ShowPlacesList('Достопримечательности', 'Достопримечательности', data[0].filter((v: any) => v.gravity < 4), 'information'),
         new SimplePointsList('Заправки', 'Заправки', data[1], 'fillingstation'),
         new ShowPlacesList('Ночевки', 'Ночевки', data[2], 'lodging-2')
     ];
@@ -98,7 +101,8 @@ async function onMapCreated(map: Map) {
         return a;
     }, {});
 
-    overlays['Main route'].addTo(map);
+    overlays['Основной маршрут'].addTo(map);
+    overlays['Основные Достопримечательности'].addTo(map);
     overlays['Достопримечательности'].addTo(map);
 
 
