@@ -45,29 +45,6 @@ L.Control.Button = L.Control.extend({
         // Nothing to do here
     }
 });
-let disqus = true;
-let DisqusButton = L.Control.extend({
-    onAdd: function(map: any) {
-        var button = L.DomUtil.create('button');
-        button.innerHTML= disqus ? 'Скрыть disqus' : 'Открыть disqus';
-        let disqusel = document.getElementById('disqus_thread')!;
-        button.onclick = () => {
-            if (disqus) {
-                disqusel.style.display = 'none';
-            } else {
-                disqusel.style.display = 'block';
-            }
-            disqus = !disqus;
-            button.innerHTML= disqus ? 'Скрыть disqus' : 'Открыть disqus';
-            map.invalidateSize();
-        }
-        return button;
-    },
-
-    onRemove: function(map: any) {
-        // Nothing to do here
-    }
-});
 
 export function AddButtonsToTheMap(map: any) {
 
@@ -77,11 +54,7 @@ export function AddButtonsToTheMap(map: any) {
     L.control.button = function(opts: any) {
         return new L.Control.Button(opts);
     }
-    L.control.disqusbutton = function(opts: any) {
-        return new L.Control.Button(opts);
-    }
 
     L.control.watermark({ position: 'bottomleft' }).addTo(map);
     L.control.button({position: 'topleft'}).addTo(map);
-    new DisqusButton({position: 'topright'}).addTo(map);
 }

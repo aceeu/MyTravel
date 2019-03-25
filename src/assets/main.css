@@ -20,11 +20,6 @@
 #map {
     flex: 1;
 }
-#disqus_thread {
-    padding: 5px;
-    width: 30%;
-    overflow: hidden;
-}
 
 .mile-stone {
     background-color: transparent;
