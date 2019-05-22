@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { LeafletBaseMap } from './leaflet';
 import { download } from './download';
-import { generateKml } from './kmlgen';
+import { genKmlMainroute, genKmlAltRoutes } from './kmlgen';
 
 export type Map = any;
 
@@ -18,10 +18,13 @@ export class LeafletMap extends React.PureComponent<Props> {
     }
 
     kmlClick = () => {
-        download('test.kml', generateKml());
+        // let s = genKmlMainroute();
+        download('baikal19.kml', genKmlMainroute());
+        download('baikal19-alt.kml', genKmlAltRoutes());
     }
 
     kmlExportButton() {
+        // return null; // kml
         return <div
             className={'kml-button'}
             onClick={this.kmlClick}
@@ -37,7 +40,7 @@ export class LeafletMap extends React.PureComponent<Props> {
                     ref={this.element}
                     id={'leafletmap'}
                 ></div>
-                {/*this.kmlExportButton()*/}
+                {this.kmlExportButton()}
             </React.Fragment>
         );
     }

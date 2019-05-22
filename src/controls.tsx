@@ -7,7 +7,7 @@ L.Control.Watermark = L.Control.extend({
     onAdd: function(map: any) {
         var img = L.DomUtil.create('img');
 
-        img.src = 'https://i.ibb.co/TYZrzxq/image.png';
+        img.src = 'https://i.ibb.co/9GrDdP4/2.png';
         img.style.width = '200px';
 
         return img;

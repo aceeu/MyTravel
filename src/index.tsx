@@ -13,6 +13,7 @@ import { Route } from './features/route';
 import { getStep } from './math';
 import { AddButtonsToTheMap } from './controls';
 import { ShowPlaceboardProps } from 'controls/show-place-board';
+import { getTrackersLayer } from './tracker/trackersGroupLayer';
 
 const palette: string[] = [
     '#990000'
@@ -24,6 +25,7 @@ let map: Map = undefined;
 interface MetaData {
     routeFiles: string[],
     alternates: string[],
+    tyva: string[],
     urls: string[]
 }
 
@@ -57,11 +59,20 @@ async function MainRoutes(routeFiles: string[]) {
     RegisterFeature(new MilestonesList('Вехи', 'Основной маршрут', [].concat(...geos)));
 }
 
-async function AlternateRoutes(alternates: string[]) {
-    const results: any[] = await fetchBinaryRouteData(alternates.map(u => './mongol19/bin/' + u));
+// async function AlternateRoutes(alternates: string[]) {
+//     const results: any[] = await fetchBinaryRouteData(alternates.map(u => './mongol19/bin/' + u));
+//     results.forEach((r, i) => {
+//         RegisterFeature(new Route('ar' + i, 'Дополнительные маршруты', r.geometry, '#0000ff'));
+//         RegisterFeature(new MilestonesList('Дополнительные маршруты' + i, 'Дополнительные маршруты' , r.geometry,
+//             Math.ceil(getStep(r.summary.distance, 8)), [9, 14]));
+//     });
+// }
+
+async function ARoute(routes: string[], name: string, color: string) {
+    const results: any[] = await fetchBinaryRouteData(routes.map(u => './mongol19/bin/' + u));
     results.forEach((r, i) => {
-        RegisterFeature(new Route('ar' + i, 'Дополнительные маршруты', r.geometry, '#0000ff'));
-        RegisterFeature(new MilestonesList('Дополнительные маршруты' + i, 'Дополнительные маршруты' , r.geometry,
+        RegisterFeature(new Route(name + i, name, r.geometry, color));
+        RegisterFeature(new MilestonesList(name + i, name , r.geometry,
             Math.ceil(getStep(r.summary.distance, 8)), [9, 14]));
     });
 }
@@ -74,7 +85,8 @@ async function fetchMetaData(): Promise<MetaData> {
 async function onMapCreated(map: Map) {
     const metaData: MetaData = await fetchMetaData();
     await MainRoutes(metaData.routeFiles);
-    await AlternateRoutes(metaData.alternates);
+    await ARoute(metaData.alternates, 'Дополнительные маршруты', '#0000ff');
+    await ARoute(metaData.tyva, 'Тыва', '#1f7a1f');
     const data = await fetchBinaryData(metaData.urls.map(u => './mongol19/bin/' + u));
     const seeSights: ShowPlaceboardProps[] = data[0];
     const mainPoints: ShowPlaceboardProps[] = seeSights.filter((ss: ShowPlaceboardProps) => ss.gravity >= 4);
@@ -91,7 +103,7 @@ async function onMapCreated(map: Map) {
 
     FeaturesList.featuresList.init(map);
 
-    const overlays = FeaturesList.FeaturesList().reduce((a: any, feature: Feature) => {
+    const overlays: {[key:string]: any} = FeaturesList.FeaturesList().reduce((a: {[key:string]: any}, feature: Feature) => {
         const gname = feature.getGroupName();
         const name: string = gname ? gname : feature.name;
         if (a[name])
@@ -100,6 +112,9 @@ async function onMapCreated(map: Map) {
             a[name] = feature.getLayerGroup(); 
         return a;
     }, {});
+
+    // aceeu
+    overlays['Маячки'] = getTrackersLayer();
 
     overlays['Основной маршрут'].addTo(map);
     overlays['Основные Достопримечательности'].addTo(map);

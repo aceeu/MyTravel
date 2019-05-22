@@ -97,6 +97,14 @@ export class FeaturesList implements Feature {
     find(name: string[]): Feature | undefined {
         return FeaturesList.featuresList.container.find(f => name.some(n => n == f.name));
     }
+    findFeatures(groupName: string) : Feature[] {
+        return FeaturesList.featuresList.container.reduce( (a: Feature[], f) => {
+            if (f.getGroupName() == groupName) {
+                a.push(f);
+            }
+            return a;
+        }, []);
+    }
 }
 
 

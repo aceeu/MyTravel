@@ -1,7 +1,7 @@
 import * as xmlbuilder from 'xmlbuilder';
-import { FeaturesList } from './features/features-list';
+import { FeaturesList, Feature } from './features/features-list';
 import { Route } from './features/route';
-import { ShowPlacesList } from 'features/show-places';
+import { ShowPlacesList, ShowPlacesListData } from 'features/show-places';
 
 // function networkLink() {
 //     return {
@@ -51,32 +51,23 @@ function placemarkFolder(name: string, points: PlacemarkPoint[]): any {
     };
 }
 
-export function generateKml() {
-    let i = 0;
-    let routes: Route[] = []
-    while (1) {
-        const r = FeaturesList.featuresList.find(['r' + i]) as Route;
-        ++i;
-        if (r) routes.push(r);
-        else break;
-    }
-
-    const folders = routes.map(r => {
+function makeRouteFolder(routes: Route[]): any[] {
+    return routes.reduce((a: any[], r) => {
         if (r.geometries.length == 0)
-            throw 'geometries empty';
+            return a;
         let startitm = r.geometries[0];
         const enditem = r.geometries[r.geometries.length -1];
-        const start = `${startitm[1]},${startitm[0]},${startitm[2]}`;
-        const end = `${enditem[1]},${enditem[0]},${enditem[2]}`;
+        // const start = `${startitm[1]},${startitm[0]},${startitm[2]}`;
+        // const end = `${enditem[1]},${enditem[0]},${enditem[2]}`;
         let coordinates: string[] = r.geometries.map((item: number[]) => `${item[1]},${item[0]},${item[2]}`);
-        return routeFolder(r.name, coordinates.join(' '));
+        a.push(routeFolder(r.name, coordinates.join(' ')));
+        return a;
+    }, []);
 
-    });
-    const poifeature = FeaturesList.featuresList.find(
-        ['Основные Достопримечательности', 'Достопримечательности']) as ShowPlacesList;
-    if (!poifeature)
-        throw 'cannot find Достопримечательности';
-    const points: PlacemarkPoint[] = poifeature.data.map(v => {
+}
+
+function makePlacemarkPoint(poifeatureData: ShowPlacesListData[]): PlacemarkPoint[] {
+    return poifeatureData.map(v => {
         const imgurl = v.imageUrl || '';
         let description: string = imageRef(imgurl)
             + '<br>' + (v.text ? v.text : '') + ' ' + 
@@ -88,17 +79,35 @@ export function generateKml() {
                 coordinates: `${v.position[1]},${v.position[0]}`
             }}
         });
-    const constPointsFolder = placemarkFolder('POI', points);
-    return kmlgen([constPointsFolder, ...folders]);
 }
 
-function kmlgen(folders: any[]): string {
+export function genKmlMainroute(): string {
+    const mainRoutes: Route[] = FeaturesList.featuresList.findFeatures('Основной маршрут') as Route[];
+    const folders: any[] = makeRouteFolder(mainRoutes);
+
+    const poiMainfeature: ShowPlacesList = FeaturesList.featuresList.find(
+        ['Основные Достопримечательности']) as ShowPlacesList;
+    const constMPointsFolder = placemarkFolder('Main POI', makePlacemarkPoint(poiMainfeature.data));
+    const poifeature: ShowPlacesList = FeaturesList.featuresList.find(
+            ['Достопримечательности']) as ShowPlacesList;
+    const constPointsFolder = placemarkFolder('POI', makePlacemarkPoint(poifeature.data));
+    return kmlgen('Байкал19', [constMPointsFolder, constPointsFolder, ...folders]);
+}
+
+export function genKmlAltRoutes(): string {
+    // alternatives
+    const alt: Route[] = FeaturesList.featuresList.findFeatures('Дополнительные маршруты') as Route[];
+    const tyva: Route[] = FeaturesList.featuresList.findFeatures('Тыва') as Route[];
+    return kmlgen('Байкал19-альтернативы', makeRouteFolder([...alt, ...tyva]));
+}
+
+function kmlgen(name: string, folders: any[]): string {
     // const coordinates = '47.17597,56.07961,0 47.17143,56.07838,0 47.14493,56.08101,0 47.12656,56.08467,0';
     const obj = {
         kml: {
             '@xmlns': 'http://www.opengis.net/kml/2.2',
             'Document': {
-                'name': 'Байкал 2019',
+                'name': name,
                 'Folder': [
                     ...folders
                 ]
