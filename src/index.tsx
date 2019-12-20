@@ -14,6 +14,7 @@ import { getStep } from './math';
 import { AddButtonsToTheMap } from './controls';
 import { ShowPlaceboardProps } from 'controls/show-place-board';
 import { getTrackersLayer } from './tracker/trackersGroupLayer';
+import { config } from 'config';
 
 const palette: string[] = [
     '#990000'
@@ -41,19 +42,19 @@ export function getMap() {
     return map;
 }
 
-type path = number[][];
+// type path = number[][];
 
-function fetchRoutes(files: string[]) {
-    let res: {[key: number]: any} = {};
-    let promices = files.map(async (route, i) => {
-        const response = await fetch('./mongol19/' + route);
-        return response.json();
-    });
-    return Promise.all(promices);
-}
+// function fetchRoutes(files: string[]) {
+//     let res: {[key: number]: any} = {};
+//     let promices = files.map(async (route, i) => {
+//         const response = await fetch('./mongol19/' + route);
+//         return response.json();
+//     });
+//     return Promise.all(promices);
+// }
 
 async function MainRoutes(routeFiles: string[]) {
-    const results: any[] = await fetchBinaryRouteData(routeFiles.map(u => './mongol19/bin/' + u));
+    const results: any[] = await fetchBinaryRouteData(routeFiles.map(u => config.mapPathBin + u));
     const geos: any[] = results.map(r => r.geometry);
     geos.forEach((r, i) => RegisterFeature(new Route('r' + i, 'Основной маршрут', r, palette[i % palette.length])))
     RegisterFeature(new MilestonesList('Вехи', 'Основной маршрут', [].concat(...geos)));
@@ -69,7 +70,7 @@ async function MainRoutes(routeFiles: string[]) {
 // }
 
 async function ARoute(routes: string[], name: string, color: string) {
-    const results: any[] = await fetchBinaryRouteData(routes.map(u => './mongol19/bin/' + u));
+    const results: any[] = await fetchBinaryRouteData(routes.map(u => config.mapPathBin + u));
     results.forEach((r, i) => {
         RegisterFeature(new Route(name + i, name, r.geometry, color));
         RegisterFeature(new MilestonesList(name + i, name , r.geometry,
@@ -78,7 +79,7 @@ async function ARoute(routes: string[], name: string, color: string) {
 }
 
 async function fetchMetaData(): Promise<MetaData> {
-    const response = await fetch('./mongol19/metadata.json');
+    const response = await fetch(`${config.mapPath}/metadata.json`);
     return await response.json();
 }
 
@@ -87,7 +88,7 @@ async function onMapCreated(map: Map) {
     await MainRoutes(metaData.routeFiles);
     await ARoute(metaData.alternates, 'Дополнительные маршруты', '#0000ff');
     await ARoute(metaData.tyva, 'Тыва', '#1f7a1f');
-    const data = await fetchBinaryData(metaData.urls.map(u => './mongol19/bin/' + u));
+    const data = await fetchBinaryData(metaData.urls.map(u => config.mapPathBin + u));
     const seeSights: ShowPlaceboardProps[] = data[0];
     const mainPoints: ShowPlaceboardProps[] = seeSights.filter((ss: ShowPlaceboardProps) => ss.gravity >= 4);
     let features: FeatureBase[] = [
