@@ -46,7 +46,7 @@ export class LeafletMap extends React.PureComponent<Props> {
     }
 
     componentDidMount() {
-        this.map = LeafletBaseMap(this.element.current, [50.29666, 81.66445]);
+        this.map = LeafletBaseMap(this.element.current, [59.05, 57.684]);
         this.props.onMap(this.map);
     }
 }

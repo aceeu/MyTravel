@@ -13,7 +13,7 @@ export interface ShowPlaceboardProps {
 
 export const ShowPlaceboard: React.SFC<ShowPlaceboardProps> = (props: ShowPlaceboardProps) => {
     const links = props.hrefs && props.hrefs.map((l, i) => {
-        return l && <a href={l} key={i} target="_blank">ссылка</a>;
+        return l && <a href={l} key={i} target="_blank">Подробнее</a>;
     });
     const youtube = props.youtube && <iframe width="330" height="189"
         src={props.youtube}

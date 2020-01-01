@@ -40,17 +40,17 @@ export abstract class FeatureBase implements Feature {
     abstract initChild(): void;
 
     onZoom(zoom: number) {
-        if (this.zoomRange[0] <= zoom && this.zoomRange[1] > zoom) {
+        // if (this.zoomRange[0] <= zoom && this.zoomRange[1] > zoom) {
 
-            if ( this.showed == false) {
-                this.layerGroup.addTo(this.map);
-                this.showed = true;
-            }
-        }
-        else {
-            this.layerGroup.remove();
-            this.showed = false;
-        }
+        //     if ( this.showed == false) {
+        //         this.layerGroup.addTo(this.map);
+        //         this.showed = true;
+        //     }
+        // }
+        // else {
+        //     this.layerGroup.remove();
+        //     this.showed = false;
+        // }
     }
 
 }

@@ -33,7 +33,9 @@ export class ShowPlacesList extends FeatureBase {
     }
 
     createMark = (item: ShowPlacesListData): FeatureMarker => {
-        const cMarker = _().marker(item.position, {icon: makeLeafIcon(totalIconMap, item.icon || this.defaultIcon || '')});
+        const cMarker = _().marker(
+            item.position,
+            {icon: makeLeafIcon(totalIconMap, item.icon || this.defaultIcon || '')});
         cMarker.bindPopup(() => {
             let element = document.createElement('div');
             showPlaceBoard(element, item);
@@ -41,6 +43,10 @@ export class ShowPlacesList extends FeatureBase {
         }, {className: 'leafletPopUp'});
         cMarker.bindTooltip(item.name);
         return cMarker;
+    }
+
+    onZoom(zoom: number) {
+        
     }
 
 }

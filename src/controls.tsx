@@ -1,5 +1,8 @@
 import _ from './leaflet-define';
 import { StartPresentation } from './presentation'
+import imgUral from './assets/ural.png';
+import { ShowPlacesList, ShowPlacesListData } from './features/show-places';
+import { FeaturesList } from './features/features-list';
 
 const L = _();
 
@@ -7,7 +10,7 @@ L.Control.Watermark = L.Control.extend({
     onAdd: function(map: any) {
         var img = L.DomUtil.create('img');
 
-        img.src = 'https://i.ibb.co/9GrDdP4/2.png';
+        img.src = imgUral;
         img.style.width = '200px';
 
         return img;
@@ -46,6 +49,31 @@ L.Control.Button = L.Control.extend({
     }
 });
 
+let editCreator = L.Control.extend({
+    onAdd: (map: any) => {
+        let input = L.DomUtil.create('input');
+        input.size = 15;
+        input.placeholder = 'Найти';
+        input.onkeyup = (e: any) => {
+            if (e.keyCode == 13) {
+              const seesights: ShowPlacesList = FeaturesList.featuresList.find(
+                ['Наш урал', 'Наш урал']) as ShowPlacesList;
+                const point: number = seesights.data.findIndex(d =>
+                    d.name.toLocaleLowerCase().includes(e.target.value.toLocaleLowerCase()));
+                if (point != -1) {
+                    const target: ShowPlacesListData = seesights.data[point];
+                    seesights.marksList[point].openPopup();
+                    map.flyTo(target.position, 7,{animate: true, duration: 4})        
+                }
+            }
+        }
+        return input;
+    },
+    onRemove: function(map: any) {
+        // Nothing to do here
+    }
+})
+
 export function AddButtonsToTheMap(map: any) {
 
     L.control.watermark = function(opts: any) {
@@ -57,4 +85,5 @@ export function AddButtonsToTheMap(map: any) {
 
     L.control.watermark({ position: 'bottomleft' }).addTo(map);
     L.control.button({position: 'topleft'}).addTo(map);
+    new editCreator({position: 'topleft'}).addTo(map);
 }

@@ -14,7 +14,7 @@ import { getStep } from './math';
 import { AddButtonsToTheMap } from './controls';
 import { ShowPlaceboardProps } from 'controls/show-place-board';
 import { getTrackersLayer } from './tracker/trackersGroupLayer';
-import { config } from 'config';
+import { config } from './config';
 
 const palette: string[] = [
     '#990000'
@@ -23,11 +23,20 @@ const palette: string[] = [
 
 let map: Map = undefined;
 
+interface PoiUrls {
+    filename: string;
+    name: string;
+    group: string;
+}
+
+interface routeFile {
+    filename: string;
+}
+
 interface MetaData {
-    routeFiles: string[],
-    alternates: string[],
-    tyva: string[],
-    urls: string[]
+    routeFiles: routeFile[], // основные маршруты
+    alternates: routeFile[], // альтернитивные маршруты
+    urls: PoiUrls[] // тут слои достопримечательностей
 }
 
 ReactDOM.render(
@@ -42,32 +51,12 @@ export function getMap() {
     return map;
 }
 
-// type path = number[][];
-
-// function fetchRoutes(files: string[]) {
-//     let res: {[key: number]: any} = {};
-//     let promices = files.map(async (route, i) => {
-//         const response = await fetch('./mongol19/' + route);
-//         return response.json();
-//     });
-//     return Promise.all(promices);
-// }
-
 async function MainRoutes(routeFiles: string[]) {
-    const results: any[] = await fetchBinaryRouteData(routeFiles.map(u => config.mapPathBin + u));
+    const results: any[] = await fetchBinaryRouteData(routeFiles.map(u => config.mapPathBin + '/' + u));
     const geos: any[] = results.map(r => r.geometry);
     geos.forEach((r, i) => RegisterFeature(new Route('r' + i, 'Основной маршрут', r, palette[i % palette.length])))
     RegisterFeature(new MilestonesList('Вехи', 'Основной маршрут', [].concat(...geos)));
 }
-
-// async function AlternateRoutes(alternates: string[]) {
-//     const results: any[] = await fetchBinaryRouteData(alternates.map(u => './mongol19/bin/' + u));
-//     results.forEach((r, i) => {
-//         RegisterFeature(new Route('ar' + i, 'Дополнительные маршруты', r.geometry, '#0000ff'));
-//         RegisterFeature(new MilestonesList('Дополнительные маршруты' + i, 'Дополнительные маршруты' , r.geometry,
-//             Math.ceil(getStep(r.summary.distance, 8)), [9, 14]));
-//     });
-// }
 
 async function ARoute(routes: string[], name: string, color: string) {
     const results: any[] = await fetchBinaryRouteData(routes.map(u => config.mapPathBin + u));
@@ -83,26 +72,29 @@ async function fetchMetaData(): Promise<MetaData> {
     return await response.json();
 }
 
+async function POI(metaData: MetaData) {
+    let features: Promise<FeatureBase>[] = metaData.urls.map(async(u: PoiUrls) => {
+       const filePath = config.mapPathBin + '/' + u.filename;
+       const [data] = await fetchBinaryData([filePath]);
+
+       const dataProps: ShowPlaceboardProps[] = data;
+    //    const uralovedFiltered: ShowPlaceboardProps[] = uraloved.filter((ss: ShowPlaceboardProps) => ss.gravity >= 0);
+    //    const nashural: ShowPlaceboardProps[] = data[0];
+        return new ShowPlacesList(u.name, u.group, dataProps as ShowPlacesListData[], 'information') as FeatureBase;
+           // new ShowPlacesList('Ураловед', 'Ураловед', uralovedFiltered as ShowPlacesListData[], 'information'),
+           // new SimplePointsList('Заправки', 'Заправки', data[1], 'fillingstation'),
+           // new ShowPlacesList('Ночевки', 'Ночевки', data[2], 'lodging-2')
+    });
+    features.forEach(f => f.then(v => RegisterFeature(v)));
+    return Promise.all(features).then(() => FeaturesList.featuresList.init(map));
+}
+
 async function onMapCreated(map: Map) {
     const metaData: MetaData = await fetchMetaData();
-    await MainRoutes(metaData.routeFiles);
-    await ARoute(metaData.alternates, 'Дополнительные маршруты', '#0000ff');
-    await ARoute(metaData.tyva, 'Тыва', '#1f7a1f');
-    const data = await fetchBinaryData(metaData.urls.map(u => config.mapPathBin + u));
-    const seeSights: ShowPlaceboardProps[] = data[0];
-    const mainPoints: ShowPlaceboardProps[] = seeSights.filter((ss: ShowPlaceboardProps) => ss.gravity >= 4);
-    let features: FeatureBase[] = [
-        new ShowPlacesList('Основные Достопримечательности', 'Основные Достопримечательности', mainPoints as ShowPlacesListData[], 'information'),
-        new ShowPlacesList('Достопримечательности', 'Достопримечательности', data[0].filter((v: any) => v.gravity < 4), 'information'),
-        new SimplePointsList('Заправки', 'Заправки', data[1], 'fillingstation'),
-        new ShowPlacesList('Ночевки', 'Ночевки', data[2], 'lodging-2')
-    ];
-    features.forEach(f => {
-        RegisterFeature(f);
-
-    });
-
-    FeaturesList.featuresList.init(map);
+    await MainRoutes(metaData.routeFiles.map(f => f.filename));
+    // await ARoute(metaData.alternates, 'Дополнительные маршруты', '#0000ff');
+    // await ARoute(metaData.tyva, 'Тыва', '#1f7a1f');
+    await POI(metaData);
 
     const overlays: {[key:string]: any} = FeaturesList.FeaturesList().reduce((a: {[key:string]: any}, feature: Feature) => {
         const gname = feature.getGroupName();
@@ -115,17 +107,17 @@ async function onMapCreated(map: Map) {
     }, {});
 
     // aceeu
-    overlays['Маячки'] = getTrackersLayer();
+    // overlays['Маячки'] = getTrackersLayer();
 
-    overlays['Основной маршрут'].addTo(map);
-    overlays['Основные Достопримечательности'].addTo(map);
-    overlays['Достопримечательности'].addTo(map);
+    // overlays['Основной маршрут'].addTo(map);
+    // overlays['Ураловед'].addTo(map);
+    overlays[metaData.urls[0].group].addTo(map);
 
 
     AddControls(map, overlays);
-    // map.on('zoom', () => {
-    //     FeaturesList.featuresList.onZoom();
-    // })
-    // FeaturesList.featuresList.onZoom();
+    map.on('zoom', () => {
+        FeaturesList.featuresList.onZoom();
+    })
+    FeaturesList.featuresList.onZoom();
     AddButtonsToTheMap(map);
 }

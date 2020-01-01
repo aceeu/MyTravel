@@ -14,7 +14,7 @@ let scheme = new Type(
     }]
 );
 
-const routeScheme = new Type({
+const routeScheme = new Type({ // utf-8 without BOM
         'warnings?': [
             {
                 code: 'uint',
@@ -57,7 +57,7 @@ const routeScheme = new Type({
     }
 );
 
-let path = './dist/mongol19/';
+let path = './dist/ural20/';
 
 
 // interface MetaData {
@@ -74,10 +74,10 @@ function fetchMetaData() { // MetaData
 
 const metadata = fetchMetaData();
 
-const processRoute = scheme => filename => {
-    let content = fs.readFileSync(path + filename);
-    console.log(filename);
-    const fname = filename.split('.')[0];
+const processRoute = scheme => urlItem => {
+    let content = fs.readFileSync(path + urlItem.filename);
+    console.log(urlItem.filename);
+    const fname = urlItem.filename.split('.')[0];
     let res = scheme.encode(JSON.parse(content));
     fs.writeFileSync(path + 'bin/' + fname + '.bin', res);
 };

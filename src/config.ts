@@ -1,4 +1,4 @@
 export const config = {
-    mapPath: './mongol19',
-    mapPathBin: './mongol19/bin'
+    mapPath: './ural20',
+    mapPathBin: './ural20/bin'
 }
