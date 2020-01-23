@@ -54,8 +54,89 @@ const routeScheme = new Type({ // utf-8 without BOM
         ],
         way_points: ['int'],
         bbox: ['float']
-    }
-);
+    });
+
+const routeScheme2 = new Type({ // utf-8 without BOM
+    // новый формат из https://maps.openrouteservice.org/directions?n1=55.206304&n2=58.6409&n3=9&a=55.82954,56.91459,55.203344,58.630347,55.153718,58.691738,55.13816,58.726674&b=0&c=0&k1=en-US&k2=km&s
+    bbox: ['float'],
+    type: 'string',
+    properties: {
+        ascent: 'float',
+        descent: 'float',
+        segments: [
+            {
+                distance: 'float',
+                duration: 'float',
+                ascent: 'float',
+                descent: 'float',
+                detourfactor: 'float',
+                percentage: 'float',
+                steps: [
+                    {
+                        distance: 'float',
+                        duration: 'float',
+                        type: 'int',
+                        instruction: 'string',
+                        way_points: ['int'],
+                        'distanceTurf?': 'float'
+                    }
+                ]
+            }
+        ],
+        extras: {
+            surface: {
+                values: [
+                    ['int']
+                ],
+                summary: [
+                    {
+                        value: 'int',
+                        distance: 'float',
+                        amount: 'float'
+                    }
+                ]
+            },
+            waytypes: {
+                values: [
+                    ['int']
+                ],
+                summary: [
+                    {
+                        value: 'int',
+                        distance: 'float',
+                        amount: 'float'
+                    }
+                ]
+            },
+            steepness: {
+                values: [
+                    ['int']
+                ],
+                summary: [
+                    {
+                        value: 'int',
+                        distance: 'float',
+                        amount: 'float'
+                    }
+                ]
+            }
+        },
+        summary: {
+            distance: 'float',
+            duration: 'float'
+        },
+        way_points: ['int']
+    },
+    geometry: [
+        ['float']
+    ],
+    'warnings?': [
+        {
+            code: 'uint',
+            message: 'string'
+        }
+    ],
+});
 
 let path = './dist/ural20/';
 
@@ -83,8 +164,8 @@ const processRoute = scheme => urlItem => {
 };
 
 metadata.urls.forEach(processRoute(scheme));
-metadata.routeFiles.forEach(processRoute(routeScheme));
-metadata.alternates.forEach(processRoute(routeScheme));
+metadata.routeFiles.forEach(processRoute(routeScheme2));
+metadata.alternates.forEach(processRoute(routeScheme2));
 
 
 // let content = fs.readFileSync(path + 'show-places-data.json.bin');

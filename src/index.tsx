@@ -2,10 +2,8 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { LeafletMap, Map } from './leafletMap';
 import { FeaturesList, RegisterFeature, FeatureBase, Feature } from './features/features-list';
-// import { MovementMarkersList } from './features/movement-markers';
 import { MilestonesList } from './features/mile-stones';
 import { ShowPlacesList, ShowPlacesListData } from './features/show-places';
-import { SimplePointsList } from './features/simple-points';
 
 import { AddControls } from './leaflet';
 import { fetchBinaryData, fetchBinaryRouteData } from './fetch-showplaces';
@@ -13,12 +11,10 @@ import { Route } from './features/route';
 import { getStep } from './math';
 import { AddButtonsToTheMap } from './controls';
 import { ShowPlaceboardProps } from 'controls/show-place-board';
-import { getTrackersLayer } from './tracker/trackersGroupLayer';
 import { config } from './config';
 
 const palette: string[] = [
-    '#990000'
-    // '#1c6597', '#bc832d', '#466a33', '#d0342a', '#125f6a', '#f47955', '#8c5892', '#a99f2e', '#ffce07', '#32a9b2'
+    '#990000', '#1c6597', '#bc832d', '#466a33', '#d0342a', '#125f6a', '#f47955', '#8c5892', '#a99f2e', '#ffce07', '#32a9b2'
 ];
 
 let map: Map = undefined;
@@ -60,7 +56,7 @@ async function MainRoutes(routeFiles: string[]) {
 
 async function ARoute(routes: string[], name: string, color: string) {
     const results: any[] = await fetchBinaryRouteData(routes.map(u => config.mapPathBin + u));
-    results.forEach((r, i) => {
+    return results.forEach((r, i) => {
         RegisterFeature(new Route(name + i, name, r.geometry, color));
         RegisterFeature(new MilestonesList(name + i, name , r.geometry,
             Math.ceil(getStep(r.summary.distance, 8)), [9, 14]));
@@ -109,7 +105,7 @@ async function onMapCreated(map: Map) {
     // aceeu
     // overlays['Маячки'] = getTrackersLayer();
 
-    // overlays['Основной маршрут'].addTo(map);
+    overlays['Основной маршрут'].addTo(map);
     // overlays['Ураловед'].addTo(map);
     overlays[metaData.urls[0].group].addTo(map);
 
