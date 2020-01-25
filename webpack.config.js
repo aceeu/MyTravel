@@ -1,10 +1,18 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+
+// console.log(`path: ${path} path.resolve(__dirname, 'dist'): ${path.resolve(__dirname, 'dist')}`);
+
 module.exports = {
-    entry: { main: './src/index.tsx'},
+    context: path.resolve(__dirname, 'src'),
+    entry: {
+        main: './index.tsx'
+    },
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'main.js'
+        filename: 'main.[contenthash].js'
     },
     module: {
         rules: [
@@ -47,22 +55,26 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: [
+        extensions: [ // исп в случае если мы не используем в import расширения
           '.tsx',
           '.ts',
           '.js'
         ]
     },
+    devServer: {
+        port: 3000
+    },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './src/index.html', // require('html-webpack-template'),
-            inject: true,
-            appMountId: 'app',
-        })
-    ],
-    externals: {
-        "react": "React",
-        "react-dom": "ReactDOM",
-        "leaflet": "L"
-    }
+            template: './assets/index.html', // require('html-webpack-template'),
+            inject: 'body'
+        }),
+        new CopyWebpackPlugin([{
+            from: './assets/data/ural20',
+            to: path.resolve(__dirname, 'dist/ural20'),
+            type: 'dir'
+        }
+        ]),
+        new CleanWebpackPlugin()
+    ]
 }

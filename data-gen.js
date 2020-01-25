@@ -138,7 +138,7 @@ const routeScheme2 = new Type({ // utf-8 without BOM
     ],
 });
 
-let path = './dist/ural20/';
+let path = './src/assets/data/ural20/';
 
 
 // interface MetaData {

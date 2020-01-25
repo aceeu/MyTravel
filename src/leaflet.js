@@ -1,4 +1,4 @@
-import L from 'leaflet';
+import * as L from 'leaflet';
 import './assets/main.css';
 import './plugins/leaflet-mouse-position.js';
 import './plugins/Leaflet.PolylineMeasure.js';
@@ -29,7 +29,7 @@ export function LeafletBaseMap(element, startPos) {
 
     let mymap = L.map(element, {
         center: startPos,
-        zoom: 5,
+        zoom: 7,
         layers: [mapbox]
     });
 

@@ -107,7 +107,7 @@ async function onMapCreated(map: Map) {
 
     overlays['Основной маршрут'].addTo(map);
     // overlays['Ураловед'].addTo(map);
-    overlays[metaData.urls[0].group].addTo(map);
+    overlays['Достопримечательности на маршруте'].addTo(map);
 
 
     AddControls(map, overlays);
