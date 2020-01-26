@@ -1,5 +1,5 @@
 var { Type } = require('js-binary');
-let fs = require("fs");
+let fs = require('fs');
 
 let scheme = new Type(
     [{

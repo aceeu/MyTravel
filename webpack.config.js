@@ -3,8 +3,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
-// console.log(`path: ${path} path.resolve(__dirname, 'dist'): ${path.resolve(__dirname, 'dist')}`);
-
 module.exports = {
     context: path.resolve(__dirname, 'src'),
     entry: {
@@ -13,6 +11,15 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'main.[contenthash].js'
+    },
+    optimization: {
+        splitChunks: {
+            chunks: 'all'
+        },
+        minimizer: [compiler => {
+            const TerserWebpackPlugin = require('terser-webpack-plugin');
+            new TerserWebpackPlugin().apply(compiler);
+        }]
     },
     module: {
         rules: [
@@ -64,6 +71,7 @@ module.exports = {
     devServer: {
         port: 3000
     },
+    devtool: 'source-map',
     plugins: [
         new HtmlWebpackPlugin({
             template: './assets/index.html', // require('html-webpack-template'),
