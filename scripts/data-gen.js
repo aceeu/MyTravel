@@ -156,11 +156,13 @@ function fetchMetaData() { // MetaData
 const metadata = fetchMetaData();
 
 const processRoute = scheme => urlItem => {
-    let content = fs.readFileSync(path + urlItem.filename);
     console.log(urlItem.filename);
+    let content = fs.readFileSync(path + urlItem.filename);
+    console.log('read ok');
     const fname = urlItem.filename.split('.')[0];
     let res = scheme.encode(JSON.parse(content));
     fs.writeFileSync(path + 'bin/' + fname + '.bin', res);
+    console.log('write ok');
 };
 
 metadata.urls.forEach(processRoute(scheme));
