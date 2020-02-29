@@ -95,7 +95,10 @@ export class FeaturesList implements Feature {
         this.container.forEach(f => f.onZoom(z));
     }
     find(name: string[]): Feature | undefined {
-        return FeaturesList.featuresList.container.find(f => name.some(n => n == f.name));
+        return FeaturesList.featuresList.container.find((f: Feature) => name.some(n => n == f.name));
+    }
+    findByGroupName(groupName: string): Feature[] {
+        return FeaturesList.featuresList.container.filter((f: Feature) => f.getGroupName() == groupName);
     }
     findFeatures(groupName: string) : Feature[] {
         return FeaturesList.featuresList.container.reduce( (a: Feature[], f) => {

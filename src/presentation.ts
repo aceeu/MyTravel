@@ -15,7 +15,7 @@ export function StartPresentation(map: any, startStop: boolean): Promise<void> {
     
     return new Promise<void>((res, rej) => {
         const seesights: ShowPlacesList = FeaturesList.featuresList.find(
-            ['Основные Достопримечательности', 'Достопримечательности']) as ShowPlacesList;
+            ['Достопримечательности на маршруте']) as ShowPlacesList;
         let SeeSpairs: SeeSightsPair[] = [];
         for(let i: number = 0; i < seesights.data.length; ++i) {
             SeeSpairs.push({data: seesights.data[i], mark: seesights.marksList[i]});

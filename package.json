@@ -4,7 +4,8 @@
         "dev": "webpack --mode development",
         "dev:watch": "webpack --mode development --watch",
         "build": "webpack --mode production",
-        "start": "webpack-dev-server --mode development --open"
+        "start": "webpack-dev-server --mode development --open",
+        "data-gen": "node ./scripts/data-gen.js" 
     },
     "devDependencies": {
         "@babel/core": "^7.8.3",

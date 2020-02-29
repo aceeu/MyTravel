@@ -19,8 +19,8 @@ export class LeafletMap extends React.PureComponent<Props> {
 
     kmlClick = () => {
         // let s = genKmlMainroute();
-        download('baikal19.kml', genKmlMainroute());
-        download('baikal19-alt.kml', genKmlAltRoutes());
+        download('ural20.kml', genKmlMainroute());
+        // download('baikal19-alt.kml', genKmlAltRoutes());
     }
 
     kmlExportButton() {

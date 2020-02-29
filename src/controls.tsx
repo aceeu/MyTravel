@@ -56,15 +56,17 @@ let editCreator = L.Control.extend({
         input.placeholder = 'Найти';
         input.onkeyup = (e: any) => {
             if (e.keyCode == 13) {
-              const seesights: ShowPlacesList = FeaturesList.featuresList.find(
-                ['Наш урал', 'Наш урал']) as ShowPlacesList;
-                const point: number = seesights.data.findIndex(d =>
+              const seesights: ShowPlacesList[] = FeaturesList.featuresList.findByGroupName('Достопримечательности на маршруте') as ShowPlacesList[];
+              for (let i = 0; i < seesights.length; ++i) {
+                const point: number = seesights[i].data.findIndex(d =>
                     d.name.toLocaleLowerCase().includes(e.target.value.toLocaleLowerCase()));
                 if (point != -1) {
-                    const target: ShowPlacesListData = seesights.data[point];
-                    seesights.marksList[point].openPopup();
-                    map.flyTo(target.position, 7,{animate: true, duration: 4})        
+                    const target: ShowPlacesListData = seesights[i].data[point];
+                    seesights[i].marksList[point].openPopup();
+                    map.flyTo(target.position, 7,{animate: true, duration: 4})      
+                    break; 
                 }
+              }
             }
         }
         return input;

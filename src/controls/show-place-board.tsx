@@ -22,7 +22,7 @@ export const ShowPlaceboard: React.SFC<ShowPlaceboardProps> = (props: ShowPlaceb
     </iframe>;
     const img = props.imageUrl ? 
         <a href={props.imageUrl} target="_blank"><img
-            src={props.imageUrl}
+            src={props.imageUrl} crossOrigin='anonymous'
             className='showPlaceBoardImage'
         ></img></a> : null;
     return (

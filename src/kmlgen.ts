@@ -83,15 +83,15 @@ function makePlacemarkPoint(poifeatureData: ShowPlacesListData[]): PlacemarkPoin
 
 export function genKmlMainroute(): string {
     const mainRoutes: Route[] = FeaturesList.featuresList.findFeatures('Основной маршрут') as Route[];
-    const folders: any[] = makeRouteFolder(mainRoutes);
+    // const folders: any[] = makeRouteFolder(mainRoutes);
 
-    const poiMainfeature: ShowPlacesList = FeaturesList.featuresList.find(
-        ['Основные Достопримечательности']) as ShowPlacesList;
-    const constMPointsFolder = placemarkFolder('Main POI', makePlacemarkPoint(poiMainfeature.data));
-    const poifeature: ShowPlacesList = FeaturesList.featuresList.find(
-            ['Достопримечательности']) as ShowPlacesList;
-    const constPointsFolder = placemarkFolder('POI', makePlacemarkPoint(poifeature.data));
-    return kmlgen('Байкал19', [constMPointsFolder, constPointsFolder, ...folders]);
+    const poiMainfeature: ShowPlacesList[] = FeaturesList.featuresList.findByGroupName('Достопримечательности на маршруте') as ShowPlacesList[];
+    const folders: any = poiMainfeature.map(f => placemarkFolder(f.name, makePlacemarkPoint(f.data)));
+    // const constMPointsFolder = placemarkFolder('Main POI', makePlacemarkPoint(poiMainfeature.data));
+    // const poifeature: ShowPlacesList = FeaturesList.featuresList.find(
+    //         ['Достопримечательности']) as ShowPlacesList;
+    // const constPointsFolder = placemarkFolder('POI', makePlacemarkPoint(poifeature.data));
+    return kmlgen('Ural20', [makeRouteFolder(mainRoutes), ...folders]);
 }
 
 export function genKmlAltRoutes(): string {
