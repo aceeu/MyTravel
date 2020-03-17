@@ -40,11 +40,38 @@ ReactDOM.render(
         onMap={m => {
             map = m;
             onMapCreated(map);
+            initServiceWorker();
+            installPWA();
         }}
     />, document.getElementById('map'));
 
 export function getMap() {
     return map;
+}
+
+function initServiceWorker() {
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register(location.href + 'service-worker.js')
+            .then(reg => console.log('registration successful, scope is:'+ reg.scope))
+            .catch(err => console.log('service worker registration failed: ' + err))
+    }
+}
+
+function installPWA() {
+    if (document.location.protocol == 'http:') {
+        document.location.assign('https://' + document.location.hostname + ':8079' + document.location.pathname);
+        return;
+    }
+    // https://web.dev/customize-install/#criteria
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+    // Prevent the mini-infobar from appearing on mobile
+    e.preventDefault();
+    // Stash the event so it can be triggered later.
+    deferredPrompt = e;
+    // Update UI notify the user they can install the PWA
+    alert('showInstallPromotion()');
+    });
 }
 
 async function MainRoutes(routeFiles: string[]) {

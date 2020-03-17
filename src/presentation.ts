@@ -8,6 +8,7 @@ interface SeeSightsPair {
 
 let setIntervalId: NodeJS.Timeout;
 export function StartPresentation(map: any, startStop: boolean): Promise<void> {
+    CacheLog();
     if (startStop == false) {
         clearInterval(setIntervalId);
         return Promise.resolve();
@@ -37,4 +38,13 @@ export function StartPresentation(map: any, startStop: boolean): Promise<void> {
             handler, 7000);
     });
 
+}
+
+function CacheLog() {
+    console.log('cache log start...');
+    window.caches.open('aceeu').then((v: Cache) => {
+        v.keys().then(keys => {
+            console.log(keys.map(k => k.url).join('\n'))
+        })
+    })
 }

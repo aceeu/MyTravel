@@ -26,7 +26,7 @@ module.exports = {
         rules: [
             {
                 test: /\.(js|jsx)$/,
-                exclude: /node_modules/,
+                exclude: [/node_modules/, /service-worker.js/],
                 use: {
                     loader: 'babel-loader',
                     options: {
@@ -82,6 +82,14 @@ module.exports = {
             from: './assets/data/ural20',
             to: path.resolve(__dirname, 'dist/ural20'),
             type: 'dir'
+        }, {
+            from: './assets/manifest.json',
+            to: path.resolve(__dirname, 'dist/manifest.json'),
+            type: 'file'
+        }, {
+            from: './assets/service-worker.js',
+            to: path.resolve(__dirname, 'dist/service-worker.js'),
+            type: 'file'
         }
         ]),
         new CleanWebpackPlugin(),
