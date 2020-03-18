@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 module.exports = {
     context: path.resolve(__dirname, 'src'),
@@ -70,7 +71,8 @@ module.exports = {
         ]
     },
     devServer: {
-        port: 3000
+        port: 3000,
+        writeToDisk: true
     },
     devtool: 'source-map',
     plugins: [
@@ -79,20 +81,30 @@ module.exports = {
             inject: 'body'
         }),
         new CopyWebpackPlugin([{
-            from: './assets/data/ural20',
-            to: path.resolve(__dirname, 'dist/ural20'),
+            from: './assets/data/ural20/bin',
+            to: path.resolve(__dirname, 'dist/ural20/bin'),
             type: 'dir'
-        }, {
+        },{
+            from: './assets/data/ural20/img',
+            to: path.resolve(__dirname, 'dist/ural20/img'),
+            type: 'dir'
+        },{
             from: './assets/manifest.json',
             to: path.resolve(__dirname, 'dist/manifest.json'),
             type: 'file'
-        }, {
-            from: './assets/service-worker.js',
-            to: path.resolve(__dirname, 'dist/service-worker.js'),
+        },{
+            from: './assets/data/ural20/metadata.json',
+            to: path.resolve(__dirname, 'dist/ural20/metadata.json'),
             type: 'file'
         }
         ]),
         new CleanWebpackPlugin(),
+        new WorkboxPlugin.GenerateSW({ // PWA service-workers.js
+               // these options encourage the ServiceWorkers to get in there fast
+               // and not allow any straggling "old" SWs to hang around
+               clientsClaim: true,
+               skipWaiting: true
+        })
         // new BundleAnalyzerPlugin()
     ]
 }
