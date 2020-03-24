@@ -6,7 +6,7 @@ import { FeaturesList } from './features/features-list';
 
 const L = _();
 
-L.Control.Watermark = L.Control.extend({
+let Watermark = L.Control.extend({
     onAdd: function(map: any) {
         var img = L.DomUtil.create('img');
 
@@ -26,7 +26,7 @@ let presentationStarted: boolean = false;
 const startPresentation = 'Запуск презентации';
 const stopPresenttion = 'Остановить';
 
-L.Control.Button = L.Control.extend({
+let Presentation = L.Control.extend({
     onAdd: function(map: any) {
         var button = L.DomUtil.create('button');
         button.innerHTML= startPresentation;
@@ -77,15 +77,7 @@ let editCreator = L.Control.extend({
 })
 
 export function AddButtonsToTheMap(map: any) {
-
-    L.control.watermark = function(opts: any) {
-        return new L.Control.Watermark(opts);
-    }
-    L.control.button = function(opts: any) {
-        return new L.Control.Button(opts);
-    }
-
-    L.control.watermark({ position: 'bottomleft' }).addTo(map);
-    L.control.button({position: 'topleft'}).addTo(map);
+    new Watermark({ position: 'bottomleft' }).addTo(map);
+    new Presentation({position: 'topleft'}).addTo(map);
     new editCreator({position: 'topleft'}).addTo(map);
 }

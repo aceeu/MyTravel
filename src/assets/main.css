@@ -1,24 +1,28 @@
-.red {
-    color: red;
-}
+
 .leafletMap {
     height: 100%;
 }
 
-
-#top {
+#container {
+    position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
-    position: absolute;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: stretch;
+}
+#header {
+    flex: 0 0;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
     align-items: stretch;
 }
 
 #map {
-    flex: 1;
+    flex: 1 0;
 }
 
 .mile-stone {
@@ -28,7 +32,17 @@
     border-left: 1px solid black;
 }
 
-.kml-button {
+#pwa-promo {
+    display: flex;
+    justify-content: flex-end;
+}
+#pwa-promo > button {
+    background-color: cornflowerblue;
+    border-radius: 3px;
+    color: white;
+}
+
+/* .kml-button {
     position: absolute;
     background-color: bisque;
     width: 2rem;
@@ -37,4 +51,4 @@
     top: 0;
     z-index: 700;
     cursor: pointer;
-}
+} */

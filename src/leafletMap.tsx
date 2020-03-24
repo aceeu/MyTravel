@@ -2,6 +2,9 @@ import * as React from 'react';
 import { LeafletBaseMap } from './leaflet';
 import { download } from './download';
 import { genKmlMainroute, genKmlAltRoutes } from './kmlgen';
+import _ from './leaflet-define';
+
+const L = _();
 
 export type Map = any;
 
@@ -17,21 +20,6 @@ export class LeafletMap extends React.PureComponent<Props> {
         super(props);
     }
 
-    kmlClick = () => {
-        // let s = genKmlMainroute();
-        download('ural20.kml', genKmlMainroute());
-        // download('baikal19-alt.kml', genKmlAltRoutes());
-    }
-
-    kmlExportButton() {
-        // return null; // kml
-        return <div
-            className={'kml-button'}
-            onClick={this.kmlClick}
-        >kml
-        </div>
-    }
-
     render() {
         return (
             <React.Fragment>
@@ -40,7 +28,6 @@ export class LeafletMap extends React.PureComponent<Props> {
                     ref={this.element}
                     id={'leafletmap'}
                 ></div>
-                {this.kmlExportButton()}
             </React.Fragment>
         );
     }
@@ -48,5 +35,20 @@ export class LeafletMap extends React.PureComponent<Props> {
     componentDidMount() {
         this.map = LeafletBaseMap(this.element.current, [54.794, 55.711]);
         this.props.onMap(this.map);
+
+        let downloadButton = L.Control.extend({
+            onAdd: function(map: any) {
+                var button = L.DomUtil.create('button');
+                button.innerHTML= "Загрузить трек";
+                button.onclick = () => {
+                    download('ural20.kml', genKmlMainroute());
+                };
+                return button;
+            },
+            onRemove: function(map: any) {
+                // Nothing to do here
+            }
+        });
+        new downloadButton({positon: 'topleft'}).addTo(this.map);
     }
 }
