@@ -3,6 +3,7 @@ import { StartPresentation } from './presentation'
 import imgUral from './assets/ural.png';
 import { ShowPlacesList, ShowPlacesListData } from './features/show-places';
 import { FeaturesList } from './features/features-list';
+import imgPos from './assets/pos.png';
 
 const L = _();
 
@@ -49,6 +50,41 @@ let Presentation = L.Control.extend({
     }
 });
 
+let myPositionMarker: any;
+var myPosIcon = L.icon({
+    iconUrl: imgPos,
+    iconSize: [25,41],
+    iconAnchor: [25, 20],
+});
+
+const myPosition = L.Control.extend({
+    onAdd: (map: any) => {
+        let button = L.DomUtil.create('button');
+        button.innerHTML = 'Мое местоположение';
+        button.onclick = () => {
+            navigator.geolocation.watchPosition(
+            (positon: Position) => {
+                console.log(`position: (${positon.coords.latitude} - ${positon.coords.longitude})`);
+                if (myPositionMarker == null) {
+                    myPositionMarker = L.marker([positon.coords.latitude, positon.coords.longitude], {icon: myPosIcon}).addTo(map);
+                } else {
+                    myPositionMarker.setLatLng([positon.coords.latitude, positon.coords.longitude]);
+                }
+            }, 
+            (positonError: PositionError) => {
+                console.log(JSON.stringify(positonError));
+            },
+            {
+                enableHighAccuracy: true
+            });
+        };
+        return button;
+    },
+    onRemove: function(map: any) {
+        // Nothing to do here
+    }
+})
+
 let editCreator = L.Control.extend({
     onAdd: (map: any) => {
         let input = L.DomUtil.create('input');
@@ -80,4 +116,5 @@ export function AddButtonsToTheMap(map: any) {
     new Watermark({ position: 'bottomleft' }).addTo(map);
     new Presentation({position: 'topleft'}).addTo(map);
     new editCreator({position: 'topleft'}).addTo(map);
+    new myPosition({position: 'topleft'}).addTo(map);
 }
