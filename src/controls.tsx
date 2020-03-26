@@ -61,15 +61,23 @@ const myPosition = L.Control.extend({
     onAdd: (map: any) => {
         let button = L.DomUtil.create('button');
         button.innerHTML = 'Мое местоположение';
+        let myPosition: Position;
+        let clicked = false;
         button.onclick = () => {
+            if (myPosition) {
+                map.panTo([myPosition.coords.latitude, myPosition.coords.longitude], {animate: true})
+                return;
+            }
+            if (clicked)
+                return;
             navigator.geolocation.watchPosition(
             (positon: Position) => {
-                console.log(`position: (${positon.coords.latitude} - ${positon.coords.longitude})`);
+                myPosition = positon;
                 if (myPositionMarker == null) {
-                    myPositionMarker = L.marker([positon.coords.latitude, positon.coords.longitude], {icon: myPosIcon}).addTo(map);
-                } else {
+                    myPositionMarker = L.marker([myPosition.coords.latitude, myPosition.coords.longitude], {icon: myPosIcon}).addTo(map);
+                    map.panTo([myPosition.coords.latitude, myPosition.coords.longitude], {animate: true})
+                } else 
                     myPositionMarker.setLatLng([positon.coords.latitude, positon.coords.longitude]);
-                }
             }, 
             (positonError: PositionError) => {
                 console.log(JSON.stringify(positonError));
@@ -77,6 +85,7 @@ const myPosition = L.Control.extend({
             {
                 enableHighAccuracy: true
             });
+            clicked = true;
         };
         return button;
     },
