@@ -96,14 +96,28 @@ module.exports = {
             from: './assets/data/ural20/metadata.json',
             to: path.resolve(__dirname, 'dist/ural20/metadata.json'),
             type: 'file'
+        }, {
+            from: './assets/manifest.json',
+            to: path.resolve(__dirname, 'dist/manifest.json'),
+            type: 'file'
         }
         ]),
         new CleanWebpackPlugin(),
-        new WorkboxPlugin.GenerateSW({ // PWA service-workers.js
-               // these options encourage the ServiceWorkers to get in there fast
-               // and not allow any straggling "old" SWs to hang around
-               clientsClaim: true,
-               skipWaiting: true
+        // new WorkboxPlugin.GenerateSW({ // PWA service-workers.js
+        //        // these options encourage the ServiceWorkers to get in there fast
+        //        // and not allow any straggling "old" SWs to hang around
+        //        clientsClaim: true,
+        //        skipWaiting: true,
+        //        runtimeCaching: [{
+        //         // Match any request that ends with .png, .jpg, .jpeg or .svg.
+        //         urlPattern: /\.(?:png|jpg|jpeg|svg)/,
+        
+        //         // Apply a cache-first strategy.
+        //         handler: 'CacheFirst'
+        //       }],
+        // }),
+        new WorkboxPlugin.InjectManifest({
+            swSrc: './assets/service-worker.js',
         })
         // new BundleAnalyzerPlugin()
     ]

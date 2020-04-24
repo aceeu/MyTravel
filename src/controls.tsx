@@ -12,8 +12,6 @@ let Watermark = L.Control.extend({
         var img = L.DomUtil.create('img');
 
         img.src = imgUral;
-        img.style.width = '200px';
-
         return img;
     },
 
