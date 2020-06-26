@@ -1,6 +1,6 @@
 let { Type } = require('js-binary');
 let fs = require('fs');
-let metadataPath = './src/assets/data/ural20/';
+let metadataPath = './src/assets/data/';
 
 let scheme = new Type(
     [{

@@ -1,5 +1,5 @@
 export const config = {
-    mapPath: './ural20',
-    mapPathBin: './ural20/bin',
+    mapPath: '.',
+    mapPathBin: './bin',
     kmlDefaultName: 'route'
 }

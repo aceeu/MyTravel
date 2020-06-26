@@ -4,12 +4,12 @@
     "description": "Маршрут и достопримечательности",
     "icons": [
       {
-        "src": "./ural20/img/ural-192.png",
+        "src": "./manifest-192.png",
         "type": "image/png",
         "sizes": "192x192"
       },
       {
-        "src": "./ural20/img/ural-512.png",
+        "src": "./manifest-512.png",
         "type": "image/png",
         "sizes": "512x512"
       }

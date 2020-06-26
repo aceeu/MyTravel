@@ -2,5 +2,6 @@ node_modules/
 *.zip
 dist/
 images/
+src/assets/data
 mongol19/
 ural20/

@@ -81,41 +81,38 @@ module.exports = {
             inject: 'body'
         }),
         new CopyWebpackPlugin([{
-            from: './assets/data/ural20/bin',
-            to: path.resolve(__dirname, 'dist/ural20/bin'),
+            from: './assets/data/bin',
+            to: path.resolve(__dirname, 'dist/bin'),
             type: 'dir'
         },{
-            from: './assets/data/ural20/img',
-            to: path.resolve(__dirname, 'dist/ural20/img'),
+            from: './assets/data/img',
+            to: path.resolve(__dirname, 'dist/img'),
             type: 'dir'
         },{
             from: './assets/manifest.json',
-            to: path.resolve(__dirname, 'dist/manifest.json'),
+            to: path.resolve(__dirname, 'dist/'),
             type: 'file'
         },{
-            from: './assets/data/ural20/metadata.json',
-            to: path.resolve(__dirname, 'dist/ural20/metadata.json'),
+            from: './assets/manifest-512.png',
+            to: path.resolve(__dirname, 'dist/'),
             type: 'file'
-        }, {
-            from: './assets/manifest.json',
-            to: path.resolve(__dirname, 'dist/manifest.json'),
+        },{
+            from: './assets/manifest-192.png',
+            to: path.resolve(__dirname, 'dist/'),
+            type: 'file'
+        },{
+            from: './assets/data/metadata.json',
+            to: path.resolve(__dirname, 'dist/metadata.json'),
             type: 'file'
         }
+        //, 
+        // {
+        //     // from: './assets/manifest.json',
+        //     // to: path.resolve(__dirname, 'dist/manifest.json'),
+        //     // type: 'file'
+        // }
         ]),
         new CleanWebpackPlugin(),
-        // new WorkboxPlugin.GenerateSW({ // PWA service-workers.js
-        //        // these options encourage the ServiceWorkers to get in there fast
-        //        // and not allow any straggling "old" SWs to hang around
-        //        clientsClaim: true,
-        //        skipWaiting: true,
-        //        runtimeCaching: [{
-        //         // Match any request that ends with .png, .jpg, .jpeg or .svg.
-        //         urlPattern: /\.(?:png|jpg|jpeg|svg)/,
-        
-        //         // Apply a cache-first strategy.
-        //         handler: 'CacheFirst'
-        //       }],
-        // }),
         new WorkboxPlugin.InjectManifest({
             swSrc: './assets/service-worker.js',
         })
