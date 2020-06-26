@@ -139,6 +139,7 @@ const routeScheme2 = new Type({ // utf-8 without BOM
     ],
 });
 
+
 function fetchMetaData() { // MetaData
     let content = fs.readFileSync(metadataPath + 'metadata.json');
     return JSON.parse(content);

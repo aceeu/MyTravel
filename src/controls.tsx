@@ -2,11 +2,10 @@ import * as ReactDOM from 'react-dom';
 import * as React from 'react';
 import _ from './leaflet-define';
 import { StartPresentation } from './presentation'
-import waterMarkPng from './assets/watermark.png';
 import { ShowPlacesList, ShowPlacesListData } from './features/show-places';
 import { FeaturesList } from './features/features-list';
 import { GpsWatcherControl } from './controls/gpsWatchControl';
-import { watchGPS, showCurrGPS, stopWatchGPS } from './gpsWatch';
+import { watchGPS, stopWatchGPS } from './gpsWatch';
 import imgPos from './assets/pos.png';
 
 const L = _();
@@ -15,7 +14,7 @@ let Watermark = L.Control.extend({
     onAdd: function(map: any) {
         var img = L.DomUtil.create('img');
 
-        img.src = waterMarkPng;
+        img.src = 'watermark.png';
         return img;
     },
 

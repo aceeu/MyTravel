@@ -89,15 +89,19 @@ module.exports = {
             to: path.resolve(__dirname, 'dist/img'),
             type: 'dir'
         },{
-            from: './assets/manifest.json',
+            from: './assets/data/manifest.json',
             to: path.resolve(__dirname, 'dist/'),
             type: 'file'
         },{
-            from: './assets/manifest-512.png',
+            from: './assets/data/manifest-512.png',
             to: path.resolve(__dirname, 'dist/'),
             type: 'file'
         },{
-            from: './assets/manifest-192.png',
+            from: './assets/data/manifest-192.png',
+            to: path.resolve(__dirname, 'dist/'),
+            type: 'file'
+        },{
+            from: './assets/data/watermark.png',
             to: path.resolve(__dirname, 'dist/'),
             type: 'file'
         },{
