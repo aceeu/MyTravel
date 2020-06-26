@@ -151,8 +151,12 @@ const processRoute = scheme => urlItem => {
     let content = fs.readFileSync(metadataPath + urlItem.filename);
     console.log('read ok');
     const fname = urlItem.filename.split('.')[0];
+    const binFolder = metadataPath + 'bin';
     let res = scheme.encode(JSON.parse(content));
-    fs.writeFileSync(metadataPath + 'bin/' + fname + '.bin', res);
+    if (!fs.existsSync(binFolder)){
+        fs.mkdirSync(binFolder);
+    }
+    fs.writeFileSync(binFolder + '/' + fname + '.bin', res);
     console.log('write ok');
 };
 

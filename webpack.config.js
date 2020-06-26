@@ -105,12 +105,6 @@ module.exports = {
             to: path.resolve(__dirname, 'dist/metadata.json'),
             type: 'file'
         }
-        //, 
-        // {
-        //     // from: './assets/manifest.json',
-        //     // to: path.resolve(__dirname, 'dist/manifest.json'),
-        //     // type: 'file'
-        // }
         ]),
         new CleanWebpackPlugin(),
         new WorkboxPlugin.InjectManifest({

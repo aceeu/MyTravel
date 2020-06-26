@@ -34,7 +34,7 @@ export class LeafletMap extends React.PureComponent<Props> {
     }
 
     componentDidMount() {
-        this.map = LeafletBaseMap(this.element.current, [54.794, 55.711]);
+        this.map = LeafletBaseMap(this.element.current, config.defaultGPSPos);
         this.props.onMap(this.map);
 
         let downloadButton = L.Control.extend({
