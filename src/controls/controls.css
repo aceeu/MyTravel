@@ -12,3 +12,25 @@
 .leafletPopUp {
     width: 370px;
 }
+
+.toolsPanel {
+    display: flex;
+    flex-direction: column;
+}
+
+.gpsWatcherControl {
+    width: 75px;
+    height: 50px;
+    background-image: url('../assets/gpscontrol.png');
+    position: relative;
+    margin-top: 5px;
+    cursor: pointer;
+}
+.gpsWatcherSelector {
+    width: 15px;
+    height: 15px;
+    background-image: url('../assets/circle.png');
+    position: absolute;
+    top: 31px;
+    left: 5px;
+}

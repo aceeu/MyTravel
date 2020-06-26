@@ -60,7 +60,7 @@ function initServiceWorker() {
 }
 
 function installPWA() {
-    if (document.location.protocol == 'http:') {
+    if (document.location.protocol == 'http:' && document.location.hostname != 'localhost') {
         document.location.assign('https://' + document.location.hostname + ':8079' + document.location.pathname);
         return;
     }

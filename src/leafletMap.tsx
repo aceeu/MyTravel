@@ -3,6 +3,7 @@ import { LeafletBaseMap } from './leaflet';
 import { download } from './download';
 import { genKmlMainroute, genKmlAltRoutes } from './kmlgen';
 import _ from './leaflet-define';
+import { config } from './config';
 
 const L = _();
 
@@ -41,7 +42,7 @@ export class LeafletMap extends React.PureComponent<Props> {
                 var button = L.DomUtil.create('button');
                 button.innerHTML= "Загрузить трек";
                 button.onclick = () => {
-                    download('ural20.kml', genKmlMainroute());
+                    download(`${config.kmlDefaultName}.kml`, genKmlMainroute(config.kmlDefaultName));
                 };
                 return button;
             },

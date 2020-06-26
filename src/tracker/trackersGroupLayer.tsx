@@ -1,6 +1,5 @@
 import _ from '../leaflet-define';
 import { TrackFetch } from './trackFetch';
-import { getMap } from '../index';
 
 export function getTrackersLayer() {
     let trackersGroup = _().layerGroup();
