@@ -26,8 +26,7 @@ export function StartPresentation(map: any, startStop: boolean): Promise<void> {
         const handler = () => {
             SeeSpairs[i].mark.openPopup();
             let position = SeeSpairs[i++].data.position;
-            position[0] += 1.5;
-            map.flyTo(position, 7,{animate: true, duration: 4})
+            map.flyTo(position, 11,{animate: true, duration: 4})
             if (i >= SeeSpairs.length) {
                 clearInterval(setIntervalId);
                 res();

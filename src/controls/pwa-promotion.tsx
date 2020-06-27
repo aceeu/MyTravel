@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 
 interface PWAPromoProps {
     on: (value: boolean) => void;
@@ -11,7 +10,7 @@ export const PWAPromo = (props: PWAPromoProps) => {
             <button
                 onClick={() => props.on(true)}
             >
-                Установить
+                Добавить на рабочий стол
             </button>
             <button
                 onClick={() => props.on(false)}

@@ -1,4 +1,4 @@
-let {SpriteGenerator} = require('../sprite-generator/build/sprite-generator');
+let {SpriteGenerator} = require('./sprite-generator/build/sprite-generator');
 
 let spriteGenerator = new SpriteGenerator({
   sprites: [

@@ -7,6 +7,11 @@ import { FeaturesList } from './features/features-list';
 import { GpsWatcherControl } from './controls/gpsWatchControl';
 import { watchGPS, stopWatchGPS } from './gpsWatch';
 import imgPos from './assets/pos.png';
+import * as icons from './gen/sprites/icons';
+import './gen/sprites/_icons.scss';
+import { getIconInfo, IconInfoMap } from './common/sprite';
+
+const totalIconMap: IconInfoMap = {...icons.info};
 
 const L = _();
 
@@ -25,7 +30,8 @@ let Watermark = L.Control.extend({
 
 let presentationStarted: boolean = false;
 
-const startPresentation = 'Запуск презентации';
+const startPresentation = `<div class='${icons.info['information'].className}'
+    style="width:37px;height:37px"></div>`;
 const stopPresenttion = 'Остановить';
 
 let Presentation = L.Control.extend({
@@ -146,8 +152,6 @@ let emptyPanel = L.Control.extend({
         const panel = L.DomUtil.create('div', 'toolsPanel');
         panel.style.width = 50;
         panel.style.height = 50; 
-
-        createFind(map, '', panel);
         gpsControlPlaceHolder = createGpsControlPlaceHolder('gpsControlPlaceHolder', panel);
         renderGPSWatchControl(map);
         return panel;
@@ -157,8 +161,16 @@ let emptyPanel = L.Control.extend({
     }
 })
 
+let find = L.Control.extend({
+    onAdd: (map: any) => {
+        return createFind(map, '', undefined);
+    },
+    onRemove: () => {}
+})
+
 export function AddButtonsToTheMap(map: any) {
     new Watermark({ position: 'bottomleft' }).addTo(map);
     new Presentation({position: 'topleft'}).addTo(map);
     new emptyPanel({position: 'topleft'}).addTo(map);
+    new find({position: 'bottomright'}).addTo(map);
 }

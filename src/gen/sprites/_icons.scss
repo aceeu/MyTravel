@@ -5,228 +5,273 @@
 .i.s0 {
   background-image: url('./icons.png');
 
-  // arch
+  // anchorpier
   &.i0 {
+    background-position: 0 0;
+  }
+
+  // arch
+  &.i1 {
     background-position: -37px 0;
   }
 
-  // bigcity
-  &.i1 {
-    background-position: -74px -148px;
-  }
-
-  // birds-2
+  // beach_icon
   &.i2 {
     background-position: 0 -37px;
   }
 
-  // bridge_modern
+  // bigcity
   &.i3 {
     background-position: -37px -37px;
   }
 
-  // bridge_old
+  // birds-2
   &.i4 {
     background-position: -74px 0;
   }
 
-  // carwash
+  // bridge_modern
   &.i5 {
     background-position: -74px -37px;
   }
 
-  // castle-2
+  // bridge_old
   &.i6 {
     background-position: 0 -74px;
   }
 
-  // cave-2
+  // carwash
   &.i7 {
     background-position: -37px -74px;
   }
 
-  // chirch
+  // castle-2
   &.i8 {
     background-position: -74px -74px;
   }
 
-  // coffee
+  // cave-2
   &.i9 {
     background-position: -111px 0;
   }
 
-  // country
+  // chirch
   &.i10 {
     background-position: -111px -37px;
   }
 
-  // desert
+  // citywalls
   &.i11 {
     background-position: -111px -74px;
   }
 
-  // fillingstation
+  // coffee
   &.i12 {
     background-position: 0 -111px;
   }
 
-  // forest2
+  // country
   &.i13 {
     background-position: -37px -111px;
   }
 
-  // geyser-2
+  // desert
   &.i14 {
     background-position: -74px -111px;
   }
 
-  // hostel_0star
+  // fillingstation
   &.i15 {
     background-position: -111px -111px;
   }
 
-  // information
+  // fjord-2
   &.i16 {
     background-position: -148px 0;
   }
 
-  // junction
+  // forest2
   &.i17 {
     background-position: -148px -37px;
   }
 
-  // lake
+  // geyser-2
   &.i18 {
     background-position: -148px -74px;
   }
 
-  // landmark
+  // hostel_0star
   &.i19 {
     background-position: -148px -111px;
   }
 
-  // lighthouse-2
+  // information
   &.i20 {
     background-position: 0 -148px;
   }
 
-  // lodging-2
+  // junction
   &.i21 {
     background-position: -37px -148px;
   }
 
-  // market
+  // lake
   &.i22 {
-    background-position: 0 0;
+    background-position: -74px -148px;
   }
 
-  // monument
+  // landmark
   &.i23 {
     background-position: -111px -148px;
   }
 
-  // mountains
+  // lighthouse-2
   &.i24 {
     background-position: -148px -148px;
   }
 
-  // museum
+  // lodging-2
   &.i25 {
     background-position: -185px 0;
   }
 
-  // ne_barn-2
+  // market
   &.i26 {
     background-position: -185px -37px;
   }
 
-  // office-building
+  // monument
   &.i27 {
     background-position: -185px -74px;
   }
 
-  // pagoda-2
+  // mountains
   &.i28 {
     background-position: -185px -111px;
   }
 
-  // park
+  // museum
   &.i29 {
     background-position: -185px -148px;
   }
 
-  // parkinggarage
+  // ne_barn-2
   &.i30 {
     background-position: 0 -185px;
   }
 
-  // pyramid
+  // office-building
   &.i31 {
     background-position: -37px -185px;
   }
 
-  // river-2
+  // pagoda-2
   &.i32 {
     background-position: -74px -185px;
   }
 
-  // road
+  // park
   &.i33 {
     background-position: -111px -185px;
   }
 
-  // rockhouse
+  // parkinggarage
   &.i34 {
     background-position: -148px -185px;
   }
 
-  // ruins-2
+  // prayer
   &.i35 {
     background-position: -185px -185px;
   }
 
-  // smallcity
+  // pyramid
   &.i36 {
     background-position: -222px 0;
   }
 
-  // statue-2
+  // restaurant_fish
   &.i37 {
     background-position: -222px -37px;
   }
 
-  // tollstation
+  // river-2
   &.i38 {
     background-position: -222px -74px;
   }
 
-  // tree
+  // road
   &.i39 {
     background-position: -222px -111px;
   }
 
-  // villa
+  // rockhouse
   &.i40 {
     background-position: -222px -148px;
   }
 
-  // volcano-2
+  // ruins-2
   &.i41 {
     background-position: -222px -185px;
   }
 
-  // water
+  // smallcity
   &.i42 {
     background-position: 0 -222px;
   }
 
-  // waterfall
+  // statue-2
   &.i43 {
     background-position: -37px -222px;
   }
 
-  // waterwellpump
+  // tollstation
   &.i44 {
     background-position: -74px -222px;
+  }
+
+  // tree
+  &.i45 {
+    background-position: -111px -222px;
+  }
+
+  // villa
+  &.i46 {
+    background-position: -148px -222px;
+  }
+
+  // vineyard-2
+  &.i47 {
+    background-position: -185px -222px;
+  }
+
+  // volcano-2
+  &.i48 {
+    background-position: -222px -222px;
+  }
+
+  // water
+  &.i49 {
+    background-position: -259px 0;
+  }
+
+  // waterdrop
+  &.i50 {
+    background-position: -259px -37px;
+  }
+
+  // waterfall
+  &.i51 {
+    background-position: -259px -74px;
+  }
+
+  // waterwellpump
+  &.i52 {
+    background-position: -259px -111px;
+  }
+
+  // zoo
+  &.i53 {
+    background-position: -259px -148px;
   }
 }
