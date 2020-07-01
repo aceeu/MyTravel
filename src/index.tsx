@@ -82,7 +82,7 @@ function installPWA() {
                             deferredPrompt.prompt();
                             deferredPrompt.userChoice.then((choiceResult: any) => {
                                 if (choiceResult.outcome === 'accepted') {
-                                  console.log('User accepted the install prompt');
+                                  fetch('/crimea20r');
                                 } else {
                                   console.log('User dismissed the install prompt');
                                 }
