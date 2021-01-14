@@ -64,7 +64,7 @@ function createFind(map: any, className: string = '', panel: any) {
     input.placeholder = 'Найти';
     input.onkeyup = (e: any) => {
         if (e.keyCode == 13) {
-          const seesights: ShowPlacesList[] = FeaturesList.featuresList.findByGroupName('Достопримечательности на маршруте') as ShowPlacesList[];
+          const seesights: ShowPlacesList[] = FeaturesList.featuresList.findByGroupName('Достопримечательности') as ShowPlacesList[];
           for (let i = 0; i < seesights.length; ++i) {
             const point: number = seesights[i].data.findIndex(d =>
                 d.name.toLocaleLowerCase().includes(e.target.value.toLocaleLowerCase()));

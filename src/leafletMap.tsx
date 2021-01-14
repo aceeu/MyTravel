@@ -13,43 +13,39 @@ interface Props {
     onMap: (map: Map) => void;
 }
 
-export class LeafletMap extends React.PureComponent<Props> {
-    element = React.createRef<HTMLDivElement>();
-    map: any;
+export function LeafletMap(props: Props)  {
+    const element = React.useRef<HTMLDivElement>(null);
 
-    constructor(props: Props) {
-        super(props);
-    }
+    React.useEffect(
+        () => {
+            const map = LeafletBaseMap(element.current, config.defaultGPSPos);
+            props.onMap(map);
+    
+            let downloadButton = L.Control.extend({
+                onAdd: function(map: any) {
+                    var button = L.DomUtil.create('button');
+                    button.innerHTML= "Загрузить трек";
+                    button.onclick = () => {
+                        download(`${config.kmlDefaultName}.kml`, genKmlMainroute(config.kmlDefaultName));
+                        download(`${config.kmlAlternatesName}.kml`, genKmlAltRoutes(config.kmlAlternatesName));
+                    };
+                    return button;
+                },
+                onRemove: function(map: any) {
+                    // Nothing to do here
+                }
+            });
+            new downloadButton({positon: 'topleft'}).addTo(map);
+        }, []
+    
+    )
 
-    render() {
-        return (
-            <React.Fragment>
-                <div
-                    className={'leafletMap'}
-                    ref={this.element}
-                    id={'leafletmap'}
-                ></div>
-            </React.Fragment>
-        );
-    }
-
-    componentDidMount() {
-        this.map = LeafletBaseMap(this.element.current, config.defaultGPSPos);
-        this.props.onMap(this.map);
-
-        let downloadButton = L.Control.extend({
-            onAdd: function(map: any) {
-                var button = L.DomUtil.create('button');
-                button.innerHTML= "Загрузить трек";
-                button.onclick = () => {
-                    download(`${config.kmlDefaultName}.kml`, genKmlMainroute(config.kmlDefaultName));
-                };
-                return button;
-            },
-            onRemove: function(map: any) {
-                // Nothing to do here
-            }
-        });
-        new downloadButton({positon: 'topleft'}).addTo(this.map);
-    }
+    
+    return (
+        <div
+            className={'leafletMap'}
+            ref={element}
+            id={'leafletmap'}
+        ></div>
+    );
 }

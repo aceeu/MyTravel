@@ -8,10 +8,17 @@ const zoomTo = Number.POSITIVE_INFINITY;
 export class MilestonesList extends FeatureBase {
     geometries: number[][] = [];
     step: number;
-    constructor(name: string, groupName: string, geometries: number[][], step: number = 500000, zoom: number[] = [zoomFrom, zoomTo]) {
+    color: string;
+    constructor(name: string,
+            groupName: string,
+            geometries: number[][],
+            step: number = 500000,
+            zoom: number[] = [zoomFrom, zoomTo],
+            color: string = 'black') {
         super(name, groupName, zoom);
         this.geometries = geometries;
         this.step = step;
+        this.color = color;
     }
 
     initChild() {
@@ -44,7 +51,7 @@ export class MilestonesList extends FeatureBase {
 
     createMark(point: azimuth.Point, distance: number): FeatureMarker {
         const  distanceKm: string = (distance / 1000).toFixed(0);
-        const cMarker = _().marker([point.lat, point.lng], {icon: makeMileStoneLeafIcon(distanceKm)});
+        const cMarker = _().marker([point.lat, point.lng], {icon: makeMileStoneLeafIcon(distanceKm, this.color)});
         return {feature: cMarker, distance};
     }
 }
@@ -53,13 +60,13 @@ function convert(e: number[]): azimuth.Point {
     return {lat: e[0], lng: e[1], elv: e[2]};
 }
 
-function makeMileStoneLeafIcon(distance: string) {
+function makeMileStoneLeafIcon(distance: string, color: string) {
     return _().divIcon({
         iconSize:[40, 25],
         iconAnchor: [2, 25],
         popupAnchor: [0, -25],
         tooltipAnchor: [0, -25],
-        html: `<div style="margin-top: -10px;">${distance}</div>`,
+        html: `<div style="margin-top: -10px; color: ${color}">${distance}</div>`,
         className: 'mile-stone'
     });
 }

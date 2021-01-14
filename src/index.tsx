@@ -98,16 +98,17 @@ function installPWA() {
 async function MainRoutes(routeFiles: string[]) {
     const results: any[] = await fetchBinaryRouteData(routeFiles.map(u => config.mapPathBin + '/' + u));
     const geos: any[] = results.map(r => r.geometry);
-    geos.forEach((r, i) => RegisterFeature(new Route('r' + i, 'Основной маршрут', r, palette[i % palette.length])))
-    RegisterFeature(new MilestonesList('Вехи', 'Основной маршрут', [].concat(...geos)));
+    const color = (i: number) => palette[i % palette.length];
+    geos.forEach((r, i) => RegisterFeature(new Route('r' + i, 'Основной маршрут', r, color(i))))
+    RegisterFeature(new MilestonesList('Вехи', 'Основной маршрут', [].concat(...geos), undefined, undefined, 'black'));
 }
 
 async function ARoute(routes: string[], name: string, color: string) {
-    const results: any[] = await fetchBinaryRouteData(routes.map(u => config.mapPathBin + u));
+    const results: any[] = await fetchBinaryRouteData(routes.map(u => config.mapPathBin + '/' + u));
     return results.forEach((r, i) => {
         RegisterFeature(new Route(name + i, name, r.geometry, color));
         RegisterFeature(new MilestonesList(name + i, name , r.geometry,
-            Math.ceil(getStep(r.summary.distance, 8)), [9, 14]));
+            Math.ceil(getStep(r.properties.summary.distance, 8)), [9, 14], color));
     });
 }
 
@@ -133,11 +134,14 @@ async function POI(metaData: MetaData) {
     return Promise.all(features).then(() => FeaturesList.featuresList.init(map));
 }
 
+function onlyUnique(value: any, index: number, self: any) { 
+    return self.indexOf(value) === index;
+}
+
 async function onMapCreated(map: Map) {
     const metaData: MetaData = await fetchMetaData();
     await MainRoutes(metaData.routeFiles.map(f => f.filename));
-    // await ARoute(metaData.alternates, 'Дополнительные маршруты', '#0000ff');
-    // await ARoute(metaData.tyva, 'Тыва', '#1f7a1f');
+    await ARoute(metaData.alternates.map(f => f.filename), 'Дополнительные маршруты', '#0000ff');
     await POI(metaData);
 
     const overlays: {[key:string]: any} = FeaturesList.FeaturesList().reduce((a: {[key:string]: any}, feature: Feature) => {
@@ -154,8 +158,9 @@ async function onMapCreated(map: Map) {
     // overlays['Маячки'] = getTrackersLayer();
 
     overlays['Основной маршрут'].addTo(map);
-    // overlays['Ураловед'].addTo(map);
-    overlays['Достопримечательности на маршруте'].addTo(map);
+    
+    overlays['Достопримечательности'].addTo(map);
+    // metaData.urls.map(u => u.name).filter(onlyUnique).forEach(e => overlays[e].addTo(map));
 
 
     AddControls(map, overlays);

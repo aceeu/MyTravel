@@ -85,7 +85,7 @@ export function genKmlMainroute(name: string): string {
     const mainRoutes: Route[] = FeaturesList.featuresList.findFeatures('Основной маршрут') as Route[];
     // const folders: any[] = makeRouteFolder(mainRoutes);
 
-    const poiMainfeature: ShowPlacesList[] = FeaturesList.featuresList.findByGroupName('Достопримечательности на маршруте') as ShowPlacesList[];
+    const poiMainfeature: ShowPlacesList[] = FeaturesList.featuresList.findByGroupName('Достопримечательности') as ShowPlacesList[];
     const folders: any = poiMainfeature.map(f => placemarkFolder(f.name, makePlacemarkPoint(f.data)));
     // const constMPointsFolder = placemarkFolder('Main POI', makePlacemarkPoint(poiMainfeature.data));
     // const poifeature: ShowPlacesList = FeaturesList.featuresList.find(
@@ -94,11 +94,11 @@ export function genKmlMainroute(name: string): string {
     return kmlgen(name, [makeRouteFolder(mainRoutes), ...folders]);
 }
 
-export function genKmlAltRoutes(): string {
+export function genKmlAltRoutes(name: string): string {
     // alternatives
     const alt: Route[] = FeaturesList.featuresList.findFeatures('Дополнительные маршруты') as Route[];
-    const tyva: Route[] = FeaturesList.featuresList.findFeatures('Тыва') as Route[];
-    return kmlgen('Байкал19-альтернативы', makeRouteFolder([...alt, ...tyva]));
+    // const tyva: Route[] = FeaturesList.featuresList.findFeatures('Тыва') as Route[];
+    return kmlgen(name, makeRouteFolder(alt));
 }
 
 function kmlgen(name: string, folders: any[]): string {
