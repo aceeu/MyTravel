@@ -9,9 +9,12 @@ import { watchGPS, stopWatchGPS } from './gpsWatch';
 import imgPos from './assets/pos.png';
 import * as icons from './gen/sprites/icons';
 import './gen/sprites/_icons.scss';
-import { getIconInfo, IconInfoMap } from './common/sprite';
+import { download } from './download';
+import { genKmlMainroute, genKmlAltRoutes } from './kmlgen';
+import { config } from './config';
+// import { getIconInfo, IconInfoMap } from './common/sprite';
 
-const totalIconMap: IconInfoMap = {...icons.info};
+// const totalIconMap: IconInfoMap = {...icons.info};
 
 const L = _();
 
@@ -168,9 +171,26 @@ let find = L.Control.extend({
     onRemove: () => {}
 })
 
-export function AddButtonsToTheMap(map: any) {
+let downloadButton = L.Control.extend({
+    onAdd: function(map: any) {
+        var button = L.DomUtil.create('button');
+        button.innerHTML= "Загрузить трек";
+        button.onclick = () => {
+            download(`${config.kmlDefaultName}.kml`, genKmlMainroute(config.kmlDefaultName));
+            download(`${config.kmlAlternatesName}.kml`, genKmlAltRoutes(config.kmlAlternatesName));
+        };
+        return button;
+    },
+    onRemove: function(map: any) {
+        // Nothing to do here
+    }
+});
+
+
+export default function controls(map: any) {
     new Watermark({ position: 'bottomleft' }).addTo(map);
     new Presentation({position: 'topleft'}).addTo(map);
     new emptyPanel({position: 'topleft'}).addTo(map);
     new find({position: 'bottomright'}).addTo(map);
+    new downloadButton({positon: 'topleft'}).addTo(map);
 }

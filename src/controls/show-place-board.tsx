@@ -11,7 +11,7 @@ export interface ShowPlaceboardProps {
     gravity: number;
 }
 
-export const ShowPlaceboard: React.SFC<ShowPlaceboardProps> = (props: ShowPlaceboardProps) => {
+export const ShowPlaceboard = (props: ShowPlaceboardProps) => {
     const links = props.hrefs && props.hrefs.map((l, i) => {
         return l && <a href={l} key={i} target="_blank">Подробнее</a>;
     });
