@@ -33,10 +33,12 @@ interface MetaData {
 
 export default async function features(map: Map) {
     const metaData: MetaData = await fetchMetaData();
-    await MainRoutes(metaData.routeFiles.map(f => f.filename));
-    await ARoute(metaData.alternates.map(f => f.filename), 'Дополнительные маршруты', '#0000ff');
-    await POI(metaData, map);
-
+    const featuresX = await Promise.all([
+        MainRoutes(metaData.routeFiles.map(f => f.filename)),
+        ARoute(metaData.alternates.map(f => f.filename), 'Дополнительные маршруты', '#0000ff'),
+        POI(metaData, map)
+    ]);
+    
     const overlays: {[key:string]: any} = FeaturesList.FeaturesList().reduce((a: {[key:string]: any}, feature: Feature) => {
         const gname = feature.getGroupName();
         const name: string = gname ? gname : feature.name;
