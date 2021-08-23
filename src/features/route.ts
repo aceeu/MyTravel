@@ -1,8 +1,12 @@
 import { FeatureBase } from './features-list';
-import { RouteLine } from '../leaflet';
+import _ from '../leaflet-define';
 
 const zoomFrom = 0;
 const zoomTo = Number.POSITIVE_INFINITY;
+
+function RouteLine(geometry: number[][], color:string) {
+    return _().polyline(geometry, {weight: 3, color: color || '#ff5555', opacity: 0.9});
+}
 
 export class Route extends FeatureBase {
     

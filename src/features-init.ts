@@ -1,11 +1,12 @@
 import { Map } from './leafletMap';
 import { FeaturesList, RegisterFeature, FeatureBase, Feature } from './features/features-list';
 import { ShowPlacesList, ShowPlacesListData } from './features/show-places';
-import { AddControls } from './leaflet';
 import { fetchBinaryData } from './fetch-showplaces';
 import { ShowPlaceboardProps } from './controls/show-place-board';
 import { config } from './config';
 import { MainRoutes, ARoute } from './features-routes';
+import { baseLayers } from 'leaflet';
+import _ from './leaflet-define';
 
 
 
@@ -23,6 +24,14 @@ export interface MetaData {
     routeFiles: routeFile[], // основные маршруты
     alternates: routeFile[], // альтернитивные маршруты
     urls: PoiUrls[] // тут слои достопримечательностей
+}
+
+function AddControls(mymap: Map, overlays: any) {
+
+    _().control.layers(baseLayers, overlays).addTo(mymap);
+
+    _().control.mousePosition().addTo(mymap);
+    _().control.polylineMeasure().addTo(mymap);
 }
 
 export default async function features(map: Map) {

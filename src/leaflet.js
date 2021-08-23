@@ -7,7 +7,7 @@ import './plugins/Leaflet.PolylineMeasure.css';
 // набор тайл серверов
 // https://wiki.openstreetmap.org/wiki/Tile_servers
 
-const baseLayers = {
+export const baseLayers = {
     "Mapbox": L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token={accessToken}', {
         attribution: 'mapbox; openstreetmap',
         tileSize: 512,
@@ -35,27 +35,4 @@ const baseLayers = {
     })
 
 
-}
-
-export function LeafletBaseMap(element, startPos) {
-
-    let mymap = L.map(element, {
-        center: startPos,
-        zoom: 7,
-        layers: [baseLayers["Outdoors"]]
-    });
-
-    return mymap;
-}
-
-export function RouteLine(geometry, color) {
-    return L.polyline(geometry, {weight: 3, color: color || '#ff5555', opacity: 0.9});
-}
-
-export function AddControls(mymap, overlays) {
-
-    L.control.layers(baseLayers, overlays).addTo(mymap);
-
-    L.control.mousePosition().addTo(mymap);
-    L.control.polylineMeasure().addTo(mymap);
 }
