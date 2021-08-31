@@ -1,5 +1,9 @@
 import L from 'leaflet';
 
-export default function _() {
+export function _() {
     return L;
 };
+
+export function LatLng(lat, lng, alt) {
+    return new L.LatLng(lat, lng, alt);
+}

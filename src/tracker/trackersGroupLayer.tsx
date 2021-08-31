@@ -1,4 +1,4 @@
-import _ from '../leaflet-define';
+import { _ } from '../leaflet-define';
 import { TrackFetch } from './trackFetch';
 
 export function getTrackersLayer() {

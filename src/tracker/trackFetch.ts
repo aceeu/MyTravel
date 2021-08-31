@@ -1,4 +1,4 @@
-import _ from '../leaflet-define';
+import { _ } from '../leaflet-define';
 
 
 export interface TrackPoint {

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { FeatureMarker, FeatureBase } from './features-list';
-import _ from '../leaflet-define';
+import { _ } from '../leaflet-define';
 import { ShowPlaceboardProps, ShowPlaceboard } from '../controls/show-place-board';
 import { getIconInfo, IconInfoMap } from '../common/sprite';
 import * as icons from '../gen/sprites/icons';
@@ -10,8 +10,6 @@ import '../gen/sprites/_icons.scss';
 
 const totalIconMap: IconInfoMap = {...icons.info};
 
-const zoomFrom = 0;
-const zoomTo = Number.POSITIVE_INFINITY;
 
 export interface ShowPlacesListData extends ShowPlaceboardProps {
     icon: string;
@@ -22,7 +20,7 @@ export class ShowPlacesList extends FeatureBase {
     data: ShowPlacesListData[] = [];
     defaultIcon: string | undefined;
     constructor(name: string, groupName: string, data: ShowPlacesListData[], defaultIcon?: string) {
-        super(name, groupName, [zoomFrom, zoomTo]);
+        super(name, groupName);
         this.data = data;
         this.defaultIcon = defaultIcon;
     }
@@ -43,10 +41,6 @@ export class ShowPlacesList extends FeatureBase {
         }, {className: 'leafletPopUp'});
         cMarker.bindTooltip(item.name);
         return cMarker;
-    }
-
-    onZoom(zoom: number) {
-        
     }
 
 }

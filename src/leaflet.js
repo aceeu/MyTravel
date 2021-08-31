@@ -7,7 +7,7 @@ import './plugins/Leaflet.PolylineMeasure.css';
 // набор тайл серверов
 // https://wiki.openstreetmap.org/wiki/Tile_servers
 
-export const baseLayers = {
+const layers = {
     "Mapbox": L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token={accessToken}', {
         attribution: 'mapbox; openstreetmap',
         tileSize: 512,
@@ -33,6 +33,6 @@ export const baseLayers = {
     "Outdoors landscape": L.tileLayer('https://tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=99ae1bf83076479f99b0a1878abdf254', {
 	    attribution: 'thunderforest outdoors'
     })
-
-
 }
+
+export function getBaseLayers()  {return layers;}

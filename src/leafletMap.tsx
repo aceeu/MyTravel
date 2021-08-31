@@ -1,7 +1,6 @@
 import * as React from 'react';
-import _ from './leaflet-define';
-import { config } from './config';
-import { baseLayers } from './leaflet';
+import { _ } from './leaflet-define';
+import { getBaseLayers } from './leaflet';
 
 export type Map = any;
 
@@ -10,12 +9,12 @@ interface Props {
 }
 
 
-export function LeafletBaseMap(element: HTMLDivElement, startPos: number[]) {
+export function LeafletBaseMap(element: HTMLDivElement) {
 
     let mymap = _().map(element, {
-        center: startPos,
+        center: [0, 0],
         zoom: 7,
-        layers: [baseLayers["Outdoors"]]
+        layers: [getBaseLayers()["Outdoors"]]
     });
 
     return mymap;
@@ -25,7 +24,7 @@ export function LeafletBaseMap(element: HTMLDivElement, startPos: number[]) {
 export function LeafletMap(props: Props)  {
     const element = React.useRef<HTMLDivElement>(null);
 
-    React.useEffect(() => props.onMap(LeafletBaseMap(element.current!, config.defaultGPSPos)), [])
+    React.useEffect(() => props.onMap(LeafletBaseMap(element.current!)), [])
     
     return (
         <div

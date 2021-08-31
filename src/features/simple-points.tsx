@@ -1,14 +1,11 @@
 import { FeatureMarker, FeatureBase } from './features-list';
-import _ from '../leaflet-define';
+import { _ } from '../leaflet-define';
 import { getIconInfo, IconInfoMap } from '../common/sprite';
 import * as icons from '../gen/sprites/icons';
 import '../gen/sprites/_icons.scss';
 
 
 const totalIconMap: IconInfoMap = {...icons.info};
-
-const zoomFrom = 0;
-const zoomTo = Number.POSITIVE_INFINITY;
 
 interface GasRecord {
     name: string;
@@ -21,7 +18,7 @@ export class SimplePointsList extends FeatureBase {
     icon: string;
 
     constructor(name: string, groupName: string, data: any[], icon: string) {
-        super(name, groupName, [zoomFrom, zoomTo]);
+        super(name, groupName);
         this.data = data;
         this.icon = icon;
     }

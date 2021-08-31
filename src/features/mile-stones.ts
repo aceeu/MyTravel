@@ -1,9 +1,6 @@
 import { MapMarker, FeatureMarker, FeatureBase } from './features-list';
-import _ from '../leaflet-define';
+import { _ } from '../leaflet-define';
 import * as azimuth from 'azimuth';
-
-const zoomFrom = 5;
-const zoomTo = Number.POSITIVE_INFINITY;
 
 export class MilestonesList extends FeatureBase {
     geometries: number[][] = [];
@@ -13,9 +10,8 @@ export class MilestonesList extends FeatureBase {
             groupName: string,
             geometries: number[][],
             step: number = 500000,
-            zoom: number[] = [zoomFrom, zoomTo],
             color: string = 'black') {
-        super(name, groupName, zoom);
+        super(name, groupName);
         this.geometries = geometries;
         this.step = step;
         this.color = color;

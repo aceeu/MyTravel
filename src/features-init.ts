@@ -1,14 +1,15 @@
 import { Map } from './leafletMap';
 import { FeaturesList, RegisterFeature, FeatureBase, Feature } from './features/features-list';
-import { ShowPlacesList, ShowPlacesListData } from './features/show-places';
-import { fetchBinaryData } from './fetch-showplaces';
-import { ShowPlaceboardProps } from './controls/show-place-board';
 import { config } from './config';
-import { MainRoutes, ARoute } from './features-routes';
-import { baseLayers } from 'leaflet';
-import _ from './leaflet-define';
+import { _, LatLng} from './leaflet-define';
+import { makeFeatureFromMetaData, MetaData2 } from './feature-factory';
+import {reg as regPoi} from './features-poi'
+import {reg as regRoute} from './features-routes'
 
+import { getBaseLayers } from './leaflet';
 
+regPoi();
+regRoute();
 
 interface PoiUrls {
     filename: string;
@@ -28,19 +29,26 @@ export interface MetaData {
 
 function AddControls(mymap: Map, overlays: any) {
 
-    _().control.layers(baseLayers, overlays).addTo(mymap);
-
+    const f = getBaseLayers()
+    _().control.layers(f, overlays).addTo(mymap);
     _().control.mousePosition().addTo(mymap);
     _().control.polylineMeasure().addTo(mymap);
 }
 
+async function fetchMetaData2(): Promise<MetaData2> {
+    const response = await fetch(`${config.mapPath}/metadata2.json`);
+    return response.json();
+}
+
 export default async function features(map: Map) {
-    const metaData: MetaData = await fetchMetaData();
-    await Promise.all([
-        MainRoutes(metaData),
-        ARoute(metaData),
-        POI(metaData, map)
-    ]);
+    const metaData2: MetaData2 = await fetchMetaData2();
+    map.setView(LatLng(...metaData2.center), 8);
+
+    const features = makeFeatureFromMetaData(metaData2, map);
+
+    features.forEach(p => p.then(f => f.forEach(fi => RegisterFeature(fi))));
+    await Promise.all(features).then(() => FeaturesList.featuresList.init(map));
+
     
     const overlays: {[key:string]: any} = FeaturesList.FeaturesList().reduce((a: {[key:string]: any}, feature: Feature) => {
         const gname = feature.getGroupName();
@@ -52,41 +60,13 @@ export default async function features(map: Map) {
         return a;
     }, {});
 
-    // aceeu
-    // overlays['Маячки'] = getTrackersLayer();
-
-    overlays['Основной маршрут'].addTo(map);
-    
-    overlays['Достопримечательности'].addTo(map);
-    // metaData.urls.map(u => u.name).filter(onlyUnique).forEach(e => overlays[e].addTo(map));
-
+    Object.keys(overlays).forEach(key => {
+        const mdRow = metaData2.data.find(r => key == r.groupName)
+        if (mdRow?.showByDefault)
+            overlays[key].addTo(map)
+    });
 
     AddControls(map, overlays);
-    map.on('zoom', () => {
-        FeaturesList.featuresList.onZoom();
-    })
-    FeaturesList.featuresList.onZoom();
+
 }
 
-
-async function fetchMetaData(): Promise<MetaData> {
-    const response = await fetch(`${config.mapPath}/metadata.json`);
-    return await response.json();
-}
-
-async function POI(metaData: MetaData, map: Map) {
-    let features: Promise<FeatureBase>[] = metaData.urls.map(async(u: PoiUrls) => {
-       const filePath = config.mapPathBin + '/' + u.filename;
-       const [data] = await fetchBinaryData([filePath]);
-
-       const dataProps: ShowPlaceboardProps[] = data;
-    //    const uralovedFiltered: ShowPlaceboardProps[] = uraloved.filter((ss: ShowPlaceboardProps) => ss.gravity >= 0);
-    //    const nashural: ShowPlaceboardProps[] = data[0];
-        return new ShowPlacesList(u.name, u.group, dataProps as ShowPlacesListData[], 'information') as FeatureBase;
-           // new ShowPlacesList('Ураловед', 'Ураловед', uralovedFiltered as ShowPlacesListData[], 'information'),
-           // new SimplePointsList('Заправки', 'Заправки', data[1], 'fillingstation'),
-           // new ShowPlacesList('Ночевки', 'Ночевки', data[2], 'lodging-2')
-    });
-    features.forEach(f => f.then(v => RegisterFeature(v)));
-    await Promise.all(features).then(() => FeaturesList.featuresList.init(map));
-}

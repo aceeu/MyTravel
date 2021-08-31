@@ -1,6 +1,6 @@
 import * as ReactDOM from 'react-dom';
 import * as React from 'react';
-import _ from './leaflet-define';
+import { _ } from './leaflet-define';
 import { StartPresentation } from './presentation'
 import { ShowPlacesList, ShowPlacesListData } from './features/show-places';
 import { FeaturesList } from './features/features-list';

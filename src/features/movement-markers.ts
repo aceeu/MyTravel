@@ -1,14 +1,11 @@
 import { MapMarker, FeatureBase } from './features-list';
-import _ from '../leaflet-define';
-
-const zoomFrom = 11;
-const zoomTo = Number.POSITIVE_INFINITY;
+import { _ } from '../leaflet-define';
 
 export class MovementMarkersList extends FeatureBase {
 
 
     constructor(name: string, groupName: string) {
-        super(name, groupName, [zoomFrom, zoomTo]);
+        super(name, groupName);
     }
 
     initChild() {

@@ -105,8 +105,8 @@ module.exports = {
             to: path.resolve(__dirname, 'dist/'),
             type: 'file'
         },{
-            from: './assets/data/metadata.json',
-            to: path.resolve(__dirname, 'dist/metadata.json'),
+            from: './assets/data/metadata2.json',
+            to: path.resolve(__dirname, 'dist/metadata2.json'),
             type: 'file'
         }
         ]),
