@@ -8,8 +8,9 @@ export type MetaData2Row = {
     groupName: string;
     type: featureType;
     files: string[];
-    color: string[];
-    showByDefault?: boolean;
+    color?: string[];
+    showByDefault?: boolean; // показывать на карте по умолчанию
+    mileStonesOneForAll?: boolean; // вехи для всех один или для каждого отдельно
 }
 
 export interface MetaData2 {

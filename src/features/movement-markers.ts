@@ -1,7 +1,7 @@
-import { MapMarker, FeatureBase } from './features-list';
+import { MapMarker, LayerGroupFeature } from './features-list';
 import { _ } from '../leaflet-define';
 
-export class MovementMarkersList extends FeatureBase {
+export class MovementMarkersList extends LayerGroupFeature {
 
 
     constructor(name: string, groupName: string) {

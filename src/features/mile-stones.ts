@@ -1,15 +1,15 @@
-import { MapMarker, FeatureMarker, FeatureBase } from './features-list';
+import { MapMarker, FeatureMarker, LayerGroupFeature } from './features-list';
 import { _ } from '../leaflet-define';
 import * as azimuth from 'azimuth';
 
-export class MilestonesList extends FeatureBase {
+export class Milestones extends LayerGroupFeature {
     geometries: number[][] = [];
     step: number;
     color: string;
     constructor(name: string,
             groupName: string,
             geometries: number[][],
-            step: number = 500000,
+            step: number = 100000,
             color: string = 'black') {
         super(name, groupName);
         this.geometries = geometries;

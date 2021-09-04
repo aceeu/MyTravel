@@ -15,6 +15,48 @@ let scheme = new Type( // the same as in data-gen.js
     }]
 );
 
+const mongolRouteScheme = new Type({ // utf-8 without BOM
+    'warnings?': [
+        {
+            code: 'uint',
+            message: 'string'
+        }
+    ],
+    elevation: 'boolean',
+    summary: {
+        distance: 'float',
+        duration: 'float',
+        ascent: 'float',
+        descent: 'float'
+    },
+    geometry_format: 'string',
+    geometry: [
+        ['float']
+    ],
+    segments: [
+        {
+            distance: 'float',
+            duration: 'float',
+            ascent: 'float',
+            descent: 'float',
+            detourfactor: 'float',
+            percentage: 'float',
+            steps: [
+                {
+                    distance: 'float',
+                    duration: 'float',
+                    type: 'int',
+                    instruction: 'string',
+                    way_points: ['int'],
+                    'distanceTurf?': 'float'
+                }
+            ]
+        }
+    ],
+    way_points: ['int'],
+    bbox: ['float']
+});
+
 const routeScheme2 = new Type({ // utf-8 without BOM
     // новый формат из https://maps.openrouteservice.org/directions?n1=55.206304&n2=58.6409&n3=9&a=55.82954,56.91459,55.203344,58.630347,55.153718,58.691738,55.13816,58.726674&b=0&c=0&k1=en-US&k2=km&s
     bbox: ['float'],
@@ -112,7 +154,8 @@ export function fetchBinaryRouteData(urls: string[]): Promise<any[]> {
         const urlBinFile = url.replace('.json', '.bin');
         const response = await fetch(urlBinFile);
         const buf = await response.arrayBuffer();
-        return routeScheme2.decode(Buffer.from(buf));
+        //return routeScheme2.decode(Buffer.from(buf));
+        return mongolRouteScheme.decode(Buffer.from(buf));
     })
     return Promise.all(results);
 }

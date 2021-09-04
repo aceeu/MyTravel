@@ -1,8 +1,8 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { FeatureMarker, FeatureBase } from './features-list';
+import { FeatureMarker, LayerGroupFeature } from './features-list';
 import { _ } from '../leaflet-define';
-import { ShowPlaceboardProps, ShowPlaceboard } from '../controls/show-place-board';
+import { PoiBallonProps, PoiBallon } from '../controls/poi-ballon-control';
 import { getIconInfo, IconInfoMap } from '../common/sprite';
 import * as icons from '../gen/sprites/icons';
 import '../gen/sprites/_icons.scss';
@@ -10,16 +10,16 @@ import '../gen/sprites/_icons.scss';
 
 const totalIconMap: IconInfoMap = {...icons.info};
 
-
-export interface ShowPlacesListData extends ShowPlaceboardProps {
+export interface PoiListData extends PoiBallonProps {
     icon: string;
 }
 
-export class ShowPlacesList extends FeatureBase {
-    marksList: any[] = [];
-    data: ShowPlacesListData[] = [];
+export class PoiList extends LayerGroupFeature {
+    marksList: FeatureMarker[] = [];
+    data: PoiListData[] = [];
     defaultIcon: string | undefined;
-    constructor(name: string, groupName: string, data: ShowPlacesListData[], defaultIcon?: string) {
+
+    constructor(name: string, groupName: string, data: PoiListData[], defaultIcon?: string) {
         super(name, groupName);
         this.data = data;
         this.defaultIcon = defaultIcon;
@@ -30,13 +30,13 @@ export class ShowPlacesList extends FeatureBase {
         this.layerGroup = _().layerGroup(this.marksList);
     }
 
-    createMark = (item: ShowPlacesListData): FeatureMarker => {
+    createMark = (item: PoiListData): FeatureMarker => {
         const cMarker = _().marker(
             item.position,
             {icon: makeLeafIcon(totalIconMap, item.icon || this.defaultIcon || '')});
         cMarker.bindPopup(() => {
             let element = document.createElement('div');
-            showPlaceBoard(element, item);
+            showPoiBallon(element, item);
             return element;
         }, {className: 'leafletPopUp'});
         cMarker.bindTooltip(item.name);
@@ -56,9 +56,9 @@ function makeLeafIcon(iconMap: IconInfoMap, icon: string) {
     });
 }
 
-function showPlaceBoard(element: HTMLElement, item: ShowPlacesListData) {
-    let props: ShowPlaceboardProps = {
+function showPoiBallon(element: HTMLElement, item: PoiListData) {
+    let props: PoiBallonProps = {
         ...item
     };
-    ReactDOM.render(<ShowPlaceboard {...props}/>, element);
+    ReactDOM.render(<PoiBallon {...props}/>, element);
 }

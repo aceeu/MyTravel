@@ -8,7 +8,7 @@ interface Props {
     position: 0 | 1 | 2;
     select?: (position: number) => void;
 }
-export const GpsWatcherControl: React.SFC<Props> = (props) => {
+export const GpsWatcherControl = (props: Props) => {
     const left = lefts[props.position % 3];
     const element = React.createRef<HTMLDivElement>();
     const click = (event: any) => {

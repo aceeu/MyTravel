@@ -1,7 +1,7 @@
 import * as xmlbuilder from 'xmlbuilder';
-import { FeaturesList, Feature } from './features/features-list';
+import { FeaturesList } from './features/features-list';
 import { Route } from './features/route';
-import { ShowPlacesList, ShowPlacesListData } from 'features/show-places';
+import { PoiList, PoiListData } from 'features/show-places';
 
 // function networkLink() {
 //     return {
@@ -66,7 +66,7 @@ function makeRouteFolder(routes: Route[]): any[] {
 
 }
 
-function makePlacemarkPoint(poifeatureData: ShowPlacesListData[]): PlacemarkPoint[] {
+function makePlacemarkPoint(poifeatureData: PoiListData[]): PlacemarkPoint[] {
     return poifeatureData.map(v => {
         const imgurl = v.imageUrl || '';
         let description: string = imageRef(imgurl)
@@ -85,7 +85,7 @@ export function genKmlMainroute(name: string): string {
     const mainRoutes: Route[] = FeaturesList.featuresList.findFeatures('Основной маршрут') as Route[];
     // const folders: any[] = makeRouteFolder(mainRoutes);
 
-    const poiMainfeature: ShowPlacesList[] = FeaturesList.featuresList.findByGroupName('Достопримечательности') as ShowPlacesList[];
+    const poiMainfeature: PoiList[] = FeaturesList.featuresList.findByGroupName('Достопримечательности') as PoiList[];
     const folders: any = poiMainfeature.map(f => placemarkFolder(f.name, makePlacemarkPoint(f.data)));
     // const constMPointsFolder = placemarkFolder('Main POI', makePlacemarkPoint(poiMainfeature.data));
     // const poifeature: ShowPlacesList = FeaturesList.featuresList.find(

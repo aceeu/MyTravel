@@ -7,7 +7,7 @@ export interface Feature {
     name: string;
 }
 
-export abstract class FeatureBase implements Feature {
+export abstract class LayerGroupFeature implements Feature {
     markers: MapMarker[] = [];
     map: any;
     name: string;
@@ -45,9 +45,8 @@ export interface MapMarker {
 }
 
 
-export class FeaturesList implements Feature {
+export class FeaturesList {
     map: any;
-    name: string = 'container';
     container: Array<Feature> = [];
 
     static featuresList: FeaturesList = new FeaturesList();
@@ -55,9 +54,6 @@ export class FeaturesList implements Feature {
     static FeaturesList(): Feature[]  {
         return FeaturesList.featuresList.container;
     }
-
-    getLayerGroup(){}
-    getGroupName(): string | undefined {return}
 
     register(f: Feature) {
         this.container.push(f);
@@ -87,7 +83,7 @@ export class FeaturesList implements Feature {
         }, []);
     }
 
-    groupList(): string[] {
+    getGroupNames(): string[] {
         return FeaturesList.featuresList.container.map(f => f.getGroupName() ?? '')
     }
 }

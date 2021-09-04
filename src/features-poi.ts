@@ -1,9 +1,9 @@
 import { config } from "./config";
-import { ShowPlaceboardProps } from "./controls/show-place-board";
+import { PoiBallonProps } from "./controls/poi-ballon-control";
 import { MetaData2Row, MetaDataTypeHandler, registerMetaDataTypeHandler } from "./feature-factory";
 import { Feature } from "./features/features-list";
-import { ShowPlacesList, ShowPlacesListData } from "./features/show-places";
-import { fetchBinaryData } from "./fetch-showplaces";
+import { PoiList, PoiListData } from "./features/show-places";
+import { fetchBinaryData } from "./bin-loader";
 
 // async function POI(metaData: MetaData, map: Map) {
 //     let features: Promise<FeatureBase>[] = metaData.urls.map(async(u: PoiUrls) => {
@@ -25,8 +25,8 @@ import { fetchBinaryData } from "./fetch-showplaces";
 const poi: MetaDataTypeHandler = async (v: MetaData2Row) => {
     const filePath = config.mapPathBin + '/' + v.files[0];
     const [data] = await fetchBinaryData([filePath]);
-    const dataProps: ShowPlaceboardProps[] = data;
-    return [new ShowPlacesList(v.name, v.groupName, dataProps as ShowPlacesListData[], 'information')] as Feature[];
+    const dataProps: PoiBallonProps[] = data;
+    return [new PoiList(v.name, v.groupName, dataProps as PoiListData[], 'information')] as Feature[];
 }
 
 export function reg(){registerMetaDataTypeHandler('poi', poi)}

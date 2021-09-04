@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './controls.css';
 
-export interface ShowPlaceboardProps {
+export interface PoiBallonProps {
     name: string;
     position: number[]; // lat, lng
     imageUrl?: string;
@@ -11,7 +11,7 @@ export interface ShowPlaceboardProps {
     gravity: number;
 }
 
-export const ShowPlaceboard = (props: ShowPlaceboardProps) => {
+export const PoiBallon = (props: PoiBallonProps) => {
     const links = props.hrefs && props.hrefs.map((l, i) => {
         return l && <a href={l} key={i} target="_blank">Подробнее</a>;
     });

@@ -1,5 +1,5 @@
 import { Map } from './leafletMap';
-import { FeaturesList, RegisterFeature, FeatureBase, Feature } from './features/features-list';
+import { FeaturesList, RegisterFeature, LayerGroupFeature, Feature } from './features/features-list';
 import { config } from './config';
 import { _, LatLng} from './leaflet-define';
 import { makeFeatureFromMetaData, MetaData2 } from './feature-factory';

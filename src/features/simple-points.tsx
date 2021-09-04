@@ -1,4 +1,4 @@
-import { FeatureMarker, FeatureBase } from './features-list';
+import { FeatureMarker, LayerGroupFeature } from './features-list';
 import { _ } from '../leaflet-define';
 import { getIconInfo, IconInfoMap } from '../common/sprite';
 import * as icons from '../gen/sprites/icons';
@@ -12,7 +12,7 @@ interface GasRecord {
     position: number[];
 }
 
-export class SimplePointsList extends FeatureBase {
+export class SimplePointsList extends LayerGroupFeature {
     marksList: any[] = [];
     data: any[];
     icon: string;

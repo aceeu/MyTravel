@@ -1,8 +1,8 @@
 import { FeaturesList } from './features/features-list'
-import { ShowPlacesList, ShowPlacesListData } from 'features/show-places';
+import { PoiList, PoiListData } from 'features/show-places';
 
 interface SeeSightsPair {
-    data: ShowPlacesListData;
+    data: PoiListData;
     mark: any;
 }
 
@@ -15,8 +15,8 @@ export function StartPresentation(map: any, startStop: boolean): Promise<void> {
     }
     
     return new Promise<void>((res, rej) => {
-        const seesights: ShowPlacesList = FeaturesList.featuresList.find(
-            ['Достопримечательности']) as ShowPlacesList;
+        const seesights: PoiList = FeaturesList.featuresList.find(
+            ['Достопримечательности']) as PoiList;
         let SeeSpairs: SeeSightsPair[] = [];
         for(let i: number = 0; i < seesights.data.length; ++i) {
             SeeSpairs.push({data: seesights.data[i], mark: seesights.marksList[i]});

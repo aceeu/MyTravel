@@ -2,9 +2,9 @@ import * as ReactDOM from 'react-dom';
 import * as React from 'react';
 import { _ } from './leaflet-define';
 import { StartPresentation } from './presentation'
-import { ShowPlacesList, ShowPlacesListData } from './features/show-places';
+import { PoiList, PoiListData } from './features/show-places';
 import { FeaturesList } from './features/features-list';
-import { GpsWatcherControl } from './controls/gpsWatchControl';
+import { GpsWatcherControl } from './controls/gps-watch-control';
 import posPng from './assets/pos.png';
 import * as icons from './gen/sprites/icons';
 import './gen/sprites/_icons.scss';
@@ -65,12 +65,12 @@ const findControl = L.Control.extend({
         input.placeholder = 'Найти';
         input.onkeyup = (e: any) => {
             if (e.keyCode == 13) {
-              const seesights: ShowPlacesList[] = FeaturesList.featuresList.findByGroupName('Достопримечательности') as ShowPlacesList[];
+              const seesights: PoiList[] = FeaturesList.featuresList.findByGroupName('Достопримечательности') as PoiList[];
               for (let i = 0; i < seesights.length; ++i) {
                 const point: number = seesights[i].data.findIndex(d =>
                     d.name.toLocaleLowerCase().includes(e.target.value.toLocaleLowerCase()));
                 if (point != -1) {
-                    const target: ShowPlacesListData = seesights[i].data[point];
+                    const target: PoiListData = seesights[i].data[point];
                     seesights[i].marksList[point].openPopup();
                     map.flyTo(target.position, 7,{animate: true, duration: 4})      
                     break; 
