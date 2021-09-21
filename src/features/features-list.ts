@@ -45,14 +45,14 @@ export interface MapMarker {
 }
 
 
-export class FeaturesList {
+export class FeaturesStorage {
     map: any;
     container: Array<Feature> = [];
 
-    static featuresList: FeaturesList = new FeaturesList();
+    static featuresList: FeaturesStorage = new FeaturesStorage();
 
-    static FeaturesList(): Feature[]  {
-        return FeaturesList.featuresList.container;
+    static Storage(): Feature[]  {
+        return FeaturesStorage.featuresList.container;
     }
 
     register(f: Feature) {
@@ -69,13 +69,13 @@ export class FeaturesList {
     }
 
     find(name: string[]): Feature | undefined {
-        return FeaturesList.featuresList.container.find((f: Feature) => name.some(n => n == f.name));
+        return FeaturesStorage.featuresList.container.find((f: Feature) => name.some(n => n == f.name));
     }
     findByGroupName(groupName: string): Feature[] {
-        return FeaturesList.featuresList.container.filter((f: Feature) => f.getGroupName() == groupName);
+        return FeaturesStorage.featuresList.container.filter((f: Feature) => f.getGroupName() == groupName);
     }
     findFeatures(groupName: string) : Feature[] {
-        return FeaturesList.featuresList.container.reduce( (a: Feature[], f) => {
+        return FeaturesStorage.featuresList.container.reduce( (a: Feature[], f) => {
             if (f.getGroupName() == groupName) {
                 a.push(f);
             }
@@ -84,15 +84,15 @@ export class FeaturesList {
     }
 
     getGroupNames(): string[] {
-        return FeaturesList.featuresList.container.map(f => f.getGroupName() ?? '')
+        return FeaturesStorage.featuresList.container.map(f => f.getGroupName() ?? '')
     }
 }
 
 
 export function RegisterFeature(f: Feature) {
-    return FeaturesList.featuresList.register(f);
+    return FeaturesStorage.featuresList.register(f);
 }
 
 export function UnRegisterOnList(name: string) {
-    return FeaturesList.featuresList.unregister(name);
+    return FeaturesStorage.featuresList.unregister(name);
 }

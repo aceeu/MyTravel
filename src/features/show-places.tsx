@@ -56,7 +56,7 @@ function makeLeafIcon(iconMap: IconInfoMap, icon: string) {
     });
 }
 
-function showPoiBallon(element: HTMLElement, item: PoiListData) {
+export function showPoiBallon(element: HTMLElement, item: PoiListData) {
     let props: PoiBallonProps = {
         ...item
     };

@@ -1,5 +1,5 @@
 import { Map } from './leafletMap';
-import { FeaturesList, RegisterFeature, LayerGroupFeature, Feature } from './features/features-list';
+import { FeaturesStorage, RegisterFeature, LayerGroupFeature, Feature } from './features/features-list';
 import { config } from './config';
 import { _, LatLng} from './leaflet-define';
 import { makeFeatureFromMetaData, MetaData2 } from './feature-factory';
@@ -47,10 +47,10 @@ export default async function features(map: Map) {
     const features = makeFeatureFromMetaData(metaData2, map);
 
     features.forEach(p => p.then(f => f.forEach(fi => RegisterFeature(fi))));
-    await Promise.all(features).then(() => FeaturesList.featuresList.init(map));
+    await Promise.all(features).then(() => FeaturesStorage.featuresList.init(map));
 
     
-    const overlays: {[key:string]: any} = FeaturesList.FeaturesList().reduce((a: {[key:string]: any}, feature: Feature) => {
+    const overlays: {[key:string]: any} = FeaturesStorage.Storage().reduce((a: {[key:string]: any}, feature: Feature) => {
         const gname = feature.getGroupName();
         const name: string = gname ? gname : feature.name;
         if (a[name])

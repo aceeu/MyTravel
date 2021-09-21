@@ -3,7 +3,7 @@ import * as React from 'react';
 import { _ } from './leaflet-define';
 import { StartPresentation } from './presentation'
 import { PoiList, PoiListData } from './features/show-places';
-import { FeaturesList } from './features/features-list';
+import { FeaturesStorage } from './features/features-list';
 import { GpsWatcherControl } from './controls/gps-watch-control';
 import posPng from './assets/pos.png';
 import * as icons from './gen/sprites/icons';
@@ -65,7 +65,7 @@ const findControl = L.Control.extend({
         input.placeholder = 'Найти';
         input.onkeyup = (e: any) => {
             if (e.keyCode == 13) {
-              const seesights: PoiList[] = FeaturesList.featuresList.findByGroupName('Достопримечательности') as PoiList[];
+              const seesights: PoiList[] = FeaturesStorage.featuresList.findByGroupName('Достопримечательности') as PoiList[];
               for (let i = 0; i < seesights.length; ++i) {
                 const point: number = seesights[i].data.findIndex(d =>
                     d.name.toLocaleLowerCase().includes(e.target.value.toLocaleLowerCase()));

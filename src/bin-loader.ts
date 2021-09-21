@@ -139,6 +139,13 @@ const routeScheme2 = new Type({ // utf-8 without BOM
     ],
 });
 
+const shortScheme = new Type({
+    geometry: [['float']],
+    name: 'string',
+    description: 'string',
+    stroke: 'string'
+})
+
 export function fetchBinaryData(urls: string[]): Promise<any[]> {
     const results = urls.map(async (url, i) => {
         const urlBinFile = url.replace('.json', '.bin');
@@ -155,7 +162,8 @@ export function fetchBinaryRouteData(urls: string[]): Promise<any[]> {
         const response = await fetch(urlBinFile);
         const buf = await response.arrayBuffer();
         //return routeScheme2.decode(Buffer.from(buf));
-        return mongolRouteScheme.decode(Buffer.from(buf));
+        //return mongolRouteScheme.decode(Buffer.from(buf));
+        return shortScheme.decode(Buffer.from(buf));
     })
     return Promise.all(results);
 }

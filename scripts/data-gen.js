@@ -140,6 +140,13 @@ const schemeRoute = new Type({ // utf-8 without BOM
 });
 
 
+const shortScheme = new Type({
+    geometry: [['float']],
+    name: 'string',
+    description: 'string',
+    stroke: 'string'
+})
+
 function fetchMetaData() { // MetaData
     let content = fs.readFileSync(metadataPath + 'metadata2.json');
     return JSON.parse(content);
@@ -163,7 +170,7 @@ const processRoute = scheme => filename => {
 
 const schemes = {
     poi: processRoute(schemePoi),
-    route: processRoute(mongolRouteScheme) // schemeRoute
+    route: processRoute(shortScheme) // schemeRoute, mongolScheme
 }
 
 metadata.data.forEach(element => {

@@ -1,5 +1,5 @@
 import * as xmlbuilder from 'xmlbuilder';
-import { FeaturesList } from './features/features-list';
+import { FeaturesStorage } from './features/features-list';
 import { Route } from './features/route';
 import { PoiList, PoiListData } from 'features/show-places';
 
@@ -82,10 +82,10 @@ function makePlacemarkPoint(poifeatureData: PoiListData[]): PlacemarkPoint[] {
 }
 
 export function genKmlMainroute(name: string): string {
-    const mainRoutes: Route[] = FeaturesList.featuresList.findFeatures('Основной маршрут') as Route[];
+    const mainRoutes: Route[] = FeaturesStorage.featuresList.findFeatures('Основной маршрут') as Route[];
     // const folders: any[] = makeRouteFolder(mainRoutes);
 
-    const poiMainfeature: PoiList[] = FeaturesList.featuresList.findByGroupName('Достопримечательности') as PoiList[];
+    const poiMainfeature: PoiList[] = FeaturesStorage.featuresList.findByGroupName('Достопримечательности') as PoiList[];
     const folders: any = poiMainfeature.map(f => placemarkFolder(f.name, makePlacemarkPoint(f.data)));
     // const constMPointsFolder = placemarkFolder('Main POI', makePlacemarkPoint(poiMainfeature.data));
     // const poifeature: ShowPlacesList = FeaturesList.featuresList.find(
@@ -96,7 +96,7 @@ export function genKmlMainroute(name: string): string {
 
 export function genKmlAltRoutes(name: string): string {
     // alternatives
-    const alt: Route[] = FeaturesList.featuresList.findFeatures('Дополнительные маршруты') as Route[];
+    const alt: Route[] = FeaturesStorage.featuresList.findFeatures('Дополнительные маршруты') as Route[];
     // const tyva: Route[] = FeaturesList.featuresList.findFeatures('Тыва') as Route[];
     return kmlgen(name, makeRouteFolder(alt));
 }
@@ -114,6 +114,6 @@ function kmlgen(name: string, folders: any[]): string {
             },
         }
     }
-    const xmlHeader = '<?xml version="1.0" encoding="UTF-8"?>';
-    return xmlHeader + ' ' + xmlbuilder.create(obj, { encoding: 'utf-8' })
+    const xmlHeader = '<?xml version="1.0" encoding="UTF-8"?> ';
+    return xmlHeader + xmlbuilder.create(obj, { encoding: 'utf-8' })
 }
