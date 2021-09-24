@@ -36,3 +36,7 @@ const layers = {
 }
 
 export function getBaseLayers()  {return layers;}
+
+export function getStravaHeatMap() {
+    return L.tileLayer('https://heatmap-external-a.strava.com/tiles-auth/all/bluered/{z}/{x}/{y}.png?Key-Pair-Id=APKAIDPUN4QMG7VUQPSA&Policy=eyJTdGF0ZW1lbnQiOiBbeyJSZXNvdXJjZSI6Imh0dHBzOi8vaGVhdG1hcC1leHRlcm5hbC0qLnN0cmF2YS5jb20vKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTYzMzM3NzEzNn0sIkRhdGVHcmVhdGVyVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjMyMTUzMTM2fX19XX0_&Signature=l3T3oapa2~PzYvNE4rbNTyxMDjfPZugu-KKOgZy0NdAMUSXRdT3sntYJLTeO4gNDSdF9K0RwQ6yncCjQrT7K6j-zW3ZamRv3PQe5MXGwcOKSfgHMPNzdTbSkHpFUZbQ8Z9iIOlY8ozZznLPZZRFvE1g2rd9pDqSX-sBWPZzE6eusingYo5CmJA7RNBF1dG3gfE~4wPaMXmNBFxx~Zi0k8IImq1-Khx~FVTglMzooTtlIMUauuQb9P2xWTazIKipLST4Z3oDQGqAFyf9tylEICriFZ~yXeLmtDapPKs5J7vAkvGTGFKIQ~pOCh83DQJJLh3PQPNdLFxEy0EsmnOfmBA__', { maxZoom: 18})
+}

@@ -5,6 +5,7 @@ import { _, LatLng} from './leaflet-define';
 import { makeFeatureFromMetaData, MetaData2 } from './feature-factory';
 import {reg as regPoi} from './features-poi'
 import {reg as regRoute} from './features-routes'
+import {getStravaHeatMap} from './leaflet';
 
 import { getBaseLayers } from './leaflet';
 
@@ -65,6 +66,8 @@ export default async function features(map: Map) {
         if (mdRow?.showByDefault)
             overlays[key].addTo(map)
     });
+
+    overlays["Strava heatmap"] = getStravaHeatMap()
 
     AddControls(map, overlays);
 
