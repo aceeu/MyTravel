@@ -43,7 +43,7 @@ async function fetchMetaData2(): Promise<MetaData2> {
 
 export default async function features(map: Map) {
     const metaData2: MetaData2 = await fetchMetaData2();
-    map.setView(LatLng(...metaData2.center), 8);
+    map.setView(LatLng(...metaData2.center), metaData2.zoon);
 
     const features = makeFeatureFromMetaData(metaData2, map);
 

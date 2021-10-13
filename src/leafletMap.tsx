@@ -13,9 +13,11 @@ export function LeafletBaseMap(element: HTMLDivElement) {
 
     let mymap = _().map(element, {
         center: [0, 0],
-        zoom: 7,
+        zoom: 5,
         layers: [getBaseLayers()["Outdoors"]]
     });
+
+    mymap.on('zoom', () => console.log(mymap.getZoom()))
 
     return mymap;
 }

@@ -15,6 +15,7 @@ export type MetaData2Row = {
 
 export interface MetaData2 {
     center: [number, number]
+    zoon: number,
     data: MetaData2Row[];
 }
 
