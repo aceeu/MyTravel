@@ -5,58 +5,78 @@
 .i.s0 {
   background-image: url('./icons.png');
 
-  // campfire
+  // barhan
   &.i0 {
     background-position: 0 0;
   }
 
-  // camping-tent-green
+  // camping
   &.i1 {
     background-position: -56px 0;
   }
 
-  // camping-tent
+  // canyon
   &.i2 {
     background-position: 0 -56px;
   }
 
-  // here
+  // cave
   &.i3 {
     background-position: -56px -56px;
   }
 
-  // house-red
+  // cheb
   &.i4 {
     background-position: -112px 0;
   }
 
-  // house
+  // flag
   &.i5 {
-    background-position: -112px -56px;
+    background-position: -112px -168px;
   }
 
-  // info
+  // geyser
   &.i6 {
-    background-position: 0 -112px;
+    background-position: -112px -56px;
   }
 
   // information
   &.i7 {
-    background-position: -168px -56px;
+    background-position: 0 -112px;
   }
 
-  // marine-anchor
+  // lake
   &.i8 {
     background-position: -56px -112px;
   }
 
-  // optometrist-eye
+  // mount
   &.i9 {
     background-position: -112px -112px;
   }
 
-  // parking
+  // road_sand
   &.i10 {
     background-position: -168px 0;
+  }
+
+  // see
+  &.i11 {
+    background-position: -168px -56px;
+  }
+
+  // town
+  &.i12 {
+    background-position: -168px -112px;
+  }
+
+  // tree
+  &.i13 {
+    background-position: 0 -168px;
+  }
+
+  // vulkan
+  &.i14 {
+    background-position: -56px -168px;
   }
 }

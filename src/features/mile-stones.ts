@@ -21,7 +21,8 @@ export class Milestones extends LayerGroupFeature {
         let distance: number = 0;
         let last: number = distance;
         let lastPoint: azimuth.Point
-        this.geometries.reduce((a: MapMarker[], element: number[], i: number) => {
+        const geometry = this.geometries.map(v => [v[1], v[0], v[2]]) // swap x and y
+        geometry.reduce((a: MapMarker[], element: number[], i: number) => {
             const elPoint: azimuth.Point = convert(element);
             if (a.length == 0) {
                 a.push(this.createMark(elPoint, distance));

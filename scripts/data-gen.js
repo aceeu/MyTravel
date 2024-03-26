@@ -147,6 +147,13 @@ const shortScheme = new Type({
     stroke: 'string'
 })
 
+const pos_routeSceme = new Type({
+    pos_route: [{
+        lat: 'float',
+        lng: 'float'
+    }]
+})
+
 function fetchMetaData() { // MetaData
     let content = fs.readFileSync(metadataPath + 'metadata2.json');
     return JSON.parse(content);
@@ -158,19 +165,20 @@ const processRoute = scheme => filename => {
     console.log(filename);
     let content = fs.readFileSync(metadataPath + filename);
     console.log('read ok');
-    const fname = filename.split('.')[0];
+    const fname = filename.substring(0,filename.lastIndexOf('.'))
     const binFolder = metadataPath + 'bin';
     let res = scheme.encode(JSON.parse(content));
     if (!fs.existsSync(binFolder)){
         fs.mkdirSync(binFolder);
     }
     fs.writeFileSync(binFolder + '/' + fname + '.bin', res);
-    console.log('write ok');
+    console.log('write ok' + fname + '.bin');
 };
 
 const schemes = {
     poi: processRoute(schemePoi),
-    route: processRoute(shortScheme) // schemeRoute, mongolScheme
+    route: processRoute(shortScheme), // schemeRoute, mongolScheme
+    pos_route: processRoute(pos_routeSceme)
 }
 
 metadata.data.forEach(element => {

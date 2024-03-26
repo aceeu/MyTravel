@@ -1,7 +1,7 @@
 import { Feature } from "features/features-list";
 import { Map } from './leafletMap';
 
-export type featureType = 'route' | 'poi'
+export type featureType = 'route' | 'poi' | 'pos_route'
 
 export type MetaData2Row = {
     name: string;
@@ -34,7 +34,7 @@ export function makeFeatureFromMetaData(metaData: MetaData2, map: Map): Promise<
     return metaData.data.reduce((a, v) => {
         const h = handlers[v.type];
         if (!h)
-            throw 'Не известный тип'
+            throw 'Не известный тип: '+ v.type
         a.push(h(v));
         return a;
     }, [] as Promise<Feature[]>[])

@@ -19,6 +19,11 @@ export function LeafletBaseMap(element: HTMLDivElement) {
 
     mymap.on('zoom', () => console.log(mymap.getZoom()))
 
+    mymap.on('click', function(event: any){
+        console.log('----click----')
+        console.log(event.latlng)
+    });
+
     return mymap;
 }
 

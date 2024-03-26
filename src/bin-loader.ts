@@ -146,6 +146,13 @@ const shortScheme = new Type({
     stroke: 'string'
 })
 
+const pos_routeSceme = new Type({
+    pos_route: [{
+        lat: 'float',
+        lng: 'float'
+    }]
+})
+
 export function fetchBinaryData(urls: string[]): Promise<any[]> {
     const results = urls.map(async (url, i) => {
         const urlBinFile = url.replace('.json', '.bin');
@@ -164,6 +171,16 @@ export function fetchBinaryRouteData(urls: string[]): Promise<any[]> {
         //return routeScheme2.decode(Buffer.from(buf));
         //return mongolRouteScheme.decode(Buffer.from(buf));
         return shortScheme.decode(Buffer.from(buf));
+    })
+    return Promise.all(results);
+}
+
+export function fetchBinaryPoiRouteData(urls: string[]): Promise<any[]> {
+    const results = urls.map(async (url, i) => {
+        const urlBinFile = url.replace('.json', '.bin');
+        const response = await fetch(urlBinFile);
+        const buf = await response.arrayBuffer();
+        return pos_routeSceme.decode(Buffer.from(buf));
     })
     return Promise.all(results);
 }

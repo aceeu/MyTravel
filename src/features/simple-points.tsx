@@ -7,9 +7,9 @@ import '../gen/sprites/_icons.scss';
 
 const totalIconMap: IconInfoMap = {...icons.info};
 
-interface GasRecord {
-    name: string;
-    position: number[];
+interface Pos {
+    lat: number,
+    lng: number
 }
 
 export class SimplePointsList extends LayerGroupFeature {
@@ -21,6 +21,7 @@ export class SimplePointsList extends LayerGroupFeature {
         super(name, groupName);
         this.data = data;
         this.icon = icon;
+        console.log({data})
     }
 
     initChild() {
@@ -28,9 +29,9 @@ export class SimplePointsList extends LayerGroupFeature {
         this.layerGroup = _().layerGroup(this.marksList);
     }
 
-    createMark = (item: GasRecord): FeatureMarker => {
-        const cMarker = _().marker(item.position, {icon: makeLeafIcon(totalIconMap, this.icon)});
-        cMarker.bindTooltip(item.name);
+    createMark = (item: Pos, i: number): FeatureMarker => {
+        const cMarker = _().marker([item.lat, item.lng], {icon: makeLeafIcon(totalIconMap, this.icon)});
+        cMarker.bindTooltip(this.name + '_' + i);
         return cMarker;
     }
 
