@@ -8,7 +8,7 @@ import { fetchBinaryPoiRouteData } from "./bin-loader";
 const pos_route: MetaDataTypeHandler = async (v: MetaData2Row) => {
     const filePath = config.mapPathBin + '/' + v.files[0];
     const [data] = await fetchBinaryPoiRouteData([filePath]);
-    return [new SimplePointsList(v.name, v.groupName, data.pos_route, 'flag')] as Feature[];
+    return [new SimplePointsList(v.name, v.groupName, data.pos_route, v.icon || 'flag')] as Feature[];
 }
 
 export function reg(){registerMetaDataTypeHandler('pos_route', pos_route)}

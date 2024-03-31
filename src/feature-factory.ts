@@ -4,6 +4,7 @@ import { Map } from './leafletMap';
 export type featureType = 'route' | 'poi' | 'pos_route'
 
 export type MetaData2Row = {
+    icon: string,
     name: string;
     groupName: string;
     type: featureType;
