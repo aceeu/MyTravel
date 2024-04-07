@@ -32,56 +32,61 @@
 
   // flag-orange
   &.i5 {
-    background-position: -112px -168px;
+    background-position: -166px -168px;
   }
 
   // flag
   &.i6 {
-    background-position: -144px -168px;
+    background-position: -224px 0;
+  }
+
+  // food
+  &.i7 {
+    background-position: -112px -168px;
   }
 
   // geyser
-  &.i7 {
+  &.i8 {
     background-position: -112px -56px;
   }
 
   // information
-  &.i8 {
+  &.i9 {
     background-position: 0 -112px;
   }
 
   // lake
-  &.i9 {
+  &.i10 {
     background-position: -56px -112px;
   }
 
   // mount
-  &.i10 {
+  &.i11 {
     background-position: -112px -112px;
   }
 
   // road_sand
-  &.i11 {
+  &.i12 {
     background-position: -168px 0;
   }
 
   // see
-  &.i12 {
+  &.i13 {
     background-position: -168px -56px;
   }
 
   // town
-  &.i13 {
+  &.i14 {
     background-position: -168px -112px;
   }
 
   // tree
-  &.i14 {
+  &.i15 {
     background-position: 0 -168px;
   }
 
   // vulkan
-  &.i15 {
+  &.i16 {
     background-position: -56px -168px;
   }
 }
