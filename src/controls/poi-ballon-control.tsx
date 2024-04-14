@@ -28,7 +28,7 @@ export const PoiBallon = (props: PoiBallonProps) => {
     return (
         <div className='showPlaceBoard'>
             <h3>{props.name}</h3>
-            <div>{`${props.position[0]}, ${props.position[1]}`}</div>
+            {props.position && props.position[0] ? <div>{`${props.position[0]}, ${props.position[1]}`}</div>: ''}
             {img}
             {youtube}
             <div>{props.text}</div>
