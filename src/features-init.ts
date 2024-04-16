@@ -68,7 +68,6 @@ export default async function features(map: Map) {
             overlays[key].addTo(map)
     });
 
-    overlays["Strava heatmap"] = getStravaHeatMap()
     AddControls(map, overlays);
 
 }
