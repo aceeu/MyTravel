@@ -208,10 +208,10 @@ function download(filename: string, text: string) {
 const downloadButton = L.Control.extend({
     onAdd: function(map: any) {
         var button = L.DomUtil.create('button');
-        button.innerHTML= "Загрузить трек";
-        button.onclick = () => {
-            download(`${config.kmlDefaultName}.kml`, genKmlMainroute(config.kmlDefaultName));
-            download(`${config.kmlAlternatesName}.kml`, genKmlAltRoutes(config.kmlAlternatesName));
+        button.innerHTML= "Сохранить трек(kml)";
+        button.onclick = async() => {
+            download(`${config.kmlDefaultName}.kml`, await genKmlMainroute(config.kmlDefaultName));
+            //download(`${config.kmlAlternatesName}.kml`, genKmlAltRoutes(config.kmlAlternatesName));
         };
         return button;
     },

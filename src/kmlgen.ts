@@ -1,7 +1,9 @@
 import * as xmlbuilder from 'xmlbuilder';
-import { FeaturesStorage } from './features/features-list';
+import { Feature, FeaturesStorage } from './features/features-list';
 import { Route } from './features/route';
 import { PoiList, PoiListData } from 'features/show-places';
+import { fetchMetaData2 } from './features-init';
+import { MetaData2 } from 'feature-factory';
 
 // function networkLink() {
 //     return {
@@ -55,15 +57,40 @@ function makeRouteFolder(routes: Route[]): any[] {
     return routes.reduce((a: any[], r) => {
         if (r.geometries.length == 0)
             return a;
-        let startitm = r.geometries[0];
-        const enditem = r.geometries[r.geometries.length -1];
-        // const start = `${startitm[1]},${startitm[0]},${startitm[2]}`;
-        // const end = `${enditem[1]},${enditem[0]},${enditem[2]}`;
-        let coordinates: string[] = r.geometries.map((item: number[]) => `${item[1]},${item[0]},${item[2]}`);
+        let coordinates: string[] = r.geometries.map((item: number[]) => `${item[0]},${item[1]},${item[2]}`);
         a.push(routeFolder(r.name, coordinates.join(' ')));
         return a;
     }, []);
 
+}
+
+function makeFeatureFolder(features: Feature[]): any[] {
+    // тут надо создать фолдеры для разных типов Feature
+    const FolderRoute = {
+        'route': makeRouteFolder,
+        'poi': placemarkFolder
+    }
+    return features.reduce((a: any[], f: Feature) => {
+        if (f.getType() == 'route') {
+            a.push(makeRouteFolder([f as Route]))
+        } else if (f.getType() == 'poi') {
+            const poiList = f as PoiList
+            a.push(placemarkFolder(f.name, makePlacemarkPoint(poiList.data))) 
+        }
+        return a
+
+    }, [])
+
+        // const mainRoutes: Route[] = FeaturesStorage.featuresList.findFeatures('Основной маршрут') as Route[];
+    // // const folders: any[] = makeRouteFolder(mainRoutes);
+
+    // const poiMainfeature: PoiList[] = FeaturesStorage.featuresList.findByGroupName('Достопримечательности') as PoiList[];
+    // const folders: any = poiMainfeature.map(f => placemarkFolder(f.name, makePlacemarkPoint(f.data)));
+    // // const constMPointsFolder = placemarkFolder('Main POI', makePlacemarkPoint(poiMainfeature.data));
+    // // const poifeature: ShowPlacesList = FeaturesList.featuresList.find(
+    // //         ['Достопримечательности']) as ShowPlacesList;
+    // // const constPointsFolder = placemarkFolder('POI', makePlacemarkPoint(poifeature.data));
+    // return kmlgen(name, [makeRouteFolder(mainRoutes), ...folders]);
 }
 
 function makePlacemarkPoint(poifeatureData: PoiListData[]): PlacemarkPoint[] {
@@ -81,17 +108,23 @@ function makePlacemarkPoint(poifeatureData: PoiListData[]): PlacemarkPoint[] {
         });
 }
 
-export function genKmlMainroute(name: string): string {
-    const mainRoutes: Route[] = FeaturesStorage.featuresList.findFeatures('Основной маршрут') as Route[];
-    // const folders: any[] = makeRouteFolder(mainRoutes);
+export async function genKmlMainroute(name: string): Promise<string> {
 
-    const poiMainfeature: PoiList[] = FeaturesStorage.featuresList.findByGroupName('Достопримечательности') as PoiList[];
-    const folders: any = poiMainfeature.map(f => placemarkFolder(f.name, makePlacemarkPoint(f.data)));
-    // const constMPointsFolder = placemarkFolder('Main POI', makePlacemarkPoint(poiMainfeature.data));
-    // const poifeature: ShowPlacesList = FeaturesList.featuresList.find(
-    //         ['Достопримечательности']) as ShowPlacesList;
-    // const constPointsFolder = placemarkFolder('POI', makePlacemarkPoint(poifeature.data));
-    return kmlgen(name, [makeRouteFolder(mainRoutes), ...folders]);
+    const metaData2: MetaData2 = await fetchMetaData2()
+    
+    //const routes = metaData2.data.filter(d => d.type == 'route')
+    function onlyUnique(value: any, index: number, array: any[]) {
+        return array.indexOf(value) === index;
+    }
+    const groupNames: string[] = metaData2.data.map(r => r.groupName).filter(onlyUnique)
+
+    const feaures: any[] = groupNames.map(gn => {
+        const rf: Feature[] = FeaturesStorage.featuresList.findFeatures(gn)
+        return makeFeatureFolder(rf)
+    })
+    return kmlgen(name, feaures)
+
+
 }
 
 export function genKmlAltRoutes(name: string): string {

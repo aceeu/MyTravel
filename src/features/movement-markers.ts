@@ -1,5 +1,6 @@
 import { MapMarker, LayerGroupFeature } from './features-list';
 import { _ } from '../leaflet-define';
+import { featureType } from 'feature-factory';
 
 export class MovementMarkersList extends LayerGroupFeature {
 
@@ -12,6 +13,8 @@ export class MovementMarkersList extends LayerGroupFeature {
         // this.markers = GenerateFeaturesGroup(Data);
         // this.layerGroup = _().layerGroup(this.markers.map(v => v.feature));
     }
+
+    getType(): featureType {return 'milestones'}
 }
 
 function GenerateFeaturesGroup(Data: any): MapMarker[] {

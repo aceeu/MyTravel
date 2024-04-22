@@ -1,9 +1,11 @@
+import { featureType } from 'feature-factory';
 import { _ } from '../leaflet-define';
 
 export interface Feature {
     init: (map: any) => void;
     getLayerGroup(): any;
-    getGroupName(): string | undefined
+    getGroupName(): string | undefined;
+    getType(): featureType;
     name: string;
 }
 
@@ -34,6 +36,7 @@ export abstract class LayerGroupFeature implements Feature {
     }
 
     abstract initChild(): void;
+    abstract getType(): featureType;
 
 }
 

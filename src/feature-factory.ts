@@ -1,7 +1,7 @@
 import { Feature } from "features/features-list";
 import { Map } from './leafletMap';
 
-export type featureType = 'route' | 'poi' | 'pos_route'
+export type featureType = 'route' | 'poi' | 'pos_route' | 'milestones'
 
 export type MetaData2Row = {
     icon: string,

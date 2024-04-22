@@ -1,6 +1,7 @@
 import { MapMarker, FeatureMarker, LayerGroupFeature } from './features-list';
 import { _ } from '../leaflet-define';
 import * as azimuth from 'azimuth';
+import { featureType } from 'feature-factory';
 
 export class Milestones extends LayerGroupFeature {
     geometries: number[][] = [];
@@ -45,6 +46,8 @@ export class Milestones extends LayerGroupFeature {
         this.geometries = []; // remove geometries
         this.layerGroup = _().layerGroup(this.markers.map(v => v.feature));
     }
+
+    getType(): featureType {return 'milestones'}
 
     createMark(point: azimuth.Point, distance: number): FeatureMarker {
         const  distanceKm: string = (distance / 1000).toFixed(0);

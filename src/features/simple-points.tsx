@@ -3,6 +3,7 @@ import { _ } from '../leaflet-define';
 import { getIconInfo, IconInfoMap } from '../common/sprite';
 import * as icons from '../gen/sprites/icons';
 import '../gen/sprites/_icons.scss';
+import { featureType } from 'feature-factory';
 
 
 const totalIconMap: IconInfoMap = {...icons.info};
@@ -28,6 +29,8 @@ export class SimplePointsList extends LayerGroupFeature {
         this.marksList = this.data.map(this.createMark);
         this.layerGroup = _().layerGroup(this.marksList);
     }
+
+    getType(): featureType {return 'pos_route'}
 
     createMark = (item: Pos, i: number): FeatureMarker => {
         const cMarker = _().marker([item.lat, item.lng], {icon: makeLeafIcon(totalIconMap, this.icon)});

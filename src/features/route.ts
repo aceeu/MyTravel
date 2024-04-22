@@ -1,6 +1,7 @@
 import { LayerGroupFeature } from './features-list';
 import { _ } from '../leaflet-define';
 import { showPoiBallon } from './show-places';
+import { featureType } from 'feature-factory';
 
 function RouteLine(geometry: number[][], color:string, name: string = '', description = '') {
     geometry = geometry.map(v => [v[1], v[0], v[2]]) // swap x and y
@@ -31,6 +32,6 @@ export class Route extends LayerGroupFeature {
     initChild(): void {
         RouteLine(this.geometries, this.color, this.name, this.description).addTo(this.layerGroup);
     }
-    
+    getType(): featureType {return 'route' }
 }
 

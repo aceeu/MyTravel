@@ -6,6 +6,7 @@ import { PoiBallonProps, PoiBallon } from '../controls/poi-ballon-control';
 import { getIconInfo, IconInfoMap } from '../common/sprite';
 import * as icons from '../gen/sprites/icons';
 import '../gen/sprites/_icons.scss';
+import { featureType } from 'feature-factory';
 
 
 const totalIconMap: IconInfoMap = {...icons.info};
@@ -42,6 +43,10 @@ export class PoiList extends LayerGroupFeature {
         cMarker.bindTooltip(item.name);
         return cMarker;
     }
+
+    getType(): featureType {return 'poi'}
+
+
 
 }
 

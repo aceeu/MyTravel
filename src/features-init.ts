@@ -6,7 +6,7 @@ import { makeFeatureFromMetaData, MetaData2 } from './feature-factory';
 import {reg as regPoi} from './features-poi'
 import {reg as regRoute} from './features-routes'
 import {reg as regPosRoute} from './features-pos-route'
-import {getStravaHeatMap} from './leaflet';
+//import {getStravaHeatMap} from './leaflet';
 import { getBaseLayers } from './leaflet';
 
 regPoi();
@@ -37,7 +37,7 @@ function AddControls(mymap: Map, overlays: any) {
     _().control.polylineMeasure().addTo(mymap);
 }
 
-async function fetchMetaData2(): Promise<MetaData2> {
+export async function fetchMetaData2(): Promise<MetaData2> {
     const response = await fetch(`${config.mapPath}/metadata2.json`);
     return response.json();
 }
