@@ -8,14 +8,14 @@ import { featureType } from 'feature-factory';
 
 const totalIconMap: IconInfoMap = {...icons.info};
 
-interface Pos {
+export interface Pos {
     lat: number,
     lng: number
 }
 
 export class SimplePointsList extends LayerGroupFeature {
     marksList: any[] = [];
-    data: any[];
+    data: Pos[];
     icon: string;
 
     constructor(name: string, groupName: string, data: any[], icon: string) {

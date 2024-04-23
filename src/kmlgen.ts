@@ -4,6 +4,7 @@ import { Route } from './features/route';
 import { PoiList, PoiListData } from 'features/show-places';
 import { fetchMetaData2 } from './features-init';
 import { MetaData2 } from 'feature-factory';
+import { Pos, SimplePointsList } from 'features/simple-points';
 
 // function networkLink() {
 //     return {
@@ -66,16 +67,15 @@ function makeRouteFolder(routes: Route[]): any[] {
 
 function makeFeatureFolder(features: Feature[]): any[] {
     // тут надо создать фолдеры для разных типов Feature
-    const FolderRoute = {
-        'route': makeRouteFolder,
-        'poi': placemarkFolder
-    }
     return features.reduce((a: any[], f: Feature) => {
         if (f.getType() == 'route') {
             a.push(makeRouteFolder([f as Route]))
         } else if (f.getType() == 'poi') {
             const poiList = f as PoiList
             a.push(placemarkFolder(f.name, makePlacemarkPoint(poiList.data))) 
+        } else if (f.getType() == 'pos_route') {
+            const pr = f as SimplePointsList
+            a.push(placemarkFolder(f.name, makePlacemarkRoute(pr.data)))
         }
         return a
 
@@ -104,6 +104,17 @@ function makePlacemarkPoint(poifeatureData: PoiListData[]): PlacemarkPoint[] {
             description ,
             Point: {
                 coordinates: `${v.position[1]},${v.position[0]}`
+            }}
+        });
+}
+
+function makePlacemarkRoute(poss: Pos[]): PlacemarkPoint[] {
+    return poss.map((v: Pos, i: number) => {
+        return {
+            name: ''+i,
+            description: ''+i ,
+            Point: {
+                coordinates: `${v.lng},${v.lat}`
             }}
         });
 }
